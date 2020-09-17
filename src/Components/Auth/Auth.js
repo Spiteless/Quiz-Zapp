@@ -1,8 +1,10 @@
-import React from 'react'
+import React from 'react';
 
-const Card = (props) => {
+const Auth = () => {
 
     return (
-        <h1> CARD </h1>
+        <div>
+            <p>Hello World!!!!!</p>
+        </div>
     )
 }
