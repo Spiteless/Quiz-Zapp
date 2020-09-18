@@ -17,10 +17,10 @@ module.exports = {
         }
     },
     login: async (req, res) => {
-        const { email, password } = req.body;
+        const { userName, password } = req.body;
         const db = req.app.get("db");
 
-    let foundUser = await db.user.get_user(email);
+    let foundUser = await db.user.get_user(userName);
     foundUser = foundUser[0];
     if (foundUser){
         const compareHash = foundUser.password;
@@ -30,10 +30,10 @@ module.exports = {
             req.session.user = foundUser;
             res.status(202).send(foundUser);
         } else {
-            res.status(401).send("Email or password incorrect");
+            res.status(401).send("Username or password incorrect");
         }
     } else {
-        res.status(401).send("Email or Password incorrect");
+        res.status(401).send("Username or password incorrect");
     }
   },
   logout: (req, res) => {
