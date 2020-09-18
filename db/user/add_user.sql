@@ -1,6 +1,6 @@
 INSERT INTO users
-(email, password, name, address)
-VALUES($1, $2, $3, $4);
+(username, password, email)
+VALUES($1, $2, $3);
 
-SELECT user_id, email FROM users
-WHERE email = $1;
+SELECT username, email FROM users
+WHERE username = $1;
