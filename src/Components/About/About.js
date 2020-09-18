@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Auth = () => {
+const About = (props) => {
 
     return (
         <div>
@@ -8,3 +8,5 @@ const Auth = () => {
         </div>
     )
 }
+
+export default (withRouter(About));

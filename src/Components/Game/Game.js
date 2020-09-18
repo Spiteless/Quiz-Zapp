@@ -4,7 +4,7 @@ import '../App.css';
 // import axios from 'axios';
 
 
-const Game = () => {
+const Game = (props) => {
 
 
 
