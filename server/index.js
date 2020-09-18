@@ -5,8 +5,8 @@ const session = require("express-session");
 
 const{ SESSION_SECRET, CONNECTION_STRING, SERVER_PORT } = process.env;
 
-const authCtrl = require("./controllers/authController")
-const gameCtrl = require("./controllers/gameController");
+const authCtrl = require('./authController');
+const gameCtrl = require('./controllers/gameController');
 
 const app = express();
 
