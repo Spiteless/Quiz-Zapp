@@ -6,7 +6,7 @@ const session = require("express-session");
 const{ SESSION_SECRET, CONNECTION_STRING, SERVER_PORT } = process.env;
 
 const authCtrl = require("./controllers/authController")
-const gameCtrl = require("./controllers/gameController")
+const gameCtrl = require("./controllers/gameController");
 
 const app = express();
 
@@ -37,7 +37,7 @@ massive ({
 //endpoints
 
 //auth endpoints
-app.post('/auth/login', authCtr.login),
+app.post('/auth/login', authCtrl.login),
 app.post('/auth/register', authCtrl.register),
 app.post('/auth/logout', authCtrl.logout),
 app.get('/auth/user', authCtrl.getUser)
