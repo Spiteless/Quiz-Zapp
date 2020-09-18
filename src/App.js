@@ -1,24 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Switch, Router} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
+
+import About from './Components/About/About';
+import Dashboard from './Components/Dashboard/Dashboard';
+import Game from './Components/Game/Game';
+import Leaderboard from './Components/Leaderboard/Leaderboard';
+import Lobby from './Components/Lobby/Lobby';
+import WaitingRoom from './Components/WaitingRoom/WaitingRoom';
+import Profile from './Components/Profile/Profile';
+
+import Nav from './Components/Nav/Nav';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {props.location.pathname !== '/' ?
+        <Nav/>
+      }
+
     </div>
   );
 }
