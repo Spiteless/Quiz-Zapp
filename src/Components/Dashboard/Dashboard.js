@@ -6,8 +6,12 @@ import { withRouter } from "react-router-dom";
 
 const Dashboard = (props) => {
 
+  const gotoLobby = () => {
+    props.history.push("/lobby")
+  }
+
     return(
-      <div className="DashboardContainer" >
+      <div onClick={() => {gotoLobby()}} className="DashboardContainer" >
         <h1> Dashboard </h1>
       </div>
     )
