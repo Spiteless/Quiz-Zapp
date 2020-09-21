@@ -40,7 +40,6 @@ const Dashboard = (props) => {
           {loginIsDisplayed ? <Login/> : null}
           {registerIsDisplayed ? <Register/> : null}
         </div>
-        
       </div>
     )
 }; 
