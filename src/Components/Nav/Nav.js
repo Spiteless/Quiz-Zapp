@@ -27,7 +27,7 @@ const Nav = (props) => {
 
     //upon logout, go to dash? will need to perform the logout logic
     const gotoDash = () => {
-        props.history.push("/dashboard")
+        props.history.push("/")
       }
 
 
