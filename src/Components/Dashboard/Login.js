@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
+import {connect} from 'react-redux';
+import {loginUser} from '../../redux/authReducer';
 
 
 const Login = (props) => {
@@ -38,4 +40,4 @@ const Login = (props) => {
 
 
 
-export default (withRouter(Login));
+export default connect(null, {loginUser})(withRouter(Login));

@@ -1,25 +1,35 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Link, withRouter } from "react-router-dom";
+import {connect} from 'react-redux';
+import {getUser, logoutUser} from '../../redux/authReducer';
 import '../../css/Nav.css'
 
 
 const Nav = (props) => {
+    const [update, setUpdate] = useState(false);
+    console.log("comes from redux props", props);
+    useEffect(() => {
+        props.getUser();
+        console.log('props.history', props.history);
+        // if(!props.user.loading) {
+        //     if(props.user.username === ''){
+        //         props.history.push('/');
+        //     }
+        // }
+    }, [props.user.username, props.location.pathname]);
+    // [props.user.username, props.location.pathname]
 
-    //getUser won't work until we get redux up and running.
-    // useEffect(() => {
-    //     // console.log("comes from redux props", props);
-    //     // props.getUser();
-    //     console.log('props.history', props.history);
-    //     if(props.user.username === ''){
-    //         props.history.push('/');
-    //     }
-    // }, [props.user.email, props.location.pathname]);
+    useEffect(() => {
+        console.log('props.user NAV', props.user)
+        console.log('hit update', update)
+        setUpdate(() => !update);
+    }, [props.user.auth.user.username]);
 
     const logout = () => {
         axios.post('/auth/logout').then(res => {
-            // props.logoutUser();
-            // props.history.push('/')
+            props.logoutUser();
+            props.history.push('/')
         }).catch(err => console.log(err))
     }
 
@@ -43,8 +53,24 @@ const Nav = (props) => {
             <Link to='/'>
                 <h3 className="navItem" onClick={() => logout()}>Logout</h3>
             </Link>
+            {props.user.auth && <h1>{props.user.auth.user.username}</h1> }
         </nav>
     )
 }
 
-export default withRouter(Nav);
+
+// const mapStateToProps = (reduxState) => {
+//     console.log('reduxState on NAV', reduxState)
+//     return reduxState
+// }
+
+function mapStateToProps(reduxState){
+    console.log("REDUX STATE Nav", reduxState)
+    return {
+        user: reduxState
+    };
+}
+
+export default connect(mapStateToProps, {getUser, logoutUser})(withRouter(Nav));
+
+
