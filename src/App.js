@@ -16,7 +16,7 @@ import Nav from './Components/Nav/Nav';
 
 
 
-function App() {
+function App(props) {
   return (
     <div className="App">
       {(props.location.pathname !== '/' )

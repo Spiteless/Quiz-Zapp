@@ -1,3 +1,4 @@
+import { withRouter } from "react-router-dom";
 import React from 'react';
 
 const About = (props) => {
