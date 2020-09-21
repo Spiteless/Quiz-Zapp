@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 import { useSpring, animated as a } from 'react-spring'
 // import './styles.css'
 
+// backgroundImage: "url('url-to-background.png')", //state
+// style={{backgroundImage: this.state.backgroundImage}} //component property
 
 function Card(props) {
     const [flipped, set] = useState(false)
@@ -19,7 +21,10 @@ function Card(props) {
             <a.div class="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>
                 <h2>{props.headline}</h2>
             </a.div>
-            <a.div class="c front" style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`) }}>
+            <a.div class="c front"
+            style={{ opacity,
+                     transform: transform.interpolate(t => `${t} rotateX(180deg)`),
+                     backgroundImage: `url(${props.urlFront})`  }}>
                 <h3>{props.body}</h3>
             </a.div>
         </div>
