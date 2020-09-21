@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,82 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+nav {
+  display:flex;
+  width: 100%;
+}
+
+nav > * {
+  padding: 10px;
+}
+
+.gameBoard {
+  display: flex;
+  flex-direction: column;
+  background-color: bisque;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  max-width: 1000px;
+  justify-content: space-evenly;
+  border: 2px solid lightblue;
+  padding-bottom: 10px;
+}
+
+.card {
+  width: 10%;
+  height: 150px;
+  /* background-color: aquamarine; */
+  margin: 10px;
+}
+
+.otherCard {
+  /* display: inline-block;
+  width: 10%;
+  height: 150px;
+  background-color: rgb(96, 98, 190);
+  margin: 10px;
+  border: 10px red solid; */
+}
+
+.c {
+  position: absolute;
+  
+  max-width: 10%;
+  max-height: 150px;
+  width:  10%;
+  height: 150px;
+  cursor: pointer;
+  will-change: transform, opacity;
+}
+
+.card-parent {
+  margin-top: 15px;
+  border: green 3px solid;
+  width:  10%;
+  height: 150px;
+  background-clip: padding-box;
+  overflow: hidden;
+  /* position: fixed; */
+}
+
+.card-parent > * {
+  overflow: hidden;
+}
+
+.front,
+.back {
+  background-size: cover;
+}
+
+.back {
+  background-image: url(https://images.unsplash.com/photo-1544511916-0148ccdeb877?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1901&q=80i&auto=format&fit=crop);
+}
+
+.front {
+  background-image: url(https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg);
 }
