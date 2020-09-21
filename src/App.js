@@ -30,8 +30,8 @@ function App(props) {
          <Route path = '/lobby' component={Lobby} />
          <Route path = '/game/:gameId/stats' component={GameStats} />
          <Route path = '/profile/:userId' component={Profile} />  {/*USER ID NEEDED?*/}
-         <Route path = '/waitingRoom' component={WaitingRoom} />
-         <Route path = '/leaderBoard' component={Leaderboard} />
+         <Route path = '/waitingroom' component={WaitingRoom} />
+         <Route path = '/leaderboard' component={Leaderboard} />
          <Route path = '/about' component={About} />
          
        </Switch>

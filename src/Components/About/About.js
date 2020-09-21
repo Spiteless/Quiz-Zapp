@@ -10,4 +10,4 @@ const About = (props) => {
     )
 }
 
-export default (withRouter(About));
+export default About;
