@@ -1,46 +1,76 @@
-import React from 'react'
-import { withRouter } from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import { Link, withRouter } from "react-router-dom";
+import {connect} from 'react-redux';
+import {getUser, logoutUser} from '../../redux/authReducer';
+import '../../css/Nav.css'
 
 
 const Nav = (props) => {
+    const [update, setUpdate] = useState(false);
+    console.log("comes from redux props", props);
+    useEffect(() => {
+        props.getUser();
+        console.log('props.history', props.history);
+        // if(!props.user.loading) {
+        //     if(props.user.username === ''){
+        //         props.history.push('/');
+        //     }
+        // }
+    }, [props.user.username, props.location.pathname]);
+    // [props.user.username, props.location.pathname]
 
-    const gotoLobby = () => {
-        props.history.push("/lobby")
-      }
+    useEffect(() => {
+        console.log('props.user NAV', props.user)
+        console.log('hit update', update)
+        setUpdate(() => !update);
+    }, [props.user.auth.user.username]);
 
-    const gotoAbout = () => {
-        props.history.push("/about")
-      }
-    
-    //question refferenced below
-    const gotoGames = () => {
-        props.history.push("/game")
-      }
-
-    const gotoProfile = () => {
-        props.history.push("/profile")
-      }
-
-    const gotoLeader = () => {
-        props.history.push("/leaderboard")
-      }
-
-    //upon logout, go to dash? will need to perform the logout logic
-    const gotoDash = () => {
-        props.history.push("/dashboard")
-      }
-
+    const logout = () => {
+        axios.post('/auth/logout').then(res => {
+            props.logoutUser();
+            props.history.push('/')
+        }).catch(err => console.log(err))
+    }
 
     return (
-        <nav>
-            <h3 onClick={() => {gotoLobby()}} className="navItem">Home</h3>
-            <h3 onClick={() => {gotoAbout()}} className="navItem">About</h3>
-            <h3 onClick={() => {gotoGames()}} className="navItem">Games</h3> {/* is this the same as lobby? or does it go to the game? */}
-            <h3 onClick={() => {gotoProfile()}} className="navItem">Profile</h3>
-            <h3 onClick={() => {gotoLeader()}} className="navItem">Leader</h3>
-            <h3 onClick={() => {gotoDash()}} className="navItem">Logout</h3>
+        <nav className='nav'>
+            <Link to='/'>
+                <h3 className="navItem">Home</h3>
+            </Link>
+            <Link to='/about'>
+                <h3 className="navItem">About</h3>
+            </Link>
+            <Link to='/lobby'>
+                <h3 className="navItem">Games</h3> 
+            </Link>
+            <Link to='/profile'>
+                <h3 className="navItem">Profile</h3>
+            </Link>
+            <Link to='/leaderboard'>
+                <h3 className="navItem">Leader</h3>
+            </Link>
+            <Link to='/'>
+                <h3 className="navItem" onClick={() => logout()}>Logout</h3>
+            </Link>
+            {props.user.auth && <h1>{props.user.auth.user.username}</h1> }
         </nav>
     )
 }
 
-export default withRouter(Nav);
+
+// const mapStateToProps = (reduxState) => {
+//     console.log('reduxState on NAV', reduxState)
+//     return reduxState
+// }
+
+function mapStateToProps(reduxState){
+    console.log("REDUX STATE Nav", reduxState)
+    return {
+        user: reduxState
+    };
+}
+
+export default connect(mapStateToProps, {getUser, logoutUser})(withRouter(Nav));
+
+
