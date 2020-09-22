@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { withRouter } from "react-router-dom";
-// import '../App.css';
+import {getSetFunction} from '../../redux/gameReducer';
+import {connect} from 'react-redux';
 // import axios from 'axios';
 
 import { useSpring, animated as a } from 'react-spring'
@@ -14,19 +15,37 @@ function Card(props) {
         transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
         config: { mass: 5, tension: 500, friction: 80 }
     })
+
+
+
+
     return (
         <div className="card-parent" onClick={() => set(state => !state)}>
             <a.div class="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>
-                <h2>{props.headline}</h2>
+                <h2>{props.textCardBack}</h2>
             </a.div>
             <a.div class="c front"
             style={{ opacity,
                      transform: transform.interpolate(t => `${t} rotateX(180deg)`),
                      backgroundImage: `url(${props.urlFront})`  }}>
-                <h3>{props.body}</h3>
+                <h3>{props.textCardFront}</h3>
             </a.div>
         </div>
     )
 }
 
-export default (withRouter(Card));
+const mapStateToProps = reduxState => {
+    // const { email, StyledImg, userId } = reduxState.user;
+    console.log("Card/mapStateToProps:", reduxState);
+    // console.log("gameReducer on card.js", gameReducer);
+    const { auth, game } = reduxState
+    console.log(auth, game)
+    const newState = {
+        ...auth,
+        ...game
+    };
+    return newState
+};
+
+
+export default connect(mapStateToProps, {getSetFunction})(withRouter(Card));

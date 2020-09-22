@@ -130,10 +130,11 @@ nav > * {
 .front,
 .back {
   background-size: cover;
+  color: blue;
 }
 
 .back {
-  background-image: url(https://lh3.googleusercontent.com/proxy/WRhnwzujV4szbtepAiCTO0aFE7aHSnagd8DVcv8Q20BF7e2B3hNaCmQyqy8MR8sUleJbFOPh-Pu9tKoFT6eK94ztciI7i_6ARGktOTccXrCovPDD);
+  background-image: url(https://i.pinimg.com/564x/10/80/a4/1080a4bd1a33cec92019fab5efb3995d.jpg);
 }
 
 .front {
