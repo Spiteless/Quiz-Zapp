@@ -6,8 +6,6 @@ import { withRouter } from "react-router-dom";
 import { useSpring, animated as a } from 'react-spring'
 // import './styles.css'
 
-// backgroundImage: "url('url-to-background.png')", //state
-// style={{backgroundImage: this.state.backgroundImage}} //component property
 
 function Card(props) {
     const [flipped, set] = useState(false)

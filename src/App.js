@@ -20,7 +20,7 @@ function App(props) {
   return (
     <div className="App">
       {(props.location.pathname !== '/' )
-        ? <Nav/>
+        ? <div className="navContainer"><Nav/></div> 
         : null
         }
 

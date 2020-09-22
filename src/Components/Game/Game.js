@@ -133,7 +133,7 @@ const Game = (props) => {
 
   return (
     <div className="gameContainer" >
-      <h1> Game </h1>
+      {/* <h1> Game </h1> */}
 
       {mappedBoard}
       <div className="gameBoard">
@@ -187,7 +187,7 @@ const Game = (props) => {
         </div>
       </div>
 
-      {/* <div><h1>Chat window</h1></div> */}
+      <div className="chatWindow" ></div>
 
     </div>
   )
