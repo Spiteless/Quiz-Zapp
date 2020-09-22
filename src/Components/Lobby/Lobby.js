@@ -1,18 +1,19 @@
 import React from 'react';
-import { withRouter } from "react-router-dom";
-// import '../App.css';
-// import axios from 'axios';
+import { withRouter, Link } from "react-router-dom";
 
 
 const Lobby = (props) => {
 
 
 
-    return(
-      <div className="lobbyContainer" >
-        <h1> Lobby </h1>
-      </div>
-    )
+  return (
+    <div className="lobbyContainer" >
+      <h1> Lobby </h1>
+      <Link to='/game'>
+        <h2> Link to /Game </h2>
+      </Link>
+    </div>
+  )
 };
 
 
