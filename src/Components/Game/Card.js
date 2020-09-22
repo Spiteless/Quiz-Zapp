@@ -27,7 +27,9 @@ function Card(props) {
             <a.div class="c front"
             style={{ opacity,
                      transform: transform.interpolate(t => `${t} rotateX(180deg)`),
-                     backgroundImage: `url(${props.urlFront})`  }}>
+                     backgroundImage: `url(${props.urlFront})`,
+                    //  backgroundSize: 'contain'
+                       }}>
                 <h3>{props.textCardFront}</h3>
             </a.div>
         </div>
