@@ -132,8 +132,6 @@ const mapToBoard = (cardData, rows = 4, columns = 4) => {
 
 const mappedBoard = mapToBoard(sixteenCards)
 
-
-
 const Game = (props) => {
 
   return (
