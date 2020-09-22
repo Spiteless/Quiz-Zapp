@@ -4,7 +4,7 @@ import Login from './Login';
 import Register from './Register';
 // import './Dashboard.scss';
 import '../../css/Dashboard.css';
-import './sample logo.jpg';
+import logo from './sample-logo.jpg';
 // import axios from 'axios';
 
 
@@ -27,10 +27,10 @@ const Dashboard = (props) => {
   return(
       <div className="dashboardContainer" >
         <div className='grayBar'></div>
-        <img src='./sample logo.jpg' alt='logo'/> {/* import logo, and fix the position over the gray bar */}
+        <img src={logo} alt='logo'/> {/* import logo, and fix the position over the gray bar */}
         <h1> Quiz Zapp </h1>
         <div className='buttonBar'>
-          <Link to='/lobby'>
+          <Link to='/game/anon'>
             <button>Quick Start</button>
           </Link>
           <button onClick={() => toggleLogin()}>Login</button>
