@@ -2,6 +2,28 @@
   text-align: center;
 }
 
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
 
 
 @keyframes App-logo-spin {
@@ -13,20 +35,36 @@
   }
 } */
 
+.navContainer {
+  display: flex;
+  justify-content: center;
+}
+
 nav {
   display:flex;
-  width: 100%;
+  width: 50%;
+  justify-content: space-around;
 }
 
 nav > * {
   padding: 10px;
 }
 
+.navItem {
+  transition: scale .5s;
+}
+
+.navItem:hover {
+  transform: scale(1.035);
+  text-decoration: underline;
+}
+
 .gameBoard {
   display: flex;
   flex-direction: column;
-  background-color: bisque;
-  max-width: 800px;
+  background-color: rgb(190, 253, 243);
+  width: 800px;
+  border-radius: 10px;
 }
 
 .row {
@@ -34,7 +72,7 @@ nav > * {
   flex-direction: row;
   max-width: 800px;
   justify-content: space-evenly;
-  border: 2px solid lightblue;
+  /* border: 2px solid lightblue; */
   padding-bottom: 10px;
 }
 
@@ -66,11 +104,12 @@ nav > * {
   height: 150px;
   cursor: pointer;
   will-change: transform, opacity;
+  border-radius:7px;
 }
 
 .card-parent {
   margin-top: 15px;
-  border: green 3px solid;
+  /* border: green 3px solid; */
   width:  100px;
   height: 150px;
   background-clip: padding-box;
@@ -83,7 +122,9 @@ nav > * {
 }
 
 .card-parent:hover {
-  border-color: red;
+  /* border-color: grey; */
+  transform-origin: center;
+  transform: scale(1.035);
 } 
 
 .front,
@@ -92,9 +133,23 @@ nav > * {
 }
 
 .back {
-  background-image: url(https://images.unsplash.com/photo-1544511916-0148ccdeb877?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1901&q=80i&auto=format&fit=crop);
+  background-image: url(https://lh3.googleusercontent.com/proxy/WRhnwzujV4szbtepAiCTO0aFE7aHSnagd8DVcv8Q20BF7e2B3hNaCmQyqy8MR8sUleJbFOPh-Pu9tKoFT6eK94ztciI7i_6ARGktOTccXrCovPDD);
 }
 
 .front {
   background-image: url(https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg);
 }
+
+.gameContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.chatWindow {
+  float: right;
+  width: 500px;
+  height: 100vh;
+  background-color: rgb(47, 163, 240);
+  border-radius: 10px;
+}
+

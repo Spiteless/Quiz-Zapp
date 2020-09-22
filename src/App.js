@@ -24,7 +24,9 @@ function App(props) {
 
   return (
     <div className="App">
+
       {showNav}
+
        <Switch>
          <Route exact path = '/' component={Dashboard} />
          <Route exact path = '/game' component={Game} />
