@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { withRouter } from "react-router-dom";
 // import axios from 'axios';
 import Card from "./Card"
-import { useSpring, animated as a } from 'react-spring'
 
 const sixteenCards = [
   {
