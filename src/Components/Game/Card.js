@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { withRouter } from "react-router-dom";
-// import '../App.css';
+import {getSetFunction} from '../../redux/gameReducer';
+import {connect} from 'react-redux';
 // import axios from 'axios';
 
 import { useSpring, animated as a } from 'react-spring'
@@ -29,4 +30,18 @@ function Card(props) {
     )
 }
 
-export default (withRouter(Card));
+const mapStateToProps = reduxState => {
+    // const { email, StyledImg, userId } = reduxState.user;
+    console.log("Card/mapStateToProps:", reduxState);
+    // console.log("gameReducer on card.js", gameReducer);
+    const { auth, game } = reduxState
+    console.log(auth, game)
+    const newState = {
+        ...auth,
+        ...game
+    };
+    return newState
+};
+
+
+export default connect(mapStateToProps, {getSetFunction})(withRouter(Card));

@@ -8,8 +8,8 @@ const initialState = {
 }
 
 const LOGIN_USER = 'LOGIN_USER';
-const LOGOUT_USER = 'LOGOUT_USER;'
-const GET_USER = 'GET_USER;'
+const LOGOUT_USER = 'LOGOUT_USER';
+const GET_USER = 'GET_USER';
 
 
 export function loginUser(user){

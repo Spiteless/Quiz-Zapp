@@ -130,7 +130,7 @@ nav > * {
 .front,
 .back {
   background-size: cover;
-  color: white;
+  color: blue;
 }
 
 .back {

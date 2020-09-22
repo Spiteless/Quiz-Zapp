@@ -84,6 +84,7 @@ const rowFour = sixteenCards.slice(12,16);
 const firstRow = rowOne.map(el => {
   return <Card headline={el.headline}
                body={el.body}
+               key={el.headline} // CHANGE LATER
                urlFront={(el.urlFront)
                           ? el.urlFront
                           : "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg"}/>
