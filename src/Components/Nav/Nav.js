@@ -24,7 +24,7 @@ const Nav = (props) => {
         console.log('props.user NAV', props.user)
         console.log('hit update', update)
         setUpdate(() => !update);
-    }, [props.user.auth.user.username]);
+    }, [props.user.username]);
 
     const logout = () => {
         axios.post('/auth/logout').then(res => {
@@ -53,7 +53,7 @@ const Nav = (props) => {
             <Link to='/'>
                 <h3 className="navItem" onClick={() => logout()}>Logout</h3>
             </Link>
-            {props.user.auth && <h1>{props.user.auth.user.username}</h1> }
+            {props.user.auth && <h1>{props.user.username}</h1> }
         </nav>
     )
 }

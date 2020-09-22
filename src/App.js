@@ -24,19 +24,20 @@ function App(props) {
 
   return (
     <div className="App">
-
-      {showNav}
-
-       <Switch>
-         <Route exact path = '/' component={Dashboard} />
-         <Route exact path = '/game' component={Game} />
-         <Route path = '/lobby' component={Lobby} />
-         <Route path = '/game/:gameId/stats' component={GameStats} />
-         <Route path = '/game/anon' component={GameAnon} />
-         <Route path = '/profile/:userId' component={Profile} />  {/*USER ID NEEDED?*/}
-         <Route path = '/waitingroom' component={WaitingRoom} />
-         <Route path = '/leaderboard' component={Leaderboard} />
-         <Route path = '/about' component={About} />
+      <div>
+        {showNav()}
+      </div>
+      {/* <Nav/> */}
+      <Switch>
+        <Route exact path = '/' component={Dashboard} />
+        <Route exact path = '/game' component={Game} />
+        <Route path = '/lobby' component={Lobby} />
+        <Route path = '/game/:gameId/stats' component={GameStats} />
+        <Route path = '/game/anon' component={GameAnon} />
+        <Route path = '/profile/:userId' component={Profile} />  {/*USER ID NEEDED?*/}
+        <Route path = '/waitingroom' component={WaitingRoom} />
+        <Route path = '/leaderboard' component={Leaderboard} />
+        <Route path = '/about' component={About} />
          
        </Switch>
 
