@@ -141,7 +141,10 @@ nav > * {
 }
 
 .back {
-  background-image: url(https://lh3.googleusercontent.com/proxy/WRhnwzujV4szbtepAiCTO0aFE7aHSnagd8DVcv8Q20BF7e2B3hNaCmQyqy8MR8sUleJbFOPh-Pu9tKoFT6eK94ztciI7i_6ARGktOTccXrCovPDD);
+  background-image: url(./cardback.png);
+  background-size: 100px 150px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .front {
