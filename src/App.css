@@ -43,30 +43,6 @@
   background-color: rgb(46, 122, 223);
 }
 
-.navContainer {
-  display: flex;
-  justify-content: center;
-}
-
-nav {
-  display:flex;
-  width: 50%;
-  justify-content: space-around;
-}
-
-nav > * {
-  padding: 10px;
-}
-
-.navItem {
-  transition: scale .5s;
-}
-
-.navItem:hover {
-  transform: scale(1.035);
-  text-decoration: underline;
-}
-
 .gameBoard {
   display: flex;
   flex-direction: column;
