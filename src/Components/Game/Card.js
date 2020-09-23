@@ -36,9 +36,9 @@ function Card(props) {
                 <h3 className='q-a-text'>{props.textCardFront}</h3>
             <div className='btn-container-card'>
                 <button className='btn' onClick={(e) => {
-                    e.stopPropagation(); alert('Back!')}}>🔙</button>
+                    if (flipped) {e.stopPropagation(); alert(`Back! ${flipped}`)} }}>🔙</button>
                 <button className='btn' onClick={(e) => {
-                    e.stopPropagation(); alert('Match!')}}>Match!</button>
+                    if (flipped) {e.stopPropagation(); alert(`Match! ${flipped}`)} }}>Match!</button>
             </div>
             </a.div>
             {/* <div className='btn-container-card'>
