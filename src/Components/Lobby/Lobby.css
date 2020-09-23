@@ -13,6 +13,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-evenly;
 }
 
@@ -20,7 +21,31 @@
     height: 25%;
     width: 90%;
     background-color: white;
+    background-size: 150px 150px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(../../quizzapp.png);
     border-radius: 50%;
+}
+
+.games-container {
+    display: flex;
+}
+
+.custom-games-box {
+    /* margin-top: 10px; */
+    height: 350px;
+    width: 150px;
+    background-color: white;
+    display: flex;
+    align-items: flex-end;
+    margin: 0 10px;
+    border-top-left-radius: 10px;
+}
+
+.custom-game-btn {
+    width: 100%;
+    height: 30px;
 }
 
 .games-box {
@@ -29,6 +54,8 @@
     width: 250px;
     background-color: white;
     display: flex;
+    margin: 0 10px;
+    border-top-right-radius: 10px;
 }
 
 .right-container {
@@ -45,14 +72,15 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
     /* justify-content: space-evenly; */
     /* align-items: center; */
 
 }
 
 .upper-chat {
-    height: 550px;
+    height: 580px;
     width: 500px;
     display: flex;
 }
@@ -60,16 +88,16 @@
 /* Needs fixing */
 .input-btn-bar {
     width: 500px;
-    height: 70px;
+    height: 40px;
     display: flex;
     flex-direction: row;
     border: 1px black solid;
-
 }
 
 .chat-input {
     display: flex;
     width: 400px;
+    font-size: 28px;
 }
 
 .chat-send-btn {
@@ -78,6 +106,4 @@
     justify-content: center;
     align-items: center;
     font-size: 28px;
-    
-    
 }
