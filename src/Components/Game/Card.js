@@ -16,7 +16,7 @@ function Card(props) {
         config: { mass: 5, tension: 500, friction: 80 }
     })
 
-
+    
 
 
     return (
@@ -30,8 +30,17 @@ function Card(props) {
                      backgroundImage: `url(${props.urlFront})`,
                     //  backgroundSize: 'contain'
                        }}>
-                <h3>{props.textCardFront}</h3>
+                <h3 className='q-a-text'>{props.textCardFront}</h3>
+            <div className='btn-container-card'>
+                <button className='btn'>🔙</button>
+                <button className='btn'>Match!</button>
+            </div>
             </a.div>
+            <div className='btn-container-card'>
+                <button onClick={() => {}} className='btn'>🔙</button>
+                <button className='btn'>Match!</button>
+            </div>
+            {/* <div className={c front ? <div className=} */}
         </div>
     )
 }

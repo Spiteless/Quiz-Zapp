@@ -127,6 +127,9 @@ nav > * {
 
 .card-parent > * {
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-parent:hover {
@@ -148,6 +151,14 @@ nav > * {
   background-image: url(https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg);
 }
 
+.btn-container-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 5px;
+}
+
 .gameContainer {
   display: flex;
   justify-content: space-evenly;
@@ -161,3 +172,16 @@ nav > * {
   border-radius: 10px;
 }
 
+.btn {
+  height: 25px;
+  color: rgb(53, 52, 52);
+  font-weight: bolder;
+}
+
+.q-a-text {
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
+  color: white;
+  margin-top: 5px;
+}
