@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import Login from './Login';
 import Register from './Register';
 // import './Dashboard.scss';
-import '../../css/Dashboard.css';
+// import '../../css/Dashboard.css';
+import './Dashboard.css';
 import logo from './sample-logo.jpg';
 // import axios from 'axios';
 
@@ -26,9 +27,13 @@ const Dashboard = (props) => {
 
   return(
       <div className="dashboardContainer" >
-        <div className='grayBar'></div>
-        <img src={logo} alt='logo'/> {/* import logo, and fix the position over the gray bar */}
-        <h1> Quiz Zapp </h1>
+        <div className='grayBar'>
+          <div className='logo-container-dash'>
+            <img className='logo-dash' src={logo} alt='logo'/> 
+            {/* import logo, and fix the position over the gray bar */}
+          </div>
+        </div>
+        <h1 className='game-title'> Quiz Zapp </h1>
         <div className='buttonBar'>
           <Link to='/game/anon'>
             <button>Quick Start</button>

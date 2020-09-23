@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Link, withRouter } from "react-router-dom";
 import {connect} from 'react-redux';
 import {getUser, logoutUser} from '../../redux/authReducer';
-import '../../css/Nav.css'
+// import '../../css/Nav.css'
+import './Nav.css';
 
 
 const Nav = (props) => {
