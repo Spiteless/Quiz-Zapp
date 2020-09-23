@@ -1,0 +1,83 @@
+.lobbyContainer {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(46, 122, 223);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.left-container {
+    width: 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.logo-container {
+    height: 25%;
+    width: 90%;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.games-box {
+    /* margin-top: 10px; */
+    height: 350px;
+    width: 250px;
+    background-color: white;
+    display: flex;
+}
+
+.right-container {
+    height: 100%;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.chat-container {
+    height: 600px;
+    width: 500px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    /* justify-content: space-evenly; */
+    /* align-items: center; */
+
+}
+
+.upper-chat {
+    height: 550px;
+    width: 500px;
+    display: flex;
+}
+
+/* Needs fixing */
+.input-btn-bar {
+    width: 500px;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    border: 1px black solid;
+
+}
+
+.chat-input {
+    display: flex;
+    width: 400px;
+}
+
+.chat-send-btn {
+    display: flex;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    
+    
+}

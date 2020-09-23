@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './reset.css';
 import {Switch, Route} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 import About from './Components/About/About';
