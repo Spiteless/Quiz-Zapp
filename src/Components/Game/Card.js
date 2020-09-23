@@ -32,13 +32,17 @@ function Card(props) {
                      backgroundImage: `url(${props.urlFront})`,
                     //  backgroundSize: 'contain'
                        }}
-                       onClick={() => set(state => !state)}>
+                       onClick={() => {
+                           console.log('Fired!')
+                           set(state => !state)}}>
                 <h3 className='q-a-text'>{props.textCardFront}</h3>
             <div className='btn-container-card'>
                 <button className='btn' onClick={(e) => {
                     e.stopPropagation(); alert('Back!')}}>🔙</button>
                 <button className='btn' onClick={(e) => {
-                    e.stopPropagation(); alert('Match!')}}>Match!</button>
+                    props.testFunc();
+                    e.stopPropagation(); 
+                    }}>Match!</button>
             </div>
             </a.div>
             {/* <div className='btn-container-card'>

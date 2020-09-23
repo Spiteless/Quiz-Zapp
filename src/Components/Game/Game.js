@@ -17,8 +17,19 @@ class Game extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      Test: 'test'
+      Test: 'test',
+      board: 1
     }
+    this.boardPlusOne = this.boardPlusOne.bind(this)
+  }
+
+
+  boardPlusOne() {
+    let newBoard = this.state.board + 1
+    console.log("Ran boardPlusOne", this.state, newBoard, this.state.board)
+    this.setState(
+      {...this.state, board: newBoard}
+    )
   }
 
   buildCardsFromAp(data) {
@@ -48,6 +59,7 @@ class Game extends React.Component {
     return <Card textCardBack={cardInfo.textCardBack}
       textCardFront={cardInfo.textCardFront}
       key={cardInfo.textCardBack} // CHANGE LATER
+      testFunc = {this.boardPlusOne}
       urlFront={(cardInfo.urlFront)
         ? cardInfo.urlFront
         : "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg"} />
@@ -86,8 +98,9 @@ class Game extends React.Component {
     
     return (
     <div className="gameContainer" >
-      <h2>board: {}</h2>
-      {mappedBoard}
+      <h2>board:</h2>
+      <h2>{(this.state.board) ? this.state.board : "failed load"}</h2>
+      {(mappedBoard) ? mappedBoard : "Failed to load"}
       <div className="chatWindow" ></div>
     </div>
     )}
