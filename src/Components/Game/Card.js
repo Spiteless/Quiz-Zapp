@@ -20,26 +20,31 @@ function Card(props) {
 
 
     return (
-        <div className="card-parent" onClick={() => set(state => !state)}>
-            <a.div class="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>
+        <div className="card-parent" >
+            <a.div class="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform }}
+            onClick={() => set(state => !state)}>
                 <h2>{props.textCardBack}</h2>
             </a.div>
+            
             <a.div class="c front"
             style={{ opacity,
                      transform: transform.interpolate(t => `${t} rotateX(180deg)`),
                      backgroundImage: `url(${props.urlFront})`,
                     //  backgroundSize: 'contain'
-                       }}>
+                       }}
+                       onClick={() => set(state => !state)}>
                 <h3 className='q-a-text'>{props.textCardFront}</h3>
             <div className='btn-container-card'>
-                <button className='btn'>🔙</button>
-                <button className='btn'>Match!</button>
+                <button className='btn' onClick={(e) => {
+                    e.stopPropagation(); alert('Back!')}}>🔙</button>
+                <button className='btn' onClick={(e) => {
+                    e.stopPropagation(); alert('Match!')}}>Match!</button>
             </div>
             </a.div>
-            <div className='btn-container-card'>
+            {/* <div className='btn-container-card'>
                 <button onClick={() => {}} className='btn'>🔙</button>
                 <button className='btn'>Match!</button>
-            </div>
+            </div> */}
             {/* <div className={c front ? <div className=} */}
         </div>
     )
