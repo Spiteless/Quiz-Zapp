@@ -136,6 +136,7 @@ class Game extends React.Component {
     return (
     <div className="gameContainer" >
       {console.log('qArray',this.state.qArray)}
+      { console.log("option", this.props.location.state) }
       <h2>board: {}</h2>
       <h2>{this.state.board}</h2>
       {this.state.mappedBoard}
