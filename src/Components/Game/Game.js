@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { withRouter } from "react-router-dom";
-// import axios from 'axios';
+import axios from 'axios';
 import Card from "./Card"
 import sixteenCards from './CardTestData';
 
@@ -13,22 +13,57 @@ const dataIn = {
 }
 
 
+
+
 class Game extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       Test: 'test',
       board: 1,
-      mappedBoard: []
+      mappedBoard: [],
+      qArray: []
     }
     this.boardPlusOne = this.boardPlusOne.bind(this)
+    this.getQuestions = this.getQuestions.bind(this)
   }
 
   componentDidMount() {
+    this.getQuestions()
     const mappedBoard = this.mapToBoard(sixteenCards)
     this.setState({ mappedBoard })
   }
 
+  // sixteencards(qArray){
+  //   this.getQuestions()
+  //   .then(this.shuffledQuestions(qArray) this.)
+  // }
+
+  shuffleQuestions(qArray){
+    var currentIndex = qArray.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = qArray[currentIndex];
+      qArray[currentIndex] = qArray[randomIndex];
+      qArray[randomIndex] = temporaryValue;
+    }
+  
+    return qArray;
+  } 
+
+  getQuestions(){
+    let newArr = []
+    axios.get(`http://jservice.io/api/clues?category=17`)
+    .then((results) => {newArr=this.shuffleQuestions(results.data); this.setState({qArray: newArr.slice(0,8)})})
+    .catch(err => console.log(err))
+  }
 
   boardPlusOne() {
     let newBoard = this.state.board + 1
@@ -104,6 +139,7 @@ class Game extends React.Component {
   render() {
     return (
     <div className="gameContainer" >
+      {console.log('qArray',this.state.qArray)}
       <h2>board: {}</h2>
       <h2>{this.state.board}</h2>
       {this.state.mappedBoard}
