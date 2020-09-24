@@ -34,11 +34,7 @@ class Game extends React.Component {
     this.setState({ mappedBoard })
   }
 
-  // sixteencards(qArray){
-  //   this.getQuestions()
-  //   .then(this.shuffledQuestions(qArray) this.)
-  // }
-
+  
   shuffleQuestions(qArray){
     var currentIndex = qArray.length, temporaryValue, randomIndex;
   
