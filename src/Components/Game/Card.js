@@ -38,7 +38,8 @@ function Card(props) {
                 <button className='btn' onClick={(e) => {
                     if (flipped) {e.stopPropagation(); alert(`Back! ${flipped}`)} }}>🔙</button>
                 <button className='btn' onClick={(e) => {
-                    if (flipped) {e.stopPropagation(); alert(`Match! ${flipped}`)} }}>Match!</button>
+                    if (flipped) { props.testFunc();
+                        e.stopPropagation(); alert(`Match! ${flipped}`)} }}>Match!</button>
             </div>
             </a.div>
             {/* <div className='btn-container-card'>
@@ -52,10 +53,10 @@ function Card(props) {
 
 const mapStateToProps = reduxState => {
     // const { email, StyledImg, userId } = reduxState.user;
-    console.log("Card/mapStateToProps:", reduxState);
+    // console.log("Card/mapStateToProps:", reduxState);
     // console.log("gameReducer on card.js", gameReducer);
     const { auth, game } = reduxState
-    console.log(auth, game)
+    // console.log(auth, game)
     const newState = {
         ...auth,
         ...game

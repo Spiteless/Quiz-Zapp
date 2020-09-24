@@ -17,8 +17,25 @@ class Game extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      Test: 'test'
+      Test: 'test',
+      board: 1,
+      mappedBoard: []
     }
+    this.boardPlusOne = this.boardPlusOne.bind(this)
+  }
+
+  componentDidMount() {
+    const mappedBoard = this.mapToBoard(sixteenCards)
+    this.setState({ mappedBoard })
+  }
+
+
+  boardPlusOne() {
+    let newBoard = this.state.board + 1
+    console.log("Ran boardPlusOne", this.state, newBoard, this.state.board)
+    this.setState(
+      {...this.state, board: newBoard}
+    )
   }
 
   buildCardsFromAp(data) {
@@ -45,15 +62,18 @@ class Game extends React.Component {
   }
 
   createCard(cardInfo) {
+    console.log ("createCard:", cardInfo)
     return <Card textCardBack={cardInfo.textCardBack}
       textCardFront={cardInfo.textCardFront}
-      key={cardInfo.textCardBack} // CHANGE LATER
+      key={cardInfo.cardId} // CHANGE LATER
+      testFunc = {this.boardPlusOne}
       urlFront={(cardInfo.urlFront)
         ? cardInfo.urlFront
         : "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg"} />
   }
 
   mapToBoard(cardData, rows = 4, columns = 4) {
+    console.log('game mapToBoard func hit')
     let cardArray = []
 
     console.log("mapToBoard: ---------: ", cardData)
@@ -82,12 +102,11 @@ class Game extends React.Component {
 
   
   render() {
-    const mappedBoard = this.mapToBoard(sixteenCards)
-    
     return (
     <div className="gameContainer" >
       <h2>board: {}</h2>
-      {mappedBoard}
+      <h2>{this.state.board}</h2>
+      {this.state.mappedBoard}
       <div className="chatWindow" ></div>
     </div>
     )}
