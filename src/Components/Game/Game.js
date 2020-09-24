@@ -2,15 +2,7 @@ import React from 'react'
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import Card from "./Card"
-// import sixteenCards from './CardTestData';
 
-
-///EXAMPLE
-const dataIn = {
-  q: 'why though?',
-  a: 'because reasons',
-  qID: 1
-}
 
 
 
@@ -56,7 +48,14 @@ class Game extends React.Component {
     let newArr = []
     axios.get(`http://jservice.io/api/clues?category=17`)
     .then((results) => {
-      newArr=this.shuffleQuestions(results.data); 
+      newArr=this.shuffleQuestions(results.data);
+      console.log('pre splice',newArr)
+      for(let i=0; i<newArr.length; i++){
+        if(newArr[i].question === "" || newArr[i].answer === ""){
+          newArr.splice(i,1)
+        }
+      }
+      console.log('post splice',newArr)
       this.setState({qArray: newArr.slice(0,8)}); 
       this.setState({qArray: this.shuffleQuestions(this.cardData(this.state.qArray))});
       console.log(this.state.qArray);
