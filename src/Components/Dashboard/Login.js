@@ -21,19 +21,19 @@ const Login = (props) => {
   };
   return(
     <div className="authContainer" >
-      <input 
+      <input className="user-pass"
         name='username'
         value={username} 
         type='text'
         onChange={(e) => setUsername(e.target.value)}
         placeholder='Type username here.' />
-      <input 
+      <input className="user-pass"
         name='password'
         value={password} 
         type='password'
         onChange={(e) => setPassword(e.target.value)}
         placeholder='Type password here.' />
-      <button onClick={() => login()}>Submit</button>
+      <button className="user-pass-submit" onClick={() => login()}>Submit</button>
     </div>
   )
 };
