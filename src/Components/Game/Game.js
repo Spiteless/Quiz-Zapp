@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import Card from "./Card"
 import sixteenCards from './CardTestData';
+import GameChat from './GameChat'
 
 
 ///EXAMPLE
@@ -139,7 +140,9 @@ class Game extends React.Component {
       <h2>board: {}</h2>
       <h2>{this.state.board}</h2>
       {this.state.mappedBoard}
-      <div className="chatWindow" ></div>
+      <div className="chatWindow" >
+        <GameChat/>
+      </div>
     </div>
     )}
 };

@@ -30,6 +30,36 @@ massive ({
     .then((db) => {
         app.set("db", db);
         console.log("-----DATABASE CONNECTED-----");
+        //Starts db connection, and starts listening on endpoints, and if it were hit, it would throw an error because it wasn't connected yet.
+        //Also, app.listen returns the port. We need to use port again -
+        // const socketio = require('socket.io');
+        // const io = socketio(SERVER_PORT);
+        const io = require('socket.io')(app.listen(SERVER_PORT, () => console.log(`-----PORT ${SERVER_PORT} ONLINE-----`)));
+        app.set("io", io)
+        //When a new connection to the socket (to the server) do what's in this arrow function.
+        //Socket id is generated each time a user connects - it's associated with the connection, not with the user.
+        //Can move this to controller file to separate code.
+        io.on("connection", (socket) => {
+            //Socket is individual connection, io is global - all the sockets.
+            console.log(socket.id)
+            //Anytime new user connects, they will go to lobby room.
+            socket.join('lobby')
+            io.in('lobby').emit('welcome', {welcome: 'New user joined!', newUser: socket.id})
+            //connection and disconnect are default endpoints. We receive the disconnect message when someone disconnects.
+            socket.on('disconnect', () => {
+                console.log("Disconnected.")
+            })
+            //socket.on - in the arrow function it will take in a body - the body from the front end. Like a put or post from the front end.
+            socket.on('test', (body) => {
+                console.log(body)
+                //socket.on will receive body as parameter in arrow functions, and socket.emit will have body. 
+                //what we're sending back.
+                socket.emit('test2', {winter: "evil"})
+            })
+            socket.on('message', (body) => {
+                console.log
+            } )
+        })
     })
     .catch((err) => console.log(`Database error: ${err}`));
 
@@ -47,4 +77,4 @@ app.get('/auth/user', authCtrl.getUser);
 
 
 
-    app.listen(SERVER_PORT, () => console.log(`-----PORT ${SERVER_PORT} ONLINE-----`));
+
