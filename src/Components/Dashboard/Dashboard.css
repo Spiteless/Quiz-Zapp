@@ -18,11 +18,11 @@
     background-position: center;
     border-radius: 50%;
     border: 7px solid yellow;
-    animation: logo .6s ease-in;
+    animation: logo .6s;
 }
 
 @keyframes logo {
-    from {transform: rotate(200deg);}
+    from {transform: rotate(230deg);}
     to {transform: rotate(360deg);}
 }
 
@@ -77,6 +77,10 @@
 .dash-btn:hover {
     transition: .4s;
     border: 3px solid gray;
+}
+
+.dash-btn:focus {
+    outline: none;
 }
 
 .authContainer {
