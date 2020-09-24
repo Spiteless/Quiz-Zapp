@@ -1,7 +1,8 @@
 import React from 'react'
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
-import Card from "./Card";
+import Card from "./Card"
+import GameChat from './GameChat'
 
 const _ = require('lodash');
 
@@ -154,7 +155,9 @@ class Game extends React.Component {
       <h2>board: {}</h2>
       <h2>{this.state.board}</h2>
       {this.state.mappedBoard}
-      <div className="chatWindow" ></div>
+      <div className="chatWindow" >
+        <GameChat/>
+      </div>
     </div>
     )}
 };
