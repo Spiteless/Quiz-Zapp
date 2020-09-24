@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import Card from "./Card"
-import sixteenCards from './CardTestData';
+// import sixteenCards from './CardTestData';
 
 
 ///EXAMPLE
@@ -27,11 +27,9 @@ class Game extends React.Component {
     this.boardPlusOne = this.boardPlusOne.bind(this)
     this.getQuestions = this.getQuestions.bind(this)
   }
-
+ 
   componentDidMount() {
-    this.getQuestions()
-    const mappedBoard = this.mapToBoard(sixteenCards)
-    this.setState({ mappedBoard })
+    this.getQuestions()    
   }
 
   
@@ -57,9 +55,28 @@ class Game extends React.Component {
   getQuestions(){
     let newArr = []
     axios.get(`http://jservice.io/api/clues?category=17`)
-    .then((results) => {newArr=this.shuffleQuestions(results.data); this.setState({qArray: newArr.slice(0,8)})})
+    .then((results) => {
+      newArr=this.shuffleQuestions(results.data); 
+      this.setState({qArray: newArr.slice(0,8)}); 
+      this.setState({qArray: this.shuffleQuestions(this.cardData(this.state.qArray))});
+      console.log(this.state.qArray);
+      const mappedBoard = this.mapToBoard(this.state.qArray)
+    this.setState({ mappedBoard })
+    })
     .catch(err => console.log(err))
   }
+
+  cardData(qArray){
+    const qArr = qArray.map( (obj, ind) => {
+      const newObjq = {cardOrder: ind, textCardFront: obj.question, urlFront: "", matchId: obj.id, cardId: obj.id+"q"}
+      return newObjq})
+    const aArr = qArray.map((obj, ind) => {  
+      const newObja = {cardOrder: ind+8, textCardFront: obj.answer, urlFront: "", matchId: obj.id, cardId: obj.id+"a"}
+      return newObja})
+    const combinedArr = qArr.concat(aArr)
+    return (combinedArr)
+    }
+  
 
   boardPlusOne() {
     let newBoard = this.state.board + 1
@@ -135,7 +152,6 @@ class Game extends React.Component {
   render() {
     return (
     <div className="gameContainer" >
-      {console.log('qArray',this.state.qArray)}
       <h2>board: {}</h2>
       <h2>{this.state.board}</h2>
       {this.state.mappedBoard}
