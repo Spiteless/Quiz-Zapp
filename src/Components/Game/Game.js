@@ -18,9 +18,15 @@ class Game extends React.Component {
     super(props);
     this.state = {
       Test: 'test',
-      board: 1
+      board: 1,
+      mappedBoard: []
     }
     this.boardPlusOne = this.boardPlusOne.bind(this)
+  }
+
+  componentDidMount() {
+    const mappedBoard = this.mapToBoard(sixteenCards)
+    this.setState({ mappedBoard })
   }
 
 
@@ -67,6 +73,7 @@ class Game extends React.Component {
   }
 
   mapToBoard(cardData, rows = 4, columns = 4) {
+    console.log('game mapToBoard func hit')
     let cardArray = []
 
     console.log("mapToBoard: ---------: ", cardData)
@@ -95,13 +102,11 @@ class Game extends React.Component {
 
   
   render() {
-    const mappedBoard = this.mapToBoard(sixteenCards)
-    
     return (
     <div className="gameContainer" >
       <h2>board: {}</h2>
       <h2>{this.state.board}</h2>
-      {mappedBoard}
+      {this.state.mappedBoard}
       <div className="chatWindow" ></div>
     </div>
     )}
