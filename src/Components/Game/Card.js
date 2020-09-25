@@ -9,17 +9,27 @@ import { useSpring, animated as a } from 'react-spring'
 
 
 function Card(props) {
+    console.log("ran create card", props)
     const [flipped, setFlipped] = useState(false)
+    // let flipped = false; const setFlipped = () => {}
+
+
     const { transform, opacity } = useSpring({
         opacity: flipped ? 1 : 0,
         transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
         config: { mass: 5, tension: 500, friction: 80 }
     })
 
-    
+    if (props.forceFlip) {
+        alert('ran forcefLip')
+        setFlipped(state => !state)
+    } else {
+        // alert('no flip')
+    }
 
     const handleClick = () => {
         let cardStatus = {}
+        cardStatus['cardId'] = props.cardId
         cardStatus['faceDown'] = flipped
         cardStatus.matchId = props.matchId
         let cardOut = {}
@@ -74,10 +84,7 @@ function Card(props) {
 
 const mapStateToProps = reduxState => {
     // const { email, StyledImg, userId } = reduxState.user;
-    // console.log("Card/mapStateToProps:", reduxState);
-    // console.log("gameReducer on card.js", gameReducer);
     const { auth, game } = reduxState
-    // console.log(auth, game)
     const newState = {
         ...auth,
         ...game
