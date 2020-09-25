@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter, Link } from "react-router-dom";
 import './Lobby.css';
+import LobbyChat from './LobbyChat';
 
 
 class Lobby extends Component {
@@ -58,13 +59,7 @@ class Lobby extends Component {
         </Link>
       </div>
       <div className='right-container'>
-        <div className='chat-container'>
-          <div className='upper-chat'></div>
-          <div className='input-btn-bar'>
-            <input className='chat-input'/>
-            <button className='chat-send-btn'>Send</button>
-          </div>
-        </div>
+        <LobbyChat/>
       </div>
     </div>
   )

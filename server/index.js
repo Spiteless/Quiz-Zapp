@@ -32,7 +32,7 @@ massive ({
         console.log("-----DATABASE CONNECTED-----");
         //Starts db connection, and starts listening on endpoints, and if it were hit, it would throw an error because it wasn't connected yet.
         //Also, app.listen returns the port. We need to use port again -
-        // const socketio = require('socket.io');
+        //const socketio = require('socket.io');
         // const io = socketio(SERVER_PORT);
         const io = require('socket.io')(app.listen(SERVER_PORT, () => console.log(`-----PORT ${SERVER_PORT} ONLINE-----`)));
         app.set("io", io)
@@ -42,7 +42,7 @@ massive ({
         io.on("connection", (socket) => {
             //Socket is individual connection, io is global - all the sockets.
             console.log(socket.id)
-            //Anytime new user connects, they will go to lobby room.
+            //Anytime new user connects, they will go to lobby room ('lobby' is the endpoint.)
             socket.join('lobby')
             io.in('lobby').emit('welcome', {welcome: 'New user joined!', newUser: socket.id})
             //connection and disconnect are default endpoints. We receive the disconnect message when someone disconnects.

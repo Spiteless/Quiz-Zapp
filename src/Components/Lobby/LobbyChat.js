@@ -3,10 +3,10 @@ import io from 'socket.io-client';
 // const socket = io.connect('http://localhost:4141');
 //hide the port on the front end.
 
-//Option 1: Could pass socket down as prop to children.
-//Option 2: Or different socket connections per each need.
+//Could pass socket down as prop to children.
+//Or different socket connections per each need.
 //Option 3: Best, but most complicated. Save socket connection in redux or context. More complicated. React Context. Create a component that wraps around your whole app (another way to use global state).
-function GameChat(){
+function LobbyChat(){
     const [socket, setSocket] = useState(null);
     //all the endpoints will go in the same useEffect. It's just setting up a listener for whatever events.
     
@@ -26,10 +26,17 @@ function GameChat(){
             });
         }
     }, [socket])
-//Passing socket in the dependency array. So anytime socket (on local state) is updated, the useEffect will re-render.
+//Don't want anything in the dependency array, because we don't want to fire the listener another time. Need it there, empty.
   
     return(
         <div>
+            <div className='chat-container'>
+                <div className='upper-chat'></div>
+                <div className='input-btn-bar'>
+                    <input className='chat-input'/>
+                    <button className='chat-send-btn'>Send</button>
+                </div>
+            </div>
             <button onClick={()=>{
                 socket.emit('test', {pizza: 'delicious'})
             }}>Test</button>
@@ -40,7 +47,7 @@ function GameChat(){
     )
 }
 
-export default GameChat;
+export default LobbyChat;
 
 //socket.on is the listening part
 //socket.emit is the emitting/sending part.
