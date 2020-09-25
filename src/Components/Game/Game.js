@@ -44,9 +44,11 @@ class Game extends React.Component {
   } 
 
   getQuestions(){
+    let catagory = '';
+    !this.props.location.state ? catagory =  `http://jservice.io/api/clues?category=17`: catagory = this.props.location.state.name
     let newArr = []
     let newArrClean = []
-    axios.get(`http://jservice.io/api/clues?category=17`)
+    axios.get(catagory)
     .then((results) => {
       newArr=this.shuffleQuestions(results.data);
       for(let i=0; i<newArr.length; i++){
@@ -57,7 +59,6 @@ class Game extends React.Component {
       newArrClean = _.uniqBy(newArr, 'answer')
       this.setState({qArray: newArrClean.slice(0,8)}); 
       this.setState({qArray: this.shuffleQuestions(this.cardData(this.state.qArray))});
-      console.log(this.state.qArray);
       const mappedBoard = this.mapToBoard(this.state.qArray)
     this.setState({ mappedBoard })
     })
@@ -142,16 +143,10 @@ class Game extends React.Component {
       </div>
     )
   }
-
-
-
-
   
   render() {
     return (
     <div className="gameContainer" >
-      {console.log('qArray',this.state.qArray)}
-      { console.log("option", this.props.location.state) }
       <h2>board: {}</h2>
       <h2>{this.state.board}</h2>
       {this.state.mappedBoard}
