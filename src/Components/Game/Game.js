@@ -44,11 +44,11 @@ class Game extends React.Component {
   } 
 
   getQuestions(){
-    let catagory = '';
-    !this.props.location.state ? catagory =  `http://jservice.io/api/clues?category=17`: catagory = this.props.location.state.name
+    let category = '';
+    !this.props.location.state ? category =  `http://jservice.io/api/clues?category=17`: category = this.props.location.state.name
     let newArr = []
     let newArrClean = []
-    axios.get(catagory)
+    axios.get(category)
     .then((results) => {
       newArr=this.shuffleQuestions(results.data);
       for(let i=0; i<newArr.length; i++){
