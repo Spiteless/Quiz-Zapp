@@ -2,18 +2,9 @@ import React from 'react'
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import Card from "./Card"
-import sixteenCards from './CardTestData';
+import GameChat from './GameChat'
 
-
-///EXAMPLE
-const dataIn = {
-  q: 'why though?',
-  a: 'because reasons',
-  qID: 1
-}
-
-
-
+const _ = require('lodash');
 
 class Game extends React.Component {
   constructor(props) {
@@ -33,11 +24,9 @@ class Game extends React.Component {
     this.readOut = this.readOut.bind(this)
     this.checkIfMatch = this.checkIfMatch.bind(this)
   }
-
+ 
   componentDidMount() {
-    this.getQuestions()
-    const mappedBoard = this.mapToBoard(sixteenCards)
-    this.setState({ mappedBoard })
+    this.getQuestions()    
   }
 
 
@@ -60,11 +49,27 @@ class Game extends React.Component {
     return qArray;
   }
 
-  getQuestions() {
+getQuestions(){
+//     const {state: } = this.props.location
+    let category = '';
+    !this.props.location.state ? category =  `http://jservice.io/api/clues?category=17`: category = this.props.location.state.name
     let newArr = []
-    axios.get(`http://jservice.io/api/clues?category=17`)
-      .then((results) => { newArr = this.shuffleQuestions(results.data); this.setState({ qArray: newArr.slice(0, 8) }) })
-      .catch(err => console.log(err))
+    let newArrClean = []
+    axios.get(category)
+    .then((results) => {
+      newArr=this.shuffleQuestions(results.data);
+      for(let i=0; i<newArr.length; i++){
+        if(newArr[i].question === "" || newArr[i].answer === ""){
+          newArr.splice(i,1)
+        }
+      }
+      newArrClean = _.uniqBy(newArr, 'answer')
+      this.setState({qArray: newArrClean.slice(0,8)}); 
+      this.setState({qArray: this.shuffleQuestions(this.cardData(this.state.qArray))});
+      const mappedBoard = this.mapToBoard(this.state.qArray)
+    this.setState({ mappedBoard })
+    })
+    .catch(err => console.log(err))
   }
 
   handleCardClick(cardState) {
@@ -98,36 +103,40 @@ class Game extends React.Component {
   checkIfMatch(c1, c2) {
     return (c1[1].matchId === c2[1].matchId) ? true : false
   }
-
-  buildCardsFromAp(data) {
-    let cards = []
-    let cardNumber = 0
-    for (let i = 0; i < data.length; i++) {
-      cardNumber += 1
-      cards.push({
-        q: data[i].q,
-        qID: data[i].qID,
-        cardId: cardNumber,
-        cardPosition: { x: 0, y: 0 }
-      })
-      cardNumber += 1
-      cards.push({
-        a: data[i].a,
-        qID: data[i].qID,
-        number: cardNumber,
-        urlBackPhotos: '',
-        cardId: cardNumber,
-        cardPosition: { x: 0, y: 0 }
-      })
+ 
+  cardData(qArray){
+    const qArr = qArray.map( (obj, ind) => {
+      const newObjq = {cardOrder: ind, textCardFront: obj.question, urlFront: "", matchId: obj.id, cardId: obj.id+"q"}
+      return newObjq})
+    const aArr = qArray.map((obj, ind) => {  
+      const newObja = {cardOrder: ind+8, textCardFront: obj.answer, urlFront: "", matchId: obj.id, cardId: obj.id+"a"}
+      return newObja})
+    const combinedArr = qArr.concat(aArr)
+    return (combinedArr)
     }
-  }
 
-  // cardOrder: 1,
-  // textCardFront: "The US Constitution",
-  // urlFront: "https://www.signmart.com/assets/images/handheldstopsigns/handheldstopsigncropped.jpg",
-  // // matchId is going to come from the question ID from the API. 
-  // matchId: 123,
-  // cardId: "card" + 1,
+//   buildCardsFromApi(data) {
+//     let cards = []
+//     let cardNumber = 0
+//     for (let i = 0; i < data.length; i++) {
+//       cardNumber += 1
+//       cards.push({
+//         q: data[i].q,
+//         qID: data[i].qID,
+//         cardId: cardNumber,
+//         cardPosition: { x: 0, y: 0 }
+//       })
+//       cardNumber += 1
+//       cards.push({
+//         a: data[i].a,
+//         qID: data[i].qID,
+//         number: cardNumber,
+//         urlBackPhotos: '',
+//         cardId: cardNumber,
+//         cardPosition: { x: 0, y: 0 }
+//       })
+//     }
+//   }
 
   createCard(cardInfo) {
     let forceFlip = (this.state.forceFlip.includes(cardInfo.cardId))
@@ -182,40 +191,28 @@ class Game extends React.Component {
     )
   }
 
-  text = `
-  // Game Flow //
-  step 1 generateCardDeck
+//   text = `
+//   // Game Flow //
+//   step 1 generateCardDeck
 
-  step 2 ...?
+//   step 2 ...?
 
-  step 3 Game End
-
-
-
-  functions needed:
-  generateCardDeck
-  renderBoard
-  turnOverCard
-  checkIfMatched_IMG
-  checkIfMatched_QnA  
-  adjustPlayerScore
-  shuffleDeck
-  endGame 
-
-  state objects needed:
+//   step 3 Game End
 
 
-  
-  `
 
-  shuffleDeck = (cards) => {
-    return cards
-      .map(a => [Math.random(), a])
-      .sort((a, b) => a[0] - b[0])
-      .map(a => a[1])
-  }
+//   functions needed:
+//   generateCardDeck
+//   renderBoard
+//   turnOverCard
+//   checkIfMatched_IMG
+//   checkIfMatched_QnA  
+//   adjustPlayerScore
+//   shuffleDeck
+//   endGame 
 
-
+//   state objects needed:
+//   `
 
   readOut = (deck) => {
     let entries = Object.entries(deck).map(obj => {
@@ -237,10 +234,12 @@ class Game extends React.Component {
           <h1>cardsFaceUp: {this.state.cardsFaceUp.toString()}</h1>
           <h1>forceFlip: {this.state.forceFlip.toString()}</h1>
           {/* {this.readOut(this.state.cardsFaceUp)} */}
+//            <GameChat/>
         </div>
       </div>
     )
   }
+
 };
 
 export default (withRouter(Game));
