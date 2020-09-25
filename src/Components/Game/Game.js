@@ -65,7 +65,8 @@ getQuestions(){
       }
       newArrClean = _.uniqBy(newArr, 'answer')
       this.setState({qArray: newArrClean.slice(0,8)}); 
-      this.setState({qArray: this.shuffleQuestions(this.cardData(this.state.qArray))});
+      // this.setState({qArray: this.shuffleQuestions(this.cardData(this.state.qArray))});
+      this.setState({qArray: this.cardData(this.state.qArray)}); //Line prevents shufflke, delete later
       const mappedBoard = this.mapToBoard(this.state.qArray)
     this.setState({ mappedBoard })
     })
