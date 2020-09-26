@@ -234,7 +234,7 @@ getQuestions(){
           <h1>cardsFaceUp: {this.state.cardsFaceUp.toString()}</h1>
           <h1>forceFlip: {this.state.forceFlip.toString()}</h1>
           {/* {this.readOut(this.state.cardsFaceUp)} */}
-//            <GameChat/>
+            <GameChat/>
         </div>
       </div>
     )

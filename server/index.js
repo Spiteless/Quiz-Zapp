@@ -5,6 +5,8 @@ const session = require("express-session");
 
 const{ SESSION_SECRET, CONNECTION_STRING, SERVER_PORT } = process.env;
 
+const lobbyUsers = [];
+
 const authCtrl = require('./controllers/authController');
 const gameCtrl = require('./controllers/gameController');
 
@@ -44,21 +46,32 @@ massive ({
             console.log(socket.id)
             //Anytime new user connects, they will go to lobby room ('lobby' is the endpoint.)
             socket.join('lobby')
+            socket.emit('request-username')
             io.in('lobby').emit('welcome', {welcome: 'New user joined!', newUser: socket.id})
             //connection and disconnect are default endpoints. We receive the disconnect message when someone disconnects.
             socket.on('disconnect', () => {
                 console.log("Disconnected.")
             })
             //socket.on - in the arrow function it will take in a body - the body from the front end. Like a put or post from the front end.
-            socket.on('test', (body) => {
+            socket.on('turn', (body) => {
                 console.log(body)
                 //socket.on will receive body as parameter in arrow functions, and socket.emit will have body. 
                 //what we're sending back.
-                socket.emit('test2', {winter: "evil"})
+                socket.to(body.room).emit('test2', {winter: "evil"})
             })
             socket.on('message', (body) => {
-                console.log
+                console.log(body);
+                socket.emit(body);
             } )
+            socket.on('chatter', (body) => {
+                io.in('lobby').emit('message', body)
+                console.log(body)
+            })
+            socket.on('user-info', (body) => {
+                console.log('hit', body)
+                lobbyUsers.push({...body, socketId: socket.id})
+                io.in('lobby').emit("userList", lobbyUsers)
+            })
         })
     })
     .catch((err) => console.log(`Database error: ${err}`));

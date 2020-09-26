@@ -10,15 +10,15 @@ import './Nav.css';
 const Nav = (props) => {
     const [update, setUpdate] = useState(false);
     console.log("comes from redux props", props);
-    useEffect(() => {
-        props.getUser();
-        console.log('props.history', props.history);
-        // if(!props.user.loading) {
-        //     if(props.user.username === ''){
-        //         props.history.push('/');
-        //     }
-        // }
-    }, [props.user.username, props.location.pathname]);
+    // useEffect(() => {
+    //     props.getUser();
+    //     console.log('props.history', props.history);
+    //     // if(!props.user.loading) {
+    //     //     if(props.user.username === ''){
+    //     //         props.history.push('/');
+    //     //     }
+    //     // }
+    // }, [props.user.username, props.location.pathname]);
     // [props.user.username, props.location.pathname]
 
     useEffect(() => {

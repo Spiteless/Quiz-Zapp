@@ -12,7 +12,7 @@ const Login = (props) => {
   const login = () => {
     axios.post('/auth/login', {username, password}).then(res => {
         console.log("this is res.data from login post axios call in Login.js", res.data)
-        // props.loginUser(res.data)
+        props.loginUser(res.data)
         props.history.push('/lobby')
     }).catch(err => {
         console.log(err)
