@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const initialState = {
+    //Can initialize user as null, instead of empty object, to register as falsy value.
     user: {},
     loading: false
     // isLoggedIn: false
