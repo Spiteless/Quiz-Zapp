@@ -64,7 +64,7 @@ function LobbyChat() {
 
   const updateUsersList = (body) => {
     console.log('updateUsersList', body);
-    setUsersList([...usersList, body]); 
+    setUsersList((usersList) => [...usersList, body]); 
   }
   const emit = () => {
     //Add user to object after message.
@@ -110,11 +110,10 @@ function LobbyChat() {
       <div className='users-list-container'>
           <h1 className='list-header'>Challenge a Player</h1>
           <div className='users-list'>
-              {/* Will contain mapped over array of users from all logged-in users, from server. */}
-              {/* THIS MAP NEEDS TO BE FIXED--DOESN'T DISPLAY ANYTHING YET. */}
+              {/* THIS MAP NEEDS TO BE FIXED--DISPLAYS SORT OF. Each username needs to be a link/button or something that when you click on it, it will display a pop up to challenge the user...?*/}
               {usersList.map((user, ind) => {
                   return (
-                      <p className='username-for-list' key={ind}>{user.username}</p>
+                      <p className='username-for-list' key={ind}>{user[ind].username}</p>
                   )
               })}
           </div>
