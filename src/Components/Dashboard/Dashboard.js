@@ -33,7 +33,7 @@ const Dashboard = (props) => {
             {/* import logo, and fix the position over the gray bar */}
           </div>
         </div>
-        <h1 className='game-title'> Quiz Zapp </h1>
+        <h1 className='game-title'> QUIZ ZAPP </h1>
         <div className='buttonBar'>
           <Link to='/game/anon'>
             <button className="dash-btn" >Quick Start</button>
