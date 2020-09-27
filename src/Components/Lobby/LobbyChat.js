@@ -12,6 +12,7 @@ function LobbyChat() {
   const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [usersList, setUsersList] = useState([]);
   const reduxState = useSelector((reduxState) => reduxState.auth);
   console.log("reduxState", reduxState);
   //all the endpoints will go in the same useEffect. It's just setting up a listener for whatever events.
@@ -43,7 +44,8 @@ function LobbyChat() {
         }
       });
       socket.on("userList", (body) => {
-        console.log(body);
+        console.log('users list from server', body);
+        updateUsersList(body);
       });
     }
   }, [socket]);
@@ -60,6 +62,10 @@ function LobbyChat() {
     setMessages((messages) => [...messages, body]);
   };
 
+  const updateUsersList = (body) => {
+    console.log('updateUsersList', body);
+    setUsersList([...usersList, body]); 
+  }
   const emit = () => {
     //Add user to object after message.
     socket.emit("chatter", { message });
@@ -95,13 +101,22 @@ function LobbyChat() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button className='chat-send-btn' onClick={() => emit()}>Send</button>
+          <button className='chat-send-btn' onClick={() => {
+              emit();
+              setMessage('');
+              }}>Send</button>
         </div>
       </div>
       <div className='users-list-container'>
           <h1 className='list-header'>Challenge a Player</h1>
           <div className='users-list'>
               {/* Will contain mapped over array of users from all logged-in users, from server. */}
+              {/* THIS MAP NEEDS TO BE FIXED--DOESN'T DISPLAY ANYTHING YET. */}
+              {usersList.map((user, ind) => {
+                  return (
+                      <p className='username-for-list' key={ind}>{user.username}</p>
+                  )
+              })}
           </div>
       </div>
       {/* <button
