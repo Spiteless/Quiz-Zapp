@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import {useSelector} from 'react-redux';
+import { useSelector } from "react-redux";
+import './Lobby.css';
 // const socket = io.connect('http://localhost:4141');
 //hide the port on the front end.
 
@@ -12,7 +13,7 @@ function LobbyChat() {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const reduxState = useSelector((reduxState) => reduxState.auth);
-  console.log('reduxState', reduxState);
+  console.log("reduxState", reduxState);
   //all the endpoints will go in the same useEffect. It's just setting up a listener for whatever events.
 
   useEffect(() => {
@@ -23,7 +24,7 @@ function LobbyChat() {
 
   useEffect(() => {
     if (socket) {
-        console.log(socket)
+      console.log(socket);
       socket.on("test2", (body) => {
         console.log(body);
       });
@@ -34,15 +35,16 @@ function LobbyChat() {
         console.log(body);
         updateMessages(body);
       });
-      socket.on('request-username', () => {
-        console.log('reduxState', reduxState) 
-        if(reduxState.user && reduxState.user.user_id){
-            console.log("or this?")
-              socket.emit('user-info', {...reduxState.user})
-      }})
-      socket.on('userList', (body) => {
-          console.log(body)
-      })
+      socket.on("request-username", () => {
+        console.log("reduxState", reduxState);
+        if (reduxState.user && reduxState.user.user_id) {
+          console.log("or this?");
+          socket.emit("user-info", { ...reduxState.user });
+        }
+      });
+      socket.on("userList", (body) => {
+        console.log(body);
+      });
     }
   }, [socket]);
 
@@ -55,26 +57,30 @@ function LobbyChat() {
   // };
   const updateMessages = (body) => {
     console.log(body);
-    setMessages(messages =>[...messages, body]);
+    setMessages((messages) => [...messages, body]);
   };
 
   const emit = () => {
-      //Add user to object after message. 
+    //Add user to object after message.
     socket.emit("chatter", { message });
   };
 
-  console.log('messages', messages)
+  console.log("messages", messages);
 
   return (
-    <div>
+    <div className='lobby-chat-container'>
       <div className="chat-container">
+        <h1 className='list-header chat-header'>Plan a game!</h1>
         <div className="upper-chat">
           <div className="messages">
             {/* {message} */}
             {messages.map((message, i) => {
               return (
-                  //Add user info
-                <div key={i} className={message ? `my-message` : `other-message`}>
+                //Add user info
+                <div
+                  key={i}
+                  className={message ? `my-message` : `other-message`}
+                >
                   {message.message}
                 </div>
               );
@@ -89,8 +95,14 @@ function LobbyChat() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button onClick={() => emit()}>Send</button>
+          <button className='chat-send-btn' onClick={() => emit()}>Send</button>
         </div>
+      </div>
+      <div className='users-list-container'>
+          <h1 className='list-header'>Challenge a Player</h1>
+          <div className='users-list'>
+              {/* Will contain mapped over array of users from all logged-in users, from server. */}
+          </div>
       </div>
       {/* <button
         onClick={() => {

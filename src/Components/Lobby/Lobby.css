@@ -6,10 +6,11 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .left-container {
-    width: 300px;
+    width: 250px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -100,7 +101,7 @@
 }
 .chat-container {
     height: 600px;
-    width: 500px;
+    width: 400px;
     background-color: white;
     border: 3px solid gray;
     display: flex;
@@ -113,24 +114,28 @@
 }
 
 .upper-chat {
-    height: 580px;
-    width: 500px;
+    height: 480px;
+    width: 400px;
     display: flex;
+    padding: 10px;
 }
 
 /* Needs fixing */
 .input-btn-bar {
-    width: 500px;
+    width: 400px;
     height: 40px;
     display: flex;
     flex-direction: row;
-    border-top: 1px solid gray;
+    border-top: 3px solid gray;
 }
 
 .chat-input {
+    border: none;
     display: flex;
-    width: 400px;
-    font-size: 28px;
+    width: 300px;
+    font-size: 20px;
+    padding: 3px;
+    padding-left: 10px;
 }
 
 .chat-input:focus {
@@ -140,7 +145,59 @@
 .chat-send-btn {
     display: flex;
     width: 100px;
+    border: none;
+    border-left: 3px solid gray;
     justify-content: center;
     align-items: center;
-    font-size: 28px;
+    font-size: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.users-list-container {
+    height: 600px;
+    width: 200px;
+    background-color: white;
+    border: 3px solid gray;
+    overflow: auto;
+    margin-left: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.users-list {
+    display: flex;
+}
+
+.lobby-chat-container {
+    height: 600px;
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+}
+
+.list-header {
+    padding-top: 5px;
+    font-size: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: black;
+    height: 40px;
+    /* width: 150px; */
+    border-bottom: 3px yellow solid;
+    /* border-top-right-radius: 10px;
+    border-top-left-radius: 10px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding-left: 0px;
+}
+
+.chat-header {
+    width: 350px;
+    font-size: 38px;
+    margin-bottom: 10px;
 }
