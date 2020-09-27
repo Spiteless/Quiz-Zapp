@@ -1,8 +1,9 @@
 import React from 'react'
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
-import Card from "./Card"
-import GameChat from './GameChat'
+import Card from "./Card";
+import GameChat from './GameChat';
+import cardFront from '../../cardfront.png';
 
 const _ = require('lodash');
 
@@ -161,7 +162,7 @@ getQuestions(){
       }
       urlFront={(cardInfo.urlFront)
         ? cardInfo.urlFront
-        : "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg"}>
+        : cardFront}>
     {/* {alert("SPECIAL: "+ Object.entries(this.state.deck).includes(cardInfo.cardId))} */}
           </Card>
   }
