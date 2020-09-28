@@ -19,7 +19,9 @@ function App(props) {
     if(props.location.pathname !== '/' && props.location.pathname !== '/game' && props.location.pathname !== '/game/anon') {
       return <Nav/>
     } else {
-      return null
+      return <div className='not-displayed'>
+        <Nav/>
+        </div>
     }
   }
 
@@ -33,7 +35,7 @@ function App(props) {
         <Route exact path = '/' component={Dashboard} />
         <Route exact path = '/game' component={Game} />
         <Route path = '/lobby' component={Lobby} />
-        <Route path = '/game/:gameId/stats' component={GameStats} />
+        {/* <Route path = '/game/:gameId/stats' component={GameStats} /> */}
         <Route path = '/game/anon' component={GameAnon} />
         <Route path = '/profile/:userId' component={Profile} />  {/*USER ID NEEDED?*/}
         <Route path = '/waitingroom' component={WaitingRoom} />
