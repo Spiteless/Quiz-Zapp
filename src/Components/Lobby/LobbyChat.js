@@ -113,7 +113,7 @@ function LobbyChat() {
               {/* THIS MAP NEEDS TO BE FIXED--DISPLAYS SORT OF. Each username needs to be a link/button or something that when you click on it, it will display a pop up to challenge the user...?*/}
               {usersList.map((user, ind) => {
                   return (
-                      <p className='username-for-list' key={ind}>{user[ind].username}</p>
+                      <p onClick={() => {}} className='username-for-list' key={ind}>{user[ind].username}</p>
                   )
               })}
           </div>
