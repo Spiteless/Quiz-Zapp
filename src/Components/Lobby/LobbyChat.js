@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useSelector } from "react-redux";
-import './Lobby.css';
+import "./Lobby.css";
 // const socket = io.connect('http://localhost:4141');
 //hide the port on the front end.
 
@@ -44,11 +44,12 @@ function LobbyChat() {
         }
       });
       socket.on("userList", (body) => {
-        console.log('users list from server', body);
+        console.log("users list from server", body);
         updateUsersList(body);
       });
     }
   }, [socket]);
+
 
   //Don't want anything in the dependency array, because we don't want to fire the listener another time. Need it there, empty.
   // const handleInput = (e) => {
@@ -60,12 +61,13 @@ function LobbyChat() {
   const updateMessages = (body) => {
     console.log(body);
     setMessages((messages) => [...messages, body]);
+    // window.scrollTo(0,document.body.scrollHeight);
   };
 
   const updateUsersList = (body) => {
-    console.log('updateUsersList', body);
-    setUsersList((usersList) => [...usersList, body]); 
-  }
+    console.log("updateUsersList", body);
+    setUsersList((usersList) => [...usersList, body]);
+  };
   const emit = () => {
     //Add user to object after message.
     socket.emit("chatter", { message, user: reduxState.user.username });
@@ -74,9 +76,9 @@ function LobbyChat() {
   console.log("messages", messages);
 
   return (
-    <div className='lobby-chat-container'>
+    <div className="lobby-chat-container">
       <div className="chat-container">
-        <h1 className='list-header chat-header'>Plan a game!</h1>
+        <h1 className="list-header chat-header">Plan a game!</h1>
         <div className="upper-chat">
           <div className="messages">
             {/* {message} */}
@@ -84,15 +86,33 @@ function LobbyChat() {
               return (
                 //Add user info
                 <div
-                    // message={message}
-                    //this isn't working. trying to get user on message.
-                    // user={reduxState.user.username}
+                  // message={message}
+                  //this isn't working. trying to get user on message.
+                  // user={reduxState.user.username}
                   key={i}
-                  className={messages[i].user ? `my-message` : `other-message`}
+                  className={
+                    messages[i].user === reduxState.user.username
+                      ? `my-message`
+                      : `other-message`
+                  }
                 >
-                    {console.log('trying to get user on the message', message.user)}
-                    <h1>{messages[i].user}: <p>{message.message}</p></h1>
-                    {/* <p>{message.message}</p> */}
+                  {console.log(
+                    "trying to get user on the message",
+                    message.user
+                  )}
+                  
+                  <div className="message-container">
+                    {/* <h1 className='user-tag'>
+                      {messages[i].user}: <p className='user-message'>  {message.message}</p>
+                    </h1> */}
+                    <h1 className="user-tag">
+                      {messages[i].user === reduxState.user.username
+                        ? null
+                        : messages[i].user + `:`}{" "}
+                      <p className="user-message"> {message.message}</p>
+                    </h1>
+                  </div>
+                  {/* <p>{message.message}</p> */}
 
                   {/* {reduxState.user.username + ' : ' + message.message} */}
                 </div>
@@ -108,24 +128,31 @@ function LobbyChat() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button className='chat-send-btn' onClick={() => {
+          <button
+            className="chat-send-btn"
+            onClick={() => {
               emit();
-              setMessage('');
-              }}>Send</button>
+              setMessage("");
+            }}
+          >
+            Send
+          </button>
         </div>
       </div>
-      <div className='users-list-container'>
-          <h1 className='list-header'>Challenge a Player</h1>
-          <div className='users-list'>
-              {/* THIS MAP NEEDS TO BE FIXED--DISPLAYS SORT OF. Each username needs to be a link/button or something that when you click on it, it will display a pop up to challenge the user...?*/}
-              {usersList.map((user, ind) => {
-                  return (
-                      <p onClick={() => {}} className='username-for-list' key={ind}>{user[ind].username}</p>
-                    //   return (
-                        // <div className='username-for-list' key={ind}>{user[ind].username}</div>
-                  )
-              })}
-          </div>
+      <div className="users-list-container">
+        <h1 className="list-header">Challenge a Player</h1>
+        <div className="users-list">
+          {/* THIS MAP NEEDS TO BE FIXED--DISPLAYS SORT OF. Each username needs to be a link/button or something that when you click on it, it will display a pop up to challenge the user...?*/}
+          {usersList.map((user, ind) => {
+            return (
+              <p onClick={() => {}} className="username-for-list" key={ind}>
+                {user[ind].username}
+              </p>
+              //   return (
+              // <div className='username-for-list' key={ind}>{user[ind].username}</div>
+            );
+          })}
+        </div>
       </div>
       {/* <button
         onClick={() => {
