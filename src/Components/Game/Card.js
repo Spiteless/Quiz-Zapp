@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { withRouter } from "react-router-dom";
 import { getSetFunction } from '../../redux/gameReducer';
 import { connect } from 'react-redux';
@@ -9,8 +9,7 @@ import { useSpring, animated as a } from 'react-spring'
 
 
 function Card(props) {
-    console.log("ran create card", props)
-    const [flipped, setFlipped] = useState(false)
+    const [flipped, setFlipped] = useState(props.faceUp)
     // let flipped = false; const setFlipped = () => {}
 
 
@@ -20,18 +19,20 @@ function Card(props) {
         config: { mass: 5, tension: 500, friction: 80 }
     })
 
-    if (props.forceFlip) {
-        alert('ran forcefLip')
-        setFlipped(state => !state)
-    } else {
-        // alert('no flip')
-    }
+    useEffect(() => {
+        console.log("useEffect ran for", props.cardId)
+
+        if (props.count % 7 === 0 && props.count !== 0) {setFlipped(state => !state)}
+      }, [props]);
 
     const handleClick = () => {
         let cardStatus = {}
-        cardStatus['cardId'] = props.cardId
-        cardStatus['faceDown'] = flipped
+        cardStatus.cardId =  props.cardId
+        cardStatus.cardOrder = props.cardOrder
+        cardStatus.faceUp = flipped
         cardStatus.matchId = props.matchId
+        cardStatus.textCardFront = props.textCardFront
+        cardStatus.urlFront = props.urlFront
         let cardOut = {}
         cardOut[props.cardId] = cardStatus
         props.passedOnClickFunc(cardOut)
@@ -70,7 +71,7 @@ function Card(props) {
                             // alert(`Match! ${flipped}`);
                         }
                         handleClick()
-                    }}>Match!</button>
+                    }}>Match! {props.count}</button>
                 </div>
             </a.div>
             {/* <div className='btn-container-card'>
