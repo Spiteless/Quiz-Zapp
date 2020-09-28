@@ -68,7 +68,7 @@ function LobbyChat() {
   }
   const emit = () => {
     //Add user to object after message.
-    socket.emit("chatter", { message });
+    socket.emit("chatter", { message, user: reduxState.user.username });
   };
 
   console.log("messages", messages);
@@ -84,10 +84,17 @@ function LobbyChat() {
               return (
                 //Add user info
                 <div
+                    // message={message}
+                    //this isn't working. trying to get user on message.
+                    // user={reduxState.user.username}
                   key={i}
-                  className={message ? `my-message` : `other-message`}
+                  className={messages[i].user ? `my-message` : `other-message`}
                 >
-                  {message.message}
+                    {console.log('trying to get user on the message', message.user)}
+                    <h1>{messages[i].user}: <p>{message.message}</p></h1>
+                    {/* <p>{message.message}</p> */}
+
+                  {/* {reduxState.user.username + ' : ' + message.message} */}
                 </div>
               );
             })}
@@ -114,6 +121,8 @@ function LobbyChat() {
               {usersList.map((user, ind) => {
                   return (
                       <p onClick={() => {}} className='username-for-list' key={ind}>{user[ind].username}</p>
+                    //   return (
+                        // <div className='username-for-list' key={ind}>{user[ind].username}</div>
                   )
               })}
           </div>

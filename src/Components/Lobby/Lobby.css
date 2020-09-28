@@ -243,3 +243,12 @@
     
 }
 
+.my-message {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.other-message {
+    display: flex;
+    justify-content: flex-start;
+}
