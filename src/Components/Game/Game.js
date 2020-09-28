@@ -104,6 +104,7 @@ class Game extends React.Component {
     let newState = { ...this.state, deck: newDeck }
     let newCardsFaceUp = []
     Object.entries(newDeck).forEach(card => {
+      console.log("card", card)
       console.log(card[0], card[1].faceUp)
       if (card[1].faceUp) { newCardsFaceUp.push(card) }
     })
@@ -240,6 +241,16 @@ class Game extends React.Component {
     })
     return entries
   }
+  
+  modal = () => {
+    var modal = document.getElementById("modal");
+    modal.style.display = "block";
+  }
+
+  close = () => {
+    var modal = document.getElementById("modal");
+    modal.style.display="none"
+  }
 
   render() {
     console.log("Deck in render:", this.state.deck)
@@ -258,6 +269,14 @@ class Game extends React.Component {
           {/* {this.readOut(this.state.cardsFaceUp)} */}
           <GameChat />
         </div>
+
+        <button onClick={e => {this.modal()}}>MODAL</button>
+
+        <div id="modal" className="endGameModal">
+          <span onClick={e => {this.close()}} class="close">&times;</span>
+          <div className="modalContent">GAME OVER</div>
+        </div>
+
       </div>
     )
   }
