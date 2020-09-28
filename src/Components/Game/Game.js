@@ -22,6 +22,7 @@ class Game extends React.Component {
     this.getQuestions = this.getQuestions.bind(this)
     this.checkIfMatch = this.checkIfMatch.bind(this)
     this.mapToBoard = this.mapToBoard.bind(this)
+    this.makeCardInvisible = this.makeCardInvisible.bind(this)
   }
 
   componentDidMount() {
@@ -91,7 +92,6 @@ class Game extends React.Component {
     // console.log("$$$$", cardState)
     const { deck, cardsFaceUp, cardsReadyToMatch } = this.state
     let newDeck = { ...deck, ...cardState }
-    let newState = { ...this.state, deck: newDeck }
     let newCardsFaceUp = []
     Object.entries(newDeck).forEach(card => {
       const [cardName, cardAttributes] = card
@@ -100,15 +100,36 @@ class Game extends React.Component {
 
     if (newCardsFaceUp.length === 2) {
       if (this.checkIfMatch(newCardsFaceUp[0], newCardsFaceUp[1],)) {
+        setTimeout(() => {
+          newCardsFaceUp.map( c => {
+            newDeck[c[0]].isVisible = false
+            newDeck[c[0]].faceUp = false
+            alert("MATCH")
+        })
+          // newCardsFaceUp = []
+        }, 450)
         //  alert("MATCH!") 
-        setTimeout(() => alert("MATCH"), 450)
+        // let newCard0 = newCardsFaceUp[0]
+        // newCard0.isVisible = false
+        // let newCard1 = newCardsFaceUp[1]
+        // newCard1.isVisible = false
+        // // let newCards0 = this.makeCardInvisible(newCardsFaceUp[0])
+        // // let newCards1 = this.makeCardInvisible(newCardsFaceUp[1])
+        // newDeck[newCard0.cardId] = {newCard0}
+        // newDeck[newCard1.cardId] = {newCard1}
+
+        console.log("$$$$ newDeck:", newDeck)
+        // 
+        
+        
       }
       else {
         // alert("NO MATCH!") 
-        let forceFlip = [[newCardsFaceUp[0][0]], newCardsFaceUp[1][0]]
-        newState.forceFlip = forceFlip
+        // let forceFlip = [[newCardsFaceUp[0][0]], newCardsFaceUp[1][0]]
+        // newState.forceFlip = forceFlip
       }
     }
+    let newState = { ...this.state, deck: newDeck }
     newState.cardsFaceUp = newCardsFaceUp
     this.setState(newState)
   }
@@ -176,6 +197,12 @@ class Game extends React.Component {
         ? cardInfo.urlFront
         : cardFront}>
     </Card>
+  }
+
+  makeCardInvisible(card) {
+    card.isVisible = false
+    console.log("$$$$","invisCard?",card, typeof card)
+    return card
   }
 
   mapToBoard(cardArrayIn, rows = 4, columns = 4) {
