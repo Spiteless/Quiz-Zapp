@@ -11,18 +11,15 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mappedBoard: [], //required
       qArray: [],
       deck: {},
       cardsFaceUp: [],
       cardsReadyToMatch: [],
       forceFlip: [],
-      count: 0,
-
     }
-    this.handleCardClick = this.handleCardClick.bind(this)
+
+    this.gameHandleClick = this.gameHandleClick.bind(this)
     this.getQuestions = this.getQuestions.bind(this)
-    this.readOut = this.readOut.bind(this)
     this.checkIfMatch = this.checkIfMatch.bind(this)
     this.mapToBoard = this.mapToBoard.bind(this)
   }
@@ -80,21 +77,18 @@ class Game extends React.Component {
           cardStatus.matchId = card.matchId
           cardStatus.textCardFront = card.textCardFront
           cardStatus.urlFront = card.urlFront
-
+          cardStatus.isVisible = card.isVisible
+          
           newDeck[card.cardId] = cardStatus
         })
                 
-        const mappedBoard = mapToBoard(qArray)
-        
-        this.setState({ mappedBoard, deck: newDeck })
+        this.setState({ deck: newDeck })
       })
       .catch(err => console.log(err))
   }
 
-  handleCardClick(cardState) {
-    console.log(`cardState: `,
-            (cardState.faceUp) ? "Card is face up" : "Card is face down",
-            cardState, )
+  gameHandleClick(cardState) {
+    // console.log("$$$$", cardState)
     const { deck, cardsFaceUp, cardsReadyToMatch } = this.state
     let newDeck = { ...deck, ...cardState }
     let newState = { ...this.state, deck: newDeck }
@@ -107,6 +101,7 @@ class Game extends React.Component {
     if (newCardsFaceUp.length === 2) {
       if (this.checkIfMatch(newCardsFaceUp[0], newCardsFaceUp[1],)) {
         //  alert("MATCH!") 
+        setTimeout(() => alert("MATCH"), 450)
       }
       else {
         // alert("NO MATCH!") 
@@ -115,7 +110,6 @@ class Game extends React.Component {
       }
     }
     newState.cardsFaceUp = newCardsFaceUp
-    newState.count = this.state.count + 1
     this.setState(newState)
   }
 
@@ -140,6 +134,7 @@ class Game extends React.Component {
         matchId: obj.id,
         cardId: obj.id + "q",
         faceUp: false,
+        isVisible: true,
       }
       return newObjq
     })
@@ -150,6 +145,7 @@ class Game extends React.Component {
         urlFront: "", matchId: obj.id,
         cardId: obj.id + "a",
         faceUp: false,
+        isVisible: true,
       }
       return newObja
     })
@@ -158,41 +154,21 @@ class Game extends React.Component {
     return (combinedArr)
   }
 
-  //   buildCardsFromApi(data) {
-  //     let cards = []
-  //     let cardNumber = 0
-  //     for (let i = 0; i < data.length; i++) {
-  //       cardNumber += 1
-  //       cards.push({
-  //         q: data[i].q,
-  //         qID: data[i].qID,
-  //         cardId: cardNumber,
-  //         cardPosition: { x: 0, y: 0 }
-  //       })
-  //       cardNumber += 1
-  //       cards.push({
-  //         a: data[i].a,
-  //         qID: data[i].qID,
-  //         number: cardNumber,
-  //         urlBackPhotos: '',
-  //         cardId: cardNumber,
-  //         cardPosition: { x: 0, y: 0 }
-  //       })
-  //     }
-  //   }
+
 
   createCard(cardInfo) {
+    // console.log("$$$$", cardInfo)
     return <Card
       textCardBack={cardInfo.textCardBack}
       textCardFront={cardInfo.textCardFront}
       key={cardInfo.cardId}
       cardId={cardInfo.cardId}
-      passedOnClickFunc={this.handleCardClick}
+      passedOnClickFunc={this.gameHandleClick}
       matchId={cardInfo.matchId}
       deck={this.state.deck}
       cardOrder={cardInfo.cardOrder}
       faceUp = {cardInfo.faceUp}
-      count = {this.state.count}
+      isVisible = {cardInfo.isVisible}
 
       testFlip={Object.entries(this.state.deck).includes(cardInfo.cardId)}
 
@@ -203,9 +179,8 @@ class Game extends React.Component {
   }
 
   mapToBoard(cardArrayIn, rows = 4, columns = 4) {
-    
     let cardArray = []
-
+    
     for (let i = 0; i < cardArrayIn.length; i++) {
       let row = []
       for (let i = 0; i < columns; i++) {
@@ -213,7 +188,7 @@ class Game extends React.Component {
       }
       cardArray.push(row)
     }
-
+    console.log("$$$$", cardArray)
     return (
       <div className='gameBoard'>
         { cardArray.map((row, index) => {
@@ -223,14 +198,6 @@ class Game extends React.Component {
         })}
       </div>
     )
-  }
-
-  readOut = (deck) => {
-    let entries = Object.entries(deck).map(obj => {
-      let [key, val] = obj
-      return <h2>{`${key}: ${JSON.stringify(val)}`}</h2>
-    })
-    return entries
   }
 
   render() {

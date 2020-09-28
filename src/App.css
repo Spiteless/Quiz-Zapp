@@ -166,3 +166,8 @@
   color: white;
   margin-top: 5px;
 }
+
+.invisible {
+  /* display: none; */
+  opacity: 0%;
+}

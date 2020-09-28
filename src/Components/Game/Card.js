@@ -17,19 +17,22 @@ function Card(props) {
     })
 
 
-    // useEffect(() => {
-    //     console.log("&&&& useEffect ran for", props.cardId,
-    //         (isCardFaceUp) ? "Card is face up" : "Card is face down")
-    // }, [props.faceUp]);
+    useEffect(() => {
+        console.log("$$$$ useEffect ran for", props.isVisible,
+            (props.isVisible) ? "Card is visible" : "Card is not visible")
+    }, [props.isVisible]);
 
-    const handleClick = (flipOver) => {
-
-        if (flipOver) {setIsCardFaceUp(state => !state)}
-
+    const cardHandleClick = (action) => {
         let cardStatus = {}
+        cardStatus.isVisible = props.isVisible
+        if (action === 'flipOver') {setIsCardFaceUp(state => !state)}
+        if (action === 'isVisible') {
+            cardStatus.isVisible = false
+        }
+
         cardStatus.cardId = props.cardId
         cardStatus.cardOrder = props.cardOrder
-        cardStatus.faceUp = (flipOver)
+        cardStatus.faceUp = (action === 'flipOver')
             ? !isCardFaceUp
             : isCardFaceUp
         cardStatus.matchId = props.matchId
@@ -41,9 +44,12 @@ function Card(props) {
         // return cardStatus
     }
 
+    let classes = "card-parent "
+    if (!props.isVisible) {
+        classes+= " invisible"}
 
     return (
-        <div className="card-parent" >
+        <div className={classes} >
             <a.div class="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform }}
             >
                 <h2>{props.textCardBack}</h2>
@@ -58,21 +64,22 @@ function Card(props) {
                 }}
                 onClick={() => {
 
-                    handleClick('flipOver')
+                    cardHandleClick('flipOver')
                 }}>
                 <h3 className='q-a-text'>{props.textCardFront}</h3>
                 <div className='btn-container-card'>
                     <button className='btn' onClick={(e) => {
                         if (isCardFaceUp) { e.stopPropagation(); }
-                    }}>🔙</button>
+                        cardHandleClick('isVisible')
+                    }}>🔙!</button>
                     <button className='btn' onClick={(e) => {
 
                         if (isCardFaceUp) {
 
                             e.stopPropagation();
                         }
-                        handleClick()
-                    }}>Match!</button>
+                        cardHandleClick()
+                    }}>Match! {"" + props.isVisible}</button>
                 </div>
             </a.div>
             {/* <div className='btn-container-card'>
