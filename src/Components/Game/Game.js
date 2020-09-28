@@ -60,7 +60,7 @@ class Game extends React.Component {
     let newArrClean = []
     axios.get(category)
       .then((results) => {
-        newArr = this.shuffleQuestions(results.data);
+        newArr = this.shuffleQuestions(results.data); //shuffles the questiosn received from api 
         for (let i = 0; i < newArr.length; i++) {
           if (newArr[i].question === "" || newArr[i].answer === "") {
             newArr.splice(i, 1)
@@ -68,7 +68,7 @@ class Game extends React.Component {
         }
         newArrClean = _.uniqBy(newArr, 'answer')
         this.setState({ qArray: newArrClean.slice(0, 8) });
-        this.setState({ qArray: shuffleQuestions(cardData(this.state.qArray)) });
+        this.setState({ qArray: shuffleQuestions(cardData(this.state.qArray)) }); //shuffles slice of questions
         const qArray = this.state.qArray
 
         let newDeck = {}
@@ -85,11 +85,6 @@ class Game extends React.Component {
         })
                 
         const mappedBoard = mapToBoard(qArray)
-
-
-
-        // this.setState({ deck: newDeck })
-
         
         this.setState({ mappedBoard, deck: newDeck })
       })
@@ -97,15 +92,16 @@ class Game extends React.Component {
   }
 
   handleCardClick(cardState) {
-    console.log(`cardState: `, cardState)
+    console.log(`cardState: `,
+            (cardState.faceUp) ? "Card is face up" : "Card is face down",
+            cardState, )
     const { deck, cardsFaceUp, cardsReadyToMatch } = this.state
-    // const myDeck = deck.map( n => n)
     let newDeck = { ...deck, ...cardState }
     let newState = { ...this.state, deck: newDeck }
     let newCardsFaceUp = []
     Object.entries(newDeck).forEach(card => {
-      console.log(card[0], card[1].faceUp)
-      if (card[1].faceUp) { newCardsFaceUp.push(card) }
+      const [cardName, cardAttributes] = card
+      if (cardAttributes.faceUp) { newCardsFaceUp.push(card) }
     })
 
     if (newCardsFaceUp.length === 2) {
@@ -120,14 +116,19 @@ class Game extends React.Component {
     }
     newState.cardsFaceUp = newCardsFaceUp
     newState.count = this.state.count + 1
-
-    console.log("newDeck:", Object.entries(newDeck).length, Object.values(newDeck))
-
     this.setState(newState)
   }
 
   checkIfMatch(c1, c2) {
     return (c1[1].matchId === c2[1].matchId) ? true : false
+  }
+
+  checkPlayerTurnOver(){
+
+  }
+
+  emitGameState(){
+
   }
 
   cardData(qArray) {
@@ -181,13 +182,8 @@ class Game extends React.Component {
   //   }
 
   createCard(cardInfo) {
-    let forceFlip = (this.state.forceFlip.includes(cardInfo.cardId))
-      ? true
-      : false
-    // alert(forceFlip)
-
-
-    return <Card textCardBack={cardInfo.textCardBack}
+    return <Card
+      textCardBack={cardInfo.textCardBack}
       textCardFront={cardInfo.textCardFront}
       key={cardInfo.cardId}
       cardId={cardInfo.cardId}
@@ -199,19 +195,15 @@ class Game extends React.Component {
       count = {this.state.count}
 
       testFlip={Object.entries(this.state.deck).includes(cardInfo.cardId)}
-      // forceFlip={(this.state.forceFlip.includes(cardInfo.cardId))
-      forceFlip={(this.state.forceFlip.includes(cardInfo.cardId) ? true : false)
 
-
-      }
       urlFront={(cardInfo.urlFront)
         ? cardInfo.urlFront
         : cardFront}>
-      {/* {alert("SPECIAL: "+ Object.entries(this.state.deck).includes(cardInfo.cardId))} */}
     </Card>
   }
 
   mapToBoard(cardArrayIn, rows = 4, columns = 4) {
+    
     let cardArray = []
 
     for (let i = 0; i < cardArrayIn.length; i++) {
@@ -242,20 +234,14 @@ class Game extends React.Component {
   }
 
   render() {
-    console.log("Deck in render:", this.state.deck)
-
+    let mappedBoard = this.mapToBoard(Object.values(this.state.deck))
     return (
       <div className="gameContainer" >
-        {console.log('qArray', this.state.qArray)}
-        {/* {this.state.mappedBoard} */}
-        {this.mapToBoard(Object.values(this.state.deck))}
+        {mappedBoard}
 
         <div className="chatWindow" >
-          <h1>deck:</h1>
-          {this.readOut(this.state.deck)}
-          <h1>cardsFaceUp: {this.state.cardsFaceUp.toString()}</h1>
+          <h1>cardsFaceUp: {this.state.cardsFaceUp.map(c => c[1].cardOrder).toString()}</h1>
           <h1>forceFlip: {this.state.forceFlip.toString()}</h1>
-          {/* {this.readOut(this.state.cardsFaceUp)} */}
           <GameChat />
         </div>
       </div>
