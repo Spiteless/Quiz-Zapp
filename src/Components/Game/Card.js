@@ -9,27 +9,29 @@ import { useSpring, animated as a } from 'react-spring'
 
 
 function Card(props) {
-    const [flipped, setFlipped] = useState(props.faceUp)
-    // let flipped = false; const setFlipped = () => {}
-
-
+    const [isCardFaceUp, setIsCardFaceUp] = useState(false)
     const { transform, opacity } = useSpring({
-        opacity: flipped ? 1 : 0,
-        transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
+        opacity: isCardFaceUp ? 1 : 0,
+        transform: `perspective(600px) rotateX(${isCardFaceUp ? 180 : 0}deg)`,
         config: { mass: 5, tension: 500, friction: 80 }
     })
 
-    useEffect(() => {
-        console.log("useEffect ran for", props.cardId)
 
-        // if (props.count % 7 === 0 && props.count !== 0) {setFlipped(state => !state)}
-      }, [props]);
+    // useEffect(() => {
+    //     console.log("&&&& useEffect ran for", props.cardId,
+    //         (isCardFaceUp) ? "Card is face up" : "Card is face down")
+    // }, [props.faceUp]);
 
-    const handleClick = () => {
+    const handleClick = (flipOver) => {
+
+        if (flipOver) {setIsCardFaceUp(state => !state)}
+
         let cardStatus = {}
-        cardStatus.cardId =  props.cardId
+        cardStatus.cardId = props.cardId
         cardStatus.cardOrder = props.cardOrder
-        cardStatus.faceUp = flipped
+        cardStatus.faceUp = (flipOver)
+            ? !isCardFaceUp
+            : isCardFaceUp
         cardStatus.matchId = props.matchId
         cardStatus.textCardFront = props.textCardFront
         cardStatus.urlFront = props.urlFront
@@ -43,7 +45,7 @@ function Card(props) {
     return (
         <div className="card-parent" >
             <a.div class="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform }}
-                onClick={() => setFlipped(state => !state)}>
+            >
                 <h2>{props.textCardBack}</h2>
             </a.div>
 
@@ -55,23 +57,22 @@ function Card(props) {
                     //  backgroundSize: 'contain'
                 }}
                 onClick={() => {
-                    handleClick()
-                    setFlipped(state => !state)
+
+                    handleClick('flipOver')
                 }}>
                 <h3 className='q-a-text'>{props.textCardFront}</h3>
                 <div className='btn-container-card'>
                     <button className='btn' onClick={(e) => {
-                        if (flipped) { e.stopPropagation(); alert(`Back! ${flipped}`) }
+                        if (isCardFaceUp) { e.stopPropagation(); }
                     }}>🔙</button>
                     <button className='btn' onClick={(e) => {
 
-                        if (flipped) {
+                        if (isCardFaceUp) {
 
                             e.stopPropagation();
-                            // alert(`Match! ${flipped}`);
                         }
                         handleClick()
-                    }}>Match! {props.count}</button>
+                    }}>Match!</button>
                 </div>
             </a.div>
             {/* <div className='btn-container-card'>
