@@ -243,12 +243,22 @@
     
 }
 
+.messages {
+    height: 505px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto; 
+}
+
 .my-message {
     display: flex;
     justify-content: flex-end;
+    align-items: flex-end;
 }
 
 .other-message {
     display: flex;
     justify-content: flex-start;
+    align-items: flex-start;
 }
