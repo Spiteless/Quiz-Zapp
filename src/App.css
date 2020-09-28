@@ -61,7 +61,7 @@
 }
 
 .card {
-  width: 10%;
+  width: 140px;
   height: 150px;
   /* background-color: aquamarine; */
   margin: 10px;
@@ -84,7 +84,7 @@
   justify-content: center; 
   /* max-width: 10%; */
   max-height: 150px;
-  width:  100px;
+  width:  140px;
   height: 150px;
   cursor: pointer;
   will-change: transform, opacity;
@@ -94,7 +94,7 @@
 .card-parent {
   margin-top: 15px;
   /* border: green 3px solid; */
-  width:  100px;
+  width:  140px;
   height: 150px;
   background-clip: padding-box;
   overflow: hidden;
@@ -122,6 +122,7 @@
 
 .back {
   background-image: url(./cardback.png);
+  background-color: white;
   background-size: 100px 150px;
   background-repeat: no-repeat;
   background-position: center;
