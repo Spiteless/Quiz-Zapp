@@ -60,7 +60,7 @@ class Game extends React.Component {
     let newArrClean = []
     axios.get(category)
       .then((results) => {
-        newArr = this.shuffleQuestions(results.data);
+        newArr = this.shuffleQuestions(results.data); //shuffles the questiosn received from api 
         for (let i = 0; i < newArr.length; i++) {
           if (newArr[i].question === "" || newArr[i].answer === "") {
             newArr.splice(i, 1)
@@ -68,7 +68,7 @@ class Game extends React.Component {
         }
         newArrClean = _.uniqBy(newArr, 'answer')
         this.setState({ qArray: newArrClean.slice(0, 8) });
-        this.setState({ qArray: shuffleQuestions(cardData(this.state.qArray)) });
+        this.setState({ qArray: shuffleQuestions(cardData(this.state.qArray)) }); //shuffles slice of questions
         const qArray = this.state.qArray
 
         let newDeck = {}
@@ -76,7 +76,7 @@ class Game extends React.Component {
           let cardStatus = {}
           cardStatus.cardId = card.cardId
           cardStatus.cardOrder = card.cardOrder
-          cardStatus.faceUp = card.faceUp
+          cardStatus.faceUp = false
           cardStatus.matchId = card.matchId
           cardStatus.textCardFront = card.textCardFront
           cardStatus.urlFront = card.urlFront
@@ -85,11 +85,6 @@ class Game extends React.Component {
         })
                 
         const mappedBoard = mapToBoard(qArray)
-
-
-
-        // this.setState({ deck: newDeck })
-
         
         this.setState({ mappedBoard, deck: newDeck })
       })
@@ -99,14 +94,15 @@ class Game extends React.Component {
   handleCardClick(cardState) {
     console.log(`cardState: `, cardState)
     const { deck, cardsFaceUp, cardsReadyToMatch } = this.state
-    // const myDeck = deck.map( n => n)
     let newDeck = { ...deck, ...cardState }
     let newState = { ...this.state, deck: newDeck }
     let newCardsFaceUp = []
     Object.entries(newDeck).forEach(card => {
-      console.log(card[0], card[1].faceUp)
-      if (card[1].faceUp) { newCardsFaceUp.push(card) }
+      const [cardName, cardAttributes] = card
+      console.log(cardName, cardAttributes.faceUp)
+      if (cardAttributes.faceUp) { newCardsFaceUp.push(card) }
     })
+    console.log("Testing cardsFaceUp", newCardsFaceUp, newDeck)
 
     if (newCardsFaceUp.length === 2) {
       if (this.checkIfMatch(newCardsFaceUp[0], newCardsFaceUp[1],)) {

@@ -22,7 +22,7 @@ function Card(props) {
     useEffect(() => {
         console.log("useEffect ran for", props.cardId)
 
-        if (props.count % 7 === 0 && props.count !== 0) {setFlipped(state => !state)}
+        // if (props.count % 7 === 0 && props.count !== 0) {setFlipped(state => !state)}
       }, [props]);
 
     const handleClick = () => {
