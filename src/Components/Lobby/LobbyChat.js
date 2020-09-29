@@ -42,13 +42,14 @@ function LobbyChat() {
         updateUsersList(body);
       });
     }
+    return()=> {if(socket){socket.emit('remove-user', reduxState.user.username)}}
   }, [socket]);
 
-  useEffect(() => {return() => leavePage()}, [])
+  // useEffect(() => {return() => leavePage()}, [])
 
-  const leavePage = () =>{
-    socket.emit("disconnect");
-  }
+  // const leavePage = () =>{
+  //   socket.emit("disconnect");
+  // }
 
 
   //Don't want anything in the dependency array, because we don't want to fire the listener another time. Need it there, empty.

@@ -9,7 +9,7 @@ const lobbyUsers = [];
 
 const authCtrl = require('./controllers/authController');
 const gameCtrl = require('./controllers/gameController');
-const { map } = require("lodash");
+
 
 const app = express();
 
@@ -70,9 +70,15 @@ massive ({
                 console.log('this is user-info body', body, "it ends here")
                 lobbyUsers.map((user, ind)=>{
                     if(body.username === user.username){ lobbyUsers.splice(ind, 1)}
+                });
+                lobbyUsers.push({...body, socketId: socket.id});
+                io.in('lobby').emit("userList", lobbyUsers);
+            })
+            socket.on('remove-user', (body) =>{
+                lobbyUsers.map((user, ind)=>{
+                    if(body.username === user.username){ lobbyUsers.splice(ind, 1)};
+                    io.in('lobby').emit("userList", lobbyUsers);
                 })
-                lobbyUsers.push({...body, socketId: socket.id})
-                io.in('lobby').emit("userList", lobbyUsers)
             })
         })
     })
