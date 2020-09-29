@@ -165,6 +165,12 @@ class Game extends React.Component {
 
   }
 
+  newPlayerTurn(turnState) {
+    let newTurnState = [...turnState]
+    newTurnState.push(newTurnState.shift()) //move front item to end
+    return newTurnState
+  }
+
   emitGameState() {
 
   }
