@@ -109,7 +109,7 @@ function LobbyChat() {
                     <h1 className="user-tag">
                       {messages[i].user === reduxState.user.username
                         ? null
-                        : messages[i].user + `:`}{" "}
+                        : messages[i].user + `: `}
                       <p className="user-message"> {message.message}</p>
                     </h1>
                   </div>
