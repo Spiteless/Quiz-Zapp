@@ -94,8 +94,14 @@ class Game extends React.Component {
     let newDeck = { ...deck, ...cardState }
     let newCardsFaceUp = []
     Object.entries(newDeck).forEach(card => {
+
+     //console.log("card", card)
+     //console.log(card[0], card[1].faceUp)
+     //if (card[1].faceUp) { newCardsFaceUp.push(card) }
+
       const [cardName, cardAttributes] = card
       if (cardAttributes.faceUp) { newCardsFaceUp.push(card) }
+
     })
 
     if (newCardsFaceUp.length === 2) {
@@ -227,6 +233,24 @@ class Game extends React.Component {
     )
   }
 
+  readOut = (deck) => {
+    let entries = Object.entries(deck).map(obj => {
+      let [key, val] = obj
+      return <h2>{`${key}: ${JSON.stringify(val)}`}</h2>
+    })
+    return entries
+  }
+  
+  modal = () => {
+    var modal = document.getElementById("modal");
+    modal.style.display = "block";
+  }
+
+  close = () => {
+    var modal = document.getElementById("modal");
+    modal.style.display="none"
+  }
+
   render() {
     let mappedBoard = this.mapToBoard(Object.values(this.state.deck))
     return (
@@ -238,6 +262,14 @@ class Game extends React.Component {
           <h1>forceFlip: {this.state.forceFlip.toString()}</h1>
           <GameChat />
         </div>
+
+        <button onClick={e => {this.modal()}}>MODAL</button>
+
+        <div id="modal" className="endGameModal">
+          <span onClick={e => {this.close()}} class="close">&times;</span>
+          <div className="modalContent">GAME OVER</div>
+        </div>
+
       </div>
     )
   }
