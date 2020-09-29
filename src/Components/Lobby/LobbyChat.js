@@ -27,28 +27,28 @@ function LobbyChat() {
     if (socket) {
       console.log(socket);
       socket.on("test2", (body) => {
-        console.log(body);
       });
       socket.on("welcome", (body) => {
-        console.log(body);
       });
       socket.on("message", (body) => {
-        console.log(body);
         updateMessages(body);
       });
       socket.on("request-username", () => {
-        console.log("reduxState", reduxState);
         if (reduxState.user && reduxState.user.user_id) {
-          console.log("or this?");
-          socket.emit("user-info", { ...reduxState.user });
+        socket.emit("user-info", { ...reduxState.user });
         }
       });
       socket.on("userList", (body) => {
-        console.log("users list from server", body);
         updateUsersList(body);
       });
     }
   }, [socket]);
+
+  useEffect(() => {return() => leavePage()}, [])
+
+  const leavePage = () =>{
+    socket.emit("disconnect");
+  }
 
 
   //Don't want anything in the dependency array, because we don't want to fire the listener another time. Need it there, empty.
