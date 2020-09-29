@@ -254,7 +254,7 @@
 }
 
 .my-message {
-    height: 20px;
+    /* height: 20px; */
     width: 250px;
     display: flex;
     justify-content: flex-start;
@@ -266,7 +266,7 @@
 }
 
 .other-message {
-    height: 20px;
+    /* height: 20px; */
     width: 250px;
     display: flex;
     justify-content: flex-start;
