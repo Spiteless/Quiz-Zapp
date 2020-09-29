@@ -93,7 +93,7 @@ function LobbyChat() {
             })}
           </div>
         </div>
-        <div className="input-btn-bar">
+        <form className="input-btn-bar">
           <input
             className="chat-input"
             placeholder="type message here"
@@ -101,11 +101,15 @@ function LobbyChat() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button className='chat-send-btn' onClick={() => {
+          <button
+            className='chat-send-btn'
+            type="submit"
+            onClick={(e) => {
+              e.stopPropagation();
               emit();
               setMessage('');
               }}>Send</button>
-        </div>
+        </form>
       </div>
       <div className='users-list-container'>
           <h1 className='list-header'>Challenge a Player</h1>

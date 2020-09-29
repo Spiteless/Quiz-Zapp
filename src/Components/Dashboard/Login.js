@@ -20,7 +20,7 @@ const Login = (props) => {
     })
   };
   return(
-    <div className="authContainer" >
+    <form className="authContainer" >
       <input className="user-pass"
         name='username'
         value={username} 
@@ -33,8 +33,12 @@ const Login = (props) => {
         type='password'
         onChange={(e) => setPassword(e.target.value)}
         placeholder='Type password here.' />
-      <button className="user-pass-submit" onClick={() => login()}>Submit</button>
-    </div>
+      <button className="user-pass-submit"
+      type="submit"
+      onClick={(e) => {
+        e.stopPropagation();
+        login()}}>Submit</button>
+    </form>
   )
 };
 
