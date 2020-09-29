@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { withRouter } from "react-router-dom";
 import { getSetFunction } from '../../redux/gameReducer';
 import { connect } from 'react-redux';
@@ -9,40 +9,49 @@ import { useSpring, animated as a } from 'react-spring'
 
 
 function Card(props) {
-    console.log("ran create card", props)
-    const [flipped, setFlipped] = useState(false)
-    // let flipped = false; const setFlipped = () => {}
-
-
+    const [isCardFaceUp, setIsCardFaceUp] = useState(false)
     const { transform, opacity } = useSpring({
-        opacity: flipped ? 1 : 0,
-        transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
+        opacity: isCardFaceUp ? 1 : 0,
+        transform: `perspective(600px) rotateX(${isCardFaceUp ? 180 : 0}deg)`,
         config: { mass: 5, tension: 500, friction: 80 }
     })
 
-    if (props.forceFlip) {
-        alert('ran forcefLip')
-        setFlipped(state => !state)
-    } else {
-        // alert('no flip')
-    }
 
-    const handleClick = () => {
+    useEffect(() => {
+        console.log("$$$$ useEffect ran for", props.isVisible,
+            (props.isVisible) ? "Card is visible" : "Card is not visible")
+    }, [props.isVisible]);
+
+    const cardHandleClick = (action) => {
         let cardStatus = {}
-        cardStatus['cardId'] = props.cardId
-        cardStatus['faceDown'] = flipped
+        cardStatus.isVisible = props.isVisible
+        if (action === 'flipOver') {setIsCardFaceUp(state => !state)}
+        if (action === 'isVisible') {
+            cardStatus.isVisible = false
+        }
+
+        cardStatus.cardId = props.cardId
+        cardStatus.cardOrder = props.cardOrder
+        cardStatus.faceUp = (action === 'flipOver')
+            ? !isCardFaceUp
+            : isCardFaceUp
         cardStatus.matchId = props.matchId
+        cardStatus.textCardFront = props.textCardFront
+        cardStatus.urlFront = props.urlFront
         let cardOut = {}
         cardOut[props.cardId] = cardStatus
         props.passedOnClickFunc(cardOut)
         // return cardStatus
     }
 
+    let classes = "card-parent "
+    if (!props.isVisible) {
+        classes+= " invisible"}
 
     return (
-        <div className="card-parent" >
+        <div className={classes} >
             <a.div class="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform }}
-                onClick={() => setFlipped(state => !state)}>
+            >
                 <h2>{props.textCardBack}</h2>
             </a.div>
 
@@ -54,23 +63,23 @@ function Card(props) {
                     //  backgroundSize: 'contain'
                 }}
                 onClick={() => {
-                    handleClick()
-                    setFlipped(state => !state)
+
+                    cardHandleClick('flipOver')
                 }}>
                 <h3 className='q-a-text'>{props.textCardFront}</h3>
                 <div className='btn-container-card'>
                     <button className='btn' onClick={(e) => {
-                        if (flipped) { e.stopPropagation(); alert(`Back! ${flipped}`) }
-                    }}>🔙</button>
+                        if (isCardFaceUp) { e.stopPropagation(); }
+                        cardHandleClick('isVisible')
+                    }}>🔙!</button>
                     <button className='btn' onClick={(e) => {
 
-                        if (flipped) {
+                        if (isCardFaceUp) {
 
                             e.stopPropagation();
-                            // alert(`Match! ${flipped}`);
                         }
-                        handleClick()
-                    }}>Match!</button>
+                        cardHandleClick()
+                    }}>Match! {"" + props.isVisible}</button>
                 </div>
             </a.div>
             {/* <div className='btn-container-card'>

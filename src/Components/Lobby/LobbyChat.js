@@ -50,6 +50,7 @@ function LobbyChat() {
     }
   }, [socket]);
 
+
   //Don't want anything in the dependency array, because we don't want to fire the listener another time. Need it there, empty.
   // const handleInput = (e) => {
   //     setMessage({userMessage: e.target.value})
@@ -60,14 +61,17 @@ function LobbyChat() {
   const updateMessages = (body) => {
     console.log(body);
     setMessages((messages) => [...messages, body]);
+    // window.scrollTo(0,document.body.scrollHeight);
   };
 
   const updateUsersList = (body) => {
     setUsersList(usersList.concat(body));
+    console.log("updateUsersList", body);
+
   };
   const emit = () => {
     //Add user to object after message.
-    socket.emit("chatter", { message });
+    socket.emit("chatter", { message, user: reduxState.user.username });
   };
 
   console.log("messages", messages);
@@ -83,10 +87,35 @@ function LobbyChat() {
               return (
                 //Add user info
                 <div
+                  // message={message}
+                  //this isn't working. trying to get user on message.
+                  // user={reduxState.user.username}
                   key={i}
-                  className={message ? `my-message` : `other-message`}
+                  className={
+                    messages[i].user === reduxState.user.username
+                      ? `my-message`
+                      : `other-message`
+                  }
                 >
-                  {message.message}
+                  {console.log(
+                    "trying to get user on the message",
+                    message.user
+                  )}
+                  
+                  <div className="message-container">
+                    {/* <h1 className='user-tag'>
+                      {messages[i].user}: <p className='user-message'>  {message.message}</p>
+                    </h1> */}
+                    <h1 className="user-tag">
+                      {messages[i].user === reduxState.user.username
+                        ? null
+                        : messages[i].user + `:`}{" "}
+                      <p className="user-message"> {message.message}</p>
+                    </h1>
+                  </div>
+                  {/* <p>{message.message}</p> */}
+
+                  {/* {reduxState.user.username + ' : ' + message.message} */}
                 </div>
               );
             })}
@@ -117,9 +146,11 @@ function LobbyChat() {
           {/* THIS MAP NEEDS TO BE FIXED--DISPLAYS SORT OF. Each username needs to be a link/button or something that when you click on it, it will display a pop up to challenge the user...?*/}
           {usersList.map((user, ind) => {
             return (
-              <p className="username-for-list" key={ind}>
+              <p onClick={() => {}} className="username-for-list" key={ind}>
                 {user.username}
               </p>
+              //   return (
+              // <div className='username-for-list' key={ind}>{user[ind].username}</div>
             );
           })}
         </div>
