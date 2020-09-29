@@ -26,6 +26,22 @@
     to {transform: rotate(360deg);}
 }
 
+.pulse {
+    width: 350px;
+    height: 300px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: yellow;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    from {transform: scale(0);
+          opacity: 0.75;}
+    to {transform: scale(1.5);
+        opacity: 0;}
+}
+
 .grayBar {
     width: 100%;
     height: 100px;
@@ -41,6 +57,38 @@
 @keyframes greyBar {
     from {transform: scaleY(0);}
     to {transform: scaleY(1);}
+}
+
+.lineBox {
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    animation: lineBox .7s;
+}
+
+@keyframes lineBox {
+    from {transform: scaleX(0);}
+    to {transform: scaleX(1);}
+}
+
+.line {
+    width: 700px;
+    height: 3px;
+    background-color: white;
+}
+
+.midLine {
+    width: 800px;
+    height: 3px;
+    background-color: white;
+    animation: lineBox .8s;
+}
+
+@keyframes lineBox {
+    from {transform: scaleX(0);}
+    to {transform: scaleX(1);}
 }
 
 .logo-dash {

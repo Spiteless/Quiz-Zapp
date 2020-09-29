@@ -18,14 +18,13 @@ class Lobby extends Component {
     console.log(event.target.value);
   }
 
-
   render(){
   return (
     <div className="lobbyContainer" >
       <div className='left-container'>
         <div className='logo-container'></div>
         <div className='quiz-zapp'>
-          <h1>QUIZ ZAPP</h1>
+          <h1 className="QZ">QUIZ ZAPP</h1>
         </div>
         <div className="games-container" >
             <div className='custom-games-box'>

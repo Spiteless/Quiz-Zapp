@@ -28,6 +28,12 @@ const Dashboard = (props) => {
   return(
       <div className="dashboardContainer" >
         <div className='grayBar'>
+          <div className="lineBox">
+            <div className="line"></div>
+            <div className="midLine"></div>
+            <div className="line"></div>
+          </div>
+          <div className="pulse"></div>
           <div className='logo-container-dash'>
             <div className="dash-logo"></div>
             {/* import logo, and fix the position over the gray bar */}
