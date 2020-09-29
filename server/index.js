@@ -68,17 +68,18 @@ massive ({
             })
             socket.on('user-info', (body) => {
                 console.log('this is user-info body', body, "it ends here")
-                lobbyUsers.map((user, ind)=>{
-                    if(body.username === user.username){ lobbyUsers.splice(ind, 1)}
-                });
+                // lobbyUsers.map((user, ind)=>{
+                //     if(body.username === user.username){ lobbyUsers.splice(ind, 1)}
+                // });
                 lobbyUsers.push({...body, socketId: socket.id});
                 io.in('lobby').emit("userList", lobbyUsers);
             })
             socket.on('remove-user', (body) =>{
-                lobbyUsers.map((user, ind)=>{
-                    if(body.username === user.username){ lobbyUsers.splice(ind, 1)};
-                    io.in('lobby').emit("userList", lobbyUsers);
-                })
+                console.log('remove-user',body)
+                const index = lobbyUsers.findIndex((user)=> body === user.username)
+                lobbyUsers.splice(index, 1);
+                io.in('lobby').emit("userList", lobbyUsers);
+                socket.leave('lobby')
             })
         })
     })

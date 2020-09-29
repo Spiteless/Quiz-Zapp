@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
+import React, { useEffect, useState, useContext } from "react";
 import { useSelector } from "react-redux";
 import "./Lobby.css";
+import { SocketContext } from "../Context/Context";
 // const socket = io.connect('http://localhost:4141');
 //hide the port on the front end.
 
@@ -9,50 +9,39 @@ import "./Lobby.css";
 //Or different socket connections per each need.
 //Option 3: Best, but most complicated. Save socket connection in redux or context. More complicated. React Context. Create a component that wraps around your whole app (another way to use global state).
 function LobbyChat() {
-  const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [usersList, setUsersList] = useState([]);
   const reduxState = useSelector((reduxState) => reduxState.auth);
+  const { socket } = useContext(SocketContext);
   console.log("reduxState", reduxState);
   //all the endpoints will go in the same useEffect. It's just setting up a listener for whatever events.
 
   useEffect(() => {
-    if (!socket) {
-      setSocket(io.connect("http://localhost:4141"));
-    }
-  }, []);
-
-  useEffect(() => {
     if (socket) {
       console.log(socket);
-      socket.on("test2", (body) => {
-      });
-      socket.on("welcome", (body) => {
-      });
+      socket.on("test2", (body) => {});
+      socket.on("welcome", (body) => {});
       socket.on("message", (body) => {
         updateMessages(body);
       });
       socket.on("request-username", () => {
         if (reduxState.user && reduxState.user.user_id) {
-        socket.emit("user-info", { ...reduxState.user });
+          socket.emit("user-info", { ...reduxState.user });
         }
       });
       socket.on("userList", (body) => {
         updateUsersList(body);
       });
     }
-    return()=> {if(socket){socket.emit('remove-user', reduxState.user.username)}}
+    return () => {
+      if (socket) {
+        socket.emit("remove-user", reduxState.user.username);
+      }
+    };
   }, [socket]);
 
-  // useEffect(() => {return() => leavePage()}, [])
-
-  // const leavePage = () =>{
-  //   socket.emit("disconnect");
-  // }
-
-
-  //Don't want anything in the dependency array, because we don't want to fire the listener another time. Need it there, empty.
+   //Don't want anything in the dependency array, because we don't want to fire the listener another time. Need it there, empty.
   // const handleInput = (e) => {
   //     setMessage({userMessage: e.target.value})
   // }
@@ -62,13 +51,11 @@ function LobbyChat() {
   const updateMessages = (body) => {
     console.log(body);
     setMessages((messages) => [...messages, body]);
-    // window.scrollTo(0,document.body.scrollHeight);
   };
 
   const updateUsersList = (body) => {
     setUsersList(usersList.concat(body));
     console.log("updateUsersList", body);
-
   };
   const emit = () => {
     //Add user to object after message.
@@ -102,7 +89,7 @@ function LobbyChat() {
                     "trying to get user on the message",
                     message.user
                   )}
-                  
+
                   <div className="message-container">
                     {/* <h1 className='user-tag'>
                       {messages[i].user}: <p className='user-message'>  {message.message}</p>
@@ -131,13 +118,16 @@ function LobbyChat() {
             onChange={(e) => setMessage(e.target.value)}
           />
           <button
-            className='chat-send-btn'
+            className="chat-send-btn"
             type="submit"
             onClick={(e) => {
               e.preventDefault();
               emit();
-              setMessage('');
-              }}>Send</button>
+              setMessage("");
+            }}
+          >
+            Send
+          </button>
         </form>
       </div>
       <div className="users-list-container">

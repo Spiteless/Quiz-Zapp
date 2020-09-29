@@ -1,17 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import {withRouter} from 'react-router-dom';
-
+import { SocketContext } from '../Context/Context';
 
 const Register = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-
+  const {connectSocket} = useContext(SocketContext);
   const register = () => {
     if(username && password && email){
         axios.post('/auth/register', {username, password, email}).then(res => {
-        //    props.loginUser(res.data)
+           props.loginUser(res.data)
+          connectSocket()
            props.history.push('/lobby') 
         }).catch(err => {
             console.log(err)
