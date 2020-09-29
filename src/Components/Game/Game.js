@@ -8,16 +8,32 @@ import { map } from 'lodash';
 
 const _ = require('lodash');
 
+let user1 = {correct: 0,
+email: "marty",
+questions: 0,
+score: 0,
+socketId: "A2jd5xDbxWGtygnlAAAA",
+user_id: 101,
+username: "mary"}
+let user2 = {correct: 0,
+email: "nascar",
+questions: 0,
+score: 0,
+socketId: "UBNG890351ijAOING2Pp",
+user_id: 100,
+username: "vroom"}
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       qArray: [],
       deck: {},
-      turn: [],
+      turn: [user1, user2],
       cardsFaceUp: [],
       cardsReadyToMatch: [],
       forceFlip: [],
+      me: {...user1}
     }
 
     this.gameHandleClick = this.gameHandleClick.bind(this)
@@ -26,6 +42,7 @@ class Game extends React.Component {
     this.mapToBoard = this.mapToBoard.bind(this)
     this.makeCardInvisible = this.makeCardInvisible.bind(this)
     this.getCardsFaceUp = this.getCardsFaceUp.bind(this)
+    this.nextPlayerTurn = this.nextPlayerTurn.bind(this)
   }
 
   componentDidMount() {
@@ -102,6 +119,7 @@ class Game extends React.Component {
     const { deck, cardsFaceUp, cardsReadyToMatch } = this.state
     let newDeck = { ...deck, ...cardState }
     let newCardsFaceUp = []
+    let newTurn = [...this.state.turn]
     Object.entries(newDeck).forEach(card => {
 
       //console.log("card", card)
@@ -126,8 +144,9 @@ class Game extends React.Component {
           newCardsFaceUp = []
         }
         else {
-          alert("NO MATCH!")
+          // alert("NO MATCH!")
           newCardsFaceUp.map( c => newDeck[c[0]].faceUp = false)
+          this.nextPlayerTurn(newTurn)
           newCardsFaceUp = []
           // let forceFlip = [[newCardsFaceUp[0][0]], newCardsFaceUp[1][0]]
           // newState.forceFlip = forceFlip
@@ -148,7 +167,7 @@ class Game extends React.Component {
     //     newDeck[c[0]].faceUp = false
     //   })
     // }
-    let newState = { ...this.state, deck: newDeck }
+    let newState = { ...this.state, deck: newDeck, turn: newTurn }
     newState.cardsFaceUp = newCardsFaceUp
     this.setState(newState)
   }
@@ -161,14 +180,15 @@ class Game extends React.Component {
     return (c1[1].matchId === c2[1].matchId) ? true : false
   }
 
-  checkPlayerTurnOver() {
+  // nextPlayerTurn() {
+  //   let newTurn = [this.state.turn]
+  //   return newTurn.push(newTurn.shift())
+  // }
 
-  }
-
-  newPlayerTurn(turnState) {
-    let newTurnState = [...turnState]
-    newTurnState.push(newTurnState.shift()) //move front item to end
-    return newTurnState
+  nextPlayerTurn(turnState) {
+    // let newTurnState = [...turnState]
+    turnState.push(turnState.shift()) //move front item to end
+    return turnState
   }
 
   emitGameState() {
@@ -277,13 +297,22 @@ class Game extends React.Component {
 
   render() {
     let mappedBoard = this.mapToBoard(Object.values(this.state.deck))
+
+    let currentPlayer = this.state.turn[0].username
+    let turnText = (currentPlayer === this.state.me.username)
+        ? "It's your turn!"
+        : `${currentPlayer}'s turn!`
+    let whoseTurn = (currentPlayer === this.state.me.username)
+        ? " my-turn"
+        : " not-my-turn"
+
     return (
-      <div className="gameContainer" >
+      <div className={"gameContainer" + whoseTurn} >
         {mappedBoard}
 
         <div className="chatWindow" >
+          <h1 className="player">{turnText}</h1>
           <h1>cardsFaceUp: {this.state.cardsFaceUp.map(c => c[1].matchId).toString()}</h1>
-          <h1>forceFlip: {this.state.forceFlip.toString()}</h1>
           <GameChat />
         </div>
 
