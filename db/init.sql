@@ -2,7 +2,10 @@ CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    email VARCHAR(50) NOT NULL UNIQUE
+    email VARCHAR(50) NOT NULL UNIQUE,
+    score INT,
+    questions INT,
+    answers INT
 );
 
 CREATE TABLE categories (
