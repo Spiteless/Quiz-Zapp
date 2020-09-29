@@ -51,6 +51,7 @@ massive ({
             //connection and disconnect are default endpoints. We receive the disconnect message when someone disconnects.
             socket.on('disconnect', () => {
                 console.log("Disconnected.")
+                // lobbyUsers.splice(`${socket.i}`)
             })
             //socket.on - in the arrow function it will take in a body - the body from the front end. Like a put or post from the front end.
             socket.on('turn', (body) => {

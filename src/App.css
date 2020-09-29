@@ -61,7 +61,7 @@
 }
 
 .card {
-  width: 10%;
+  width: 140px;
   height: 150px;
   /* background-color: aquamarine; */
   margin: 10px;
@@ -84,7 +84,7 @@
   justify-content: center; 
   /* max-width: 10%; */
   max-height: 150px;
-  width:  100px;
+  width:  140px;
   height: 150px;
   cursor: pointer;
   will-change: transform, opacity;
@@ -94,7 +94,7 @@
 .card-parent {
   margin-top: 15px;
   /* border: green 3px solid; */
-  width:  100px;
+  width:  140px;
   height: 150px;
   background-clip: padding-box;
   overflow: hidden;
@@ -122,6 +122,7 @@
 
 .back {
   background-image: url(./cardback.png);
+  background-color: white;
   background-size: 100px 150px;
   background-repeat: no-repeat;
   background-position: center;
@@ -160,9 +161,64 @@
 }
 
 .q-a-text {
-  font-size: 16px;
+  font-size: 13.5px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bolder;
   color: white;
   margin-top: 5px;
+}
+
+.invisible {
+  /* display: none; */
+  opacity: 0%;
+}
+
+/*!-------------------------------------------------MODAL------------------------------------------------------------------- */
+
+
+.endGameModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+  background-size: contain;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+/* Modal Content (image) */
+.modalContent {
+  margin: auto;
+  display: block;
+  width: 80%;
+  height: 100vh;
+  max-width: 700px;
+  font-size: 80px;
+  text-align: center;
+  color: white;
+  background-color: blue;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
 }
