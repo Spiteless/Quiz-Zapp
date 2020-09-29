@@ -23,12 +23,13 @@ function Card(props) {
     }, [props.isVisible]);
 
     const cardHandleClick = (action) => {
+        if (!props.isVisible) { return } //if invisible, disregard clicks
         let cardStatus = {}
         cardStatus.isVisible = props.isVisible
         if (action === 'flipOver') {setIsCardFaceUp(state => !state)}
-        if (action === 'isVisible') {
-            cardStatus.isVisible = false
-        }
+        if (action === 'isVisible') {cardStatus.isVisible = false}
+        if (action === 'match') {cardStatus.button = 'match'}
+        if (action === 'back') {cardStatus.button = 'back'; alert('card: back')}
 
         cardStatus.cardId = props.cardId
         cardStatus.cardOrder = props.cardOrder
@@ -40,6 +41,8 @@ function Card(props) {
         cardStatus.urlFront = props.urlFront
         let cardOut = {}
         cardOut[props.cardId] = cardStatus
+        cardOut.name = props.cardId
+        console.log("####card", cardOut)
         props.passedOnClickFunc(cardOut)
         // return cardStatus
     }
@@ -70,7 +73,7 @@ function Card(props) {
                 <div className='btn-container-card'>
                     <button className='btn' onClick={(e) => {
                         if (isCardFaceUp) { e.stopPropagation(); }
-                        cardHandleClick('isVisible')
+                        cardHandleClick('back')
                     }}>🔙!</button>
                     <button className='btn' onClick={(e) => {
 
@@ -78,8 +81,8 @@ function Card(props) {
 
                             e.stopPropagation();
                         }
-                        cardHandleClick()
-                    }}>Match! {"" + props.isVisible}</button>
+                        cardHandleClick('match')
+                    }}>Match!</button>
                 </div>
             </a.div>
             {/* <div className='btn-container-card'>

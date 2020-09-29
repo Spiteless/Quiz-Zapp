@@ -169,8 +169,25 @@
 }
 
 .invisible {
-  /* display: none; */
-  opacity: 0%;
+  /* opacity: 0%; */
+  cursor: zoom-out !important;
+  animation-name: invisible;
+  animation-duration: 2s;
+  animation-delay: 450ms;
+  animation-fill-mode: forwards;
+}
+
+.invisible > * {
+  cursor: default !important;
+}
+
+.invisible > * > * {
+  cursor: default !important;
+}
+
+@keyframes invisible {
+  from {opacity: 100%;}
+  to {opacity: 0%;}
 }
 
 /*!-------------------------------------------------MODAL------------------------------------------------------------------- */
