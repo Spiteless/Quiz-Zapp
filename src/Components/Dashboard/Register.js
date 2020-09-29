@@ -22,7 +22,7 @@ const Register = (props) => {
     }
 }
   return(
-    <div className="authContainer" >
+    <form className="authContainer" >
       <input 
         name='username'
         value={username} 
@@ -41,8 +41,10 @@ const Register = (props) => {
         type='text'
         onChange={(e) => setEmail(e.target.value)}
         placeholder='Type email here.' />
-      <button onClick={() => register()}>Submit</button>
-    </div>
+      <button type="submit" onClick={(e) => {
+        e.stopPropagation();
+        register()}}>Submit</button>
+    </form>
   )
 };
 

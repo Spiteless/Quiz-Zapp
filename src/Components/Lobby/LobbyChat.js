@@ -65,8 +65,9 @@ function LobbyChat() {
   };
 
   const updateUsersList = (body) => {
+    setUsersList(usersList.concat(body));
     console.log("updateUsersList", body);
-    setUsersList((usersList) => [...usersList, body]);
+
   };
   const emit = () => {
     //Add user to object after message.
@@ -108,7 +109,7 @@ function LobbyChat() {
                     <h1 className="user-tag">
                       {messages[i].user === reduxState.user.username
                         ? null
-                        : messages[i].user + `:`}{" "}
+                        : messages[i].user + `: `}
                       <p className="user-message"> {message.message}</p>
                     </h1>
                   </div>
@@ -120,7 +121,7 @@ function LobbyChat() {
             })}
           </div>
         </div>
-        <div className="input-btn-bar">
+        <form className="input-btn-bar">
           <input
             className="chat-input"
             placeholder="type message here"
@@ -129,15 +130,14 @@ function LobbyChat() {
             onChange={(e) => setMessage(e.target.value)}
           />
           <button
-            className="chat-send-btn"
-            onClick={() => {
+            className='chat-send-btn'
+            type="submit"
+            onClick={(e) => {
+              e.stopPropagation();
               emit();
-              setMessage("");
-            }}
-          >
-            Send
-          </button>
-        </div>
+              setMessage('');
+              }}>Send</button>
+        </form>
       </div>
       <div className="users-list-container">
         <h1 className="list-header">Challenge a Player</h1>
@@ -146,7 +146,7 @@ function LobbyChat() {
           {usersList.map((user, ind) => {
             return (
               <p onClick={() => {}} className="username-for-list" key={ind}>
-                {user[ind].username}
+                {user.username}
               </p>
               //   return (
               // <div className='username-for-list' key={ind}>{user[ind].username}</div>

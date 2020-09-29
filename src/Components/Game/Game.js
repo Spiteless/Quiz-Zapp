@@ -4,6 +4,7 @@ import axios from 'axios';
 import Card from "./Card";
 import GameChat from './GameChat';
 import cardFront from '../../cardfront.png';
+import { map } from 'lodash';
 
 const _ = require('lodash');
 
@@ -13,6 +14,7 @@ class Game extends React.Component {
     this.state = {
       qArray: [],
       deck: {},
+      turn: [],
       cardsFaceUp: [],
       cardsReadyToMatch: [],
       forceFlip: [],
@@ -23,6 +25,7 @@ class Game extends React.Component {
     this.checkIfMatch = this.checkIfMatch.bind(this)
     this.mapToBoard = this.mapToBoard.bind(this)
     this.makeCardInvisible = this.makeCardInvisible.bind(this)
+    this.getCardsFaceUp = this.getCardsFaceUp.bind(this)
   }
 
   componentDidMount() {
@@ -70,7 +73,7 @@ class Game extends React.Component {
         const qArray = this.state.qArray
 
         let newDeck = {}
-        qArray.forEach( (card, index) => {
+        qArray.forEach((card, index) => {
           let cardStatus = {}
           cardStatus.cardId = card.cardId
           cardStatus.cardOrder = card.cardOrder
@@ -79,25 +82,31 @@ class Game extends React.Component {
           cardStatus.textCardFront = card.textCardFront
           cardStatus.urlFront = card.urlFront
           cardStatus.isVisible = card.isVisible
-          
+
           newDeck[card.cardId] = cardStatus
         })
-                
+
         this.setState({ deck: newDeck })
       })
       .catch(err => console.log(err))
   }
 
   gameHandleClick(cardState) {
-    // console.log("$$$$", cardState)
+    console.log("####game", cardState)
+    let button = undefined
+    button = cardState[cardState.name].button
+    // if (button) { alert("game: " + button) }
+
+    delete cardState[cardState.name].button
+
     const { deck, cardsFaceUp, cardsReadyToMatch } = this.state
     let newDeck = { ...deck, ...cardState }
     let newCardsFaceUp = []
     Object.entries(newDeck).forEach(card => {
 
-     //console.log("card", card)
-     //console.log(card[0], card[1].faceUp)
-     //if (card[1].faceUp) { newCardsFaceUp.push(card) }
+      //console.log("card", card)
+      //console.log(card[0], card[1].faceUp)
+      //if (card[1].faceUp) { newCardsFaceUp.push(card) }
 
       const [cardName, cardAttributes] = card
       if (cardAttributes.faceUp) { newCardsFaceUp.push(card) }
@@ -105,50 +114,64 @@ class Game extends React.Component {
     })
 
     if (newCardsFaceUp.length === 2) {
-      if (this.checkIfMatch(newCardsFaceUp[0], newCardsFaceUp[1],)) {
-        setTimeout(() => {
-          newCardsFaceUp.map( c => {
+      console.log("#### newCardsFaceUp === 2")
+      if (button === 'match') {
+        if (this.checkIfMatch(newCardsFaceUp[0], newCardsFaceUp[1],)) {
+          newCardsFaceUp.map(c => {
             newDeck[c[0]].isVisible = false
             newDeck[c[0]].faceUp = false
-            alert("MATCH")
-        })
-          // newCardsFaceUp = []
-        }, 450)
-        //  alert("MATCH!") 
-        // let newCard0 = newCardsFaceUp[0]
-        // newCard0.isVisible = false
-        // let newCard1 = newCardsFaceUp[1]
-        // newCard1.isVisible = false
-        // // let newCards0 = this.makeCardInvisible(newCardsFaceUp[0])
-        // // let newCards1 = this.makeCardInvisible(newCardsFaceUp[1])
-        // newDeck[newCard0.cardId] = {newCard0}
-        // newDeck[newCard1.cardId] = {newCard1}
-
-        console.log("$$$$ newDeck:", newDeck)
-        // 
-        
-        
+          })
+          console.log("SUCCESS, CARDS MATCHED!")
+          console.log("$$$$ newDeck:", newDeck)
+          newCardsFaceUp = []
+        }
+        else {
+          alert("NO MATCH!")
+          newCardsFaceUp.map( c => newDeck[c[0]].faceUp = false)
+          newCardsFaceUp = []
+          // let forceFlip = [[newCardsFaceUp[0][0]], newCardsFaceUp[1][0]]
+          // newState.forceFlip = forceFlip
+        }
       }
-      else {
-        // alert("NO MATCH!") 
-        // let forceFlip = [[newCardsFaceUp[0][0]], newCardsFaceUp[1][0]]
-        // newState.forceFlip = forceFlip
-      }
+      if (button === 'back') {
+        newCardsFaceUp.map((c, index) => {
+          // if (index + 1 !== map.newCardsFaceUp.length) {
+          newDeck[c[0]].faceUp = false
+          newCardsFaceUp = []
+        }
+        // }
+        )}
     }
+
+    // if (newCardsFaceUp.length > 2) {
+    //   newCardsFaceUp.map(c => {
+    //     newDeck[c[0]].faceUp = false
+    //   })
+    // }
     let newState = { ...this.state, deck: newDeck }
     newState.cardsFaceUp = newCardsFaceUp
     this.setState(newState)
+  }
+
+  getCardsFaceUp() {
+    return Object.values(this.state.cardsFaceUp).map(m => m[1].cardId)
   }
 
   checkIfMatch(c1, c2) {
     return (c1[1].matchId === c2[1].matchId) ? true : false
   }
 
-  checkPlayerTurnOver(){
+  checkPlayerTurnOver() {
 
   }
 
-  emitGameState(){
+  newPlayerTurn(turnState) {
+    let newTurnState = [...turnState]
+    newTurnState.push(newTurnState.shift()) //move front item to end
+    return newTurnState
+  }
+
+  emitGameState() {
 
   }
 
@@ -194,8 +217,9 @@ class Game extends React.Component {
       matchId={cardInfo.matchId}
       deck={this.state.deck}
       cardOrder={cardInfo.cardOrder}
-      faceUp = {cardInfo.faceUp}
-      isVisible = {cardInfo.isVisible}
+      faceUp={cardInfo.faceUp}
+      isVisible={cardInfo.isVisible}
+      getCardsFaceUp={this.getCardsFaceUp}
 
       testFlip={Object.entries(this.state.deck).includes(cardInfo.cardId)}
 
@@ -207,13 +231,13 @@ class Game extends React.Component {
 
   makeCardInvisible(card) {
     card.isVisible = false
-    console.log("$$$$","invisCard?",card, typeof card)
+    console.log("$$$$", "invisCard?", card, typeof card)
     return card
   }
 
   mapToBoard(cardArrayIn, rows = 4, columns = 4) {
     let cardArray = []
-    
+
     for (let i = 0; i < cardArrayIn.length; i++) {
       let row = []
       for (let i = 0; i < columns; i++) {
@@ -240,7 +264,7 @@ class Game extends React.Component {
     })
     return entries
   }
-  
+
   modal = () => {
     var modal = document.getElementById("modal");
     modal.style.display = "block";
@@ -248,7 +272,7 @@ class Game extends React.Component {
 
   close = () => {
     var modal = document.getElementById("modal");
-    modal.style.display="none"
+    modal.style.display = "none"
   }
 
   render() {
@@ -258,15 +282,15 @@ class Game extends React.Component {
         {mappedBoard}
 
         <div className="chatWindow" >
-          <h1>cardsFaceUp: {this.state.cardsFaceUp.map(c => c[1].cardOrder).toString()}</h1>
+          <h1>cardsFaceUp: {this.state.cardsFaceUp.map(c => c[1].matchId).toString()}</h1>
           <h1>forceFlip: {this.state.forceFlip.toString()}</h1>
           <GameChat />
         </div>
 
-        <button onClick={e => {this.modal()}}>MODAL</button>
+        <button onClick={e => { this.modal() }}>MODAL</button>
 
         <div id="modal" className="endGameModal">
-          <span onClick={e => {this.close()}} class="close">&times;</span>
+          <span onClick={e => { this.close() }} class="close">&times;</span>
           <div className="modalContent">GAME OVER</div>
         </div>
 

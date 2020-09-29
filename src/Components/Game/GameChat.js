@@ -29,14 +29,14 @@ function GameChat(){
 //Passing socket in the dependency array. So anytime socket (on local state) is updated, the useEffect will re-render.
   
     return(
-        <div>
+        <form>
             <button onClick={()=>{
                 socket.emit('test', {pizza: 'delicious'})
             }}>Test</button>
-            <button onClick={() =>{
-                socket.emit('test', {dog: "lucy"} )
+            <button type="submit" onClick={(e) =>{
+                e.stopPropagation();socket.emit('test', {dog: "lucy"} )
             }}>Another button</button>
-        </div>
+        </form>
     )
 }
 
