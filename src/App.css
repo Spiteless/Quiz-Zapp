@@ -168,8 +168,9 @@
   margin-top: 5px;
 }
 
+/*!-------------------------------------------------Game.js------------------------------------------------------------------- */
+
 .invisible {
-  /* display: none; */
   opacity: 100%;
   cursor: default !important;
  
@@ -185,6 +186,25 @@
 
 .invisible > * > * {
   cursor: default !important;
+}
+.chatWindow{
+  align-items: center;
+  justify-content: center;
+}
+.chatWindow > h1 {
+  margin-bottom: 15px;
+  font-size: 2em;
+}
+.player {
+  color:white;
+  background: black;
+}
+
+.not-my-turn div.row div.card-parent {
+  border: red solid 2px;
+}
+.my-turn div.row div.card-parent {
+  border: transparent solid 2px;
 }
 
 @keyframes invisible {
