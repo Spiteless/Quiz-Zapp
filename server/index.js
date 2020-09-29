@@ -10,6 +10,7 @@ const lobbyUsers = [];
 const authCtrl = require('./controllers/authController');
 const gameCtrl = require('./controllers/gameController');
 
+
 const app = express();
 
 app.use(express.json());
@@ -55,23 +56,29 @@ massive ({
             })
             //socket.on - in the arrow function it will take in a body - the body from the front end. Like a put or post from the front end.
             socket.on('turn', (body) => {
-                console.log(body)
                 //socket.on will receive body as parameter in arrow functions, and socket.emit will have body. 
                 //what we're sending back.
                 socket.to(body.room).emit('test2', {winter: "evil"})
             })
             socket.on('message', (body) => {
-                console.log(body);
                 socket.emit(body);
             } )
             socket.on('chatter', (body) => {
                 io.in('lobby').emit('message', body)
-                console.log(body)
             })
             socket.on('user-info', (body) => {
-                console.log('hit', body)
-                lobbyUsers.push({...body, socketId: socket.id})
-                io.in('lobby').emit("userList", lobbyUsers)
+                console.log('this is user-info body', body, "it ends here")
+                lobbyUsers.map((user, ind)=>{
+                    if(body.username === user.username){ lobbyUsers.splice(ind, 1)}
+                });
+                lobbyUsers.push({...body, socketId: socket.id});
+                io.in('lobby').emit("userList", lobbyUsers);
+            })
+            socket.on('remove-user', (body) =>{
+                lobbyUsers.map((user, ind)=>{
+                    if(body.username === user.username){ lobbyUsers.splice(ind, 1)};
+                    io.in('lobby').emit("userList", lobbyUsers);
+                })
             })
         })
     })
