@@ -170,7 +170,8 @@
 
 .invisible {
   /* opacity: 0%; */
-  cursor: zoom-out !important;
+  cursor: default !important;
+  .none {cursor: none;}
   animation-name: invisible;
   animation-duration: 2s;
   animation-delay: 450ms;

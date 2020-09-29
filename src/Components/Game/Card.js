@@ -33,10 +33,13 @@ function Card(props) {
     const cardHandleClick = (action) => {
         if (!props.isVisible) { return } //if invisible, disregard clicks
         let faceUpCards = props.getCardsFaceUp()
-        if (faceUpCards.length >= 2 
-            && !faceUpCards.includes(props.cardId)) {
-            // if (!faceUpCards.includes(props.cardId)) { return }
-          return  }
+        if (faceUpCards.length >= 2){
+            //disregard clicks on non-faceUp cards while 2 faceup
+            if (!faceUpCards.includes(props.cardId)) { return }
+                //disregard clicks on card body, must click buttons
+            if (action==='flipOver') { return }
+            }
+                   
         let cardStatus = {}
         cardStatus.isVisible = props.isVisible
         if (action === 'flipOver') { setIsCardFaceUp(state => !state) }
@@ -91,7 +94,7 @@ function Card(props) {
                     <button className='btn' onClick={(e) => {
                         if (isCardFaceUp) { e.stopPropagation(); }
                         cardHandleClick('back')
-                    }}>🔙!</button>
+                    }}>🔙</button>
                     <button className='btn' onClick={(e) => {
 
                         if (isCardFaceUp) {
