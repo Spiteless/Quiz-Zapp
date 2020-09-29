@@ -1,10 +1,13 @@
 import { withRouter } from "react-router-dom";
-import React from 'react';
+import React, { useContext } from 'react';
+import { SocketContext } from '../Context/Context';
 // import '../../css/About.css';
 import './About.css';
 
 const About = (props) => {
-
+    const context = useContext(SocketContext)
+    console.log(context)
+    console.log('just a word')
     return (
         <div className='about-pg'>
             <div className='gray-bar-about'>

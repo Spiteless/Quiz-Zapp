@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
+import React, { useState, useContext } from 'react';
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {loginUser} from '../../redux/authReducer';
+import { SocketContext } from '../Context/Context';
 
 
 const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const {connectSocket} = useContext(SocketContext);
   const login = () => {
     axios.post('/auth/login', {username, password}).then(res => {
         console.log("this is res.data from login post axios call in Login.js", res.data)
         props.loginUser(res.data)
+        connectSocket()
         props.history.push('/lobby')
     }).catch(err => {
         console.log(err)
