@@ -42,7 +42,7 @@ const Register = (props) => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder='Type email here.' />
       <button type="submit" onClick={(e) => {
-        e.stopPropagation();
+        e.preventDefault();
         register()}}>Submit</button>
     </form>
   )

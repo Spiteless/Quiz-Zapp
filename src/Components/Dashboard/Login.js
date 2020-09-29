@@ -34,10 +34,12 @@ const Login = (props) => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder='Type password here.' />
       <button className="user-pass-submit"
-      type="submit"
+      type=""
+      method='post'
       onClick={(e) => {
-        e.stopPropagation();
-        login()}}>Submit</button>
+        e.preventDefault();
+        login()
+        return false}}>Submit</button>
     </form>
   )
 };

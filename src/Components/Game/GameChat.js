@@ -34,7 +34,7 @@ function GameChat(){
                 socket.emit('test', {pizza: 'delicious'})
             }}>Test</button>
             <button type="submit" onClick={(e) =>{
-                e.stopPropagation();socket.emit('test', {dog: "lucy"} )
+                e.preventDefault();socket.emit('test', {dog: "lucy"} )
             }}>Another button</button>
         </form>
     )

@@ -133,7 +133,7 @@ function LobbyChat() {
             className='chat-send-btn'
             type="submit"
             onClick={(e) => {
-              e.stopPropagation();
+              e.preventDefault();
               emit();
               setMessage('');
               }}>Send</button>
