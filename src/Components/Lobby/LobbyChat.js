@@ -65,8 +65,9 @@ function LobbyChat() {
   };
 
   const updateUsersList = (body) => {
+    setUsersList(usersList.concat(body));
     console.log("updateUsersList", body);
-    setUsersList((usersList) => [...usersList, body]);
+
   };
   const emit = () => {
     //Add user to object after message.
@@ -146,7 +147,7 @@ function LobbyChat() {
           {usersList.map((user, ind) => {
             return (
               <p onClick={() => {}} className="username-for-list" key={ind}>
-                {user[ind].username}
+                {user.username}
               </p>
               //   return (
               // <div className='username-for-list' key={ind}>{user[ind].username}</div>
