@@ -32,6 +32,10 @@ function Card(props) {
         // if (!props.isItMyTurn()) { return }
         if (!props.isVisible) { return } //if invisible, disregard clicks
         let faceUpCards = props.getCardsFaceUp()
+
+        if (faceUpCards.length === 1
+            && faceUpCards.includes(props.cardId)) { return }
+
         if (faceUpCards.length >= 2) {
             //disregard clicks on non-faceUp cards while 2 faceup
             if (!faceUpCards.includes(props.cardId)) {
@@ -46,7 +50,10 @@ function Card(props) {
         cardStatus.isVisible = props.isVisible
         if (action === 'flipOver') { setIsCardFaceUp(state => !state) }
         if (action === 'isVisible') { cardStatus.isVisible = false }
-        if (action === 'match' ) { cardStatus.button = 'match' }
+        if (action === 'match' ) { 
+            cardStatus.button = 'match' 
+            // alert("Card Match")
+        }
         if (action === 'back') {
             cardStatus['button'] = 'back';
             console.log("**** !!!!1", cardStatus)

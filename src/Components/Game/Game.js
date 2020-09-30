@@ -57,6 +57,7 @@ const Game = (props) => {
     let category = '';
     (props.location)
       ? category = `http://jservice.io/api/clues?category=17`
+      // : category = this.props.location.state.name
       : category = `http://jservice.io/api/clues?category=17`
     let newArr = []
     let newArrClean = []
@@ -164,10 +165,12 @@ const Game = (props) => {
         newCardsFaceUp.map((c, index) => {
           // if (index + 1 !== map.newCardsFaceUp.length) {
           newDeck[c[0]].faceUp = false
-          newCardsFaceUp = []
         }
-          // }
+        
+        // }
         )
+        nextPlayerTurn(newTurn)
+        newCardsFaceUp = []
       }
     }
 
@@ -247,7 +250,7 @@ const Game = (props) => {
   const getCardsFaceUp = () => {
     console.log("**** cardsFaceUp:", cardsFaceUp)
     let cards = Object.entries(cardsFaceUp)
-    let empty = cardsFaceUp.map(c => c[1].matchId)
+    let empty = cardsFaceUp.map(c => c[1].cardId)
     
     console.log("**** getCardsFaceUp", cards, empty)
     return empty
@@ -335,3 +338,13 @@ const Game = (props) => {
 }
 
 export default (withRouter(Game));
+
+/*
+Make back end the turn anyway
+
+
+
+
+
+
+*/
