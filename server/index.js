@@ -46,7 +46,7 @@ massive ({
             //Socket is individual connection, io is global - all the sockets.
             console.log(socket.id)
             //Anytime new user connects, they will go to lobby room ('lobby' is the endpoint.)
-            socket.join('lobby')
+            
             socket.emit('request-username')
             io.in('lobby').emit('welcome', {welcome: 'New user joined!', newUser: socket.id})
             //connection and disconnect are default endpoints. We receive the disconnect message when someone disconnects.
@@ -74,13 +74,24 @@ massive ({
                 lobbyUsers.push({...body, socketId: socket.id});
                 io.in('lobby').emit("userList", lobbyUsers);
             })
-            // socket.on('remove-user', (body) =>{
-            //     console.log('remove-user',body)
-            //     const index = lobbyUsers.findIndex((user)=> body === user.username)
-            //     lobbyUsers.splice(index, 1);
-            //     io.in('lobby').emit("userList", lobbyUsers);
-            //     socket.leave('lobby')
-            // })
+            socket.on('join-lobby', (body) => {
+                const testIndexOf = lobbyUsers.indexOf((user) => user.user_id === body.user_id)
+                console.log(testIndexOf);
+                console.log(body, lobbyUsers)
+                if(testIndexOf === -1){
+                    socket.join('lobby')
+                    console.log("how much wood could a wood chuck")
+                    lobbyUsers.push({...body, socketId: socket.id});
+                    io.in('lobby').emit("userList", lobbyUsers);
+                }
+            })
+            socket.on('remove-user', (body) =>{
+                console.log('remove-user',body)
+                const index = lobbyUsers.findIndex((user)=> body === user.username)
+                lobbyUsers.splice(index, 1);
+                io.in('lobby').emit("userList", lobbyUsers);
+                socket.leave('lobby')
+            })
         })
     })
     .catch((err) => console.log(`Database error: ${err}`));

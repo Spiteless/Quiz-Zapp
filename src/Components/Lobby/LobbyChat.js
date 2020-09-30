@@ -28,22 +28,29 @@ function LobbyChat(props) {
         updateMessages(body);
         console.log('message console.log', body)
       });
-      socket.on("request-username", () => {
-        if (reduxState.user && reduxState.user.user_id) {
-          socket.emit("user-info", { ...reduxState.user });
-        }
-      });
+      // socket.on("request-username", () => {
+      //   if (reduxState.user && reduxState.user.user_id) {
+      //     socket.emit("user-info", { ...reduxState.user });
+      //   }
+      // });
       socket.on("userList", (body) => {
         updateUsersList(body);
         // console.log('usersList in useEffect', usersList)
       });
     }
-    // return () => {
-    //   if (socket) {
-    //     socket.emit("remove-user", reduxState.user.username);
-    //   }
-    // };
+    return () => {
+      if (socket) {
+        socket.emit("remove-user", reduxState.user.username);
+      }
+    };
   }, [socket, props.location.pathname]);
+
+  useEffect(()=> {
+    if(socket){
+      console.log('useeffect hit')
+      socket.emit('join-lobby', {...reduxState.user});
+    }
+  }, [socket]);
 
 //   useEffect(() => {
 //     if (socket) {
@@ -72,7 +79,7 @@ function LobbyChat(props) {
   };
   const emit = () => {
     //Add user to object after message.
-    socket.emit("chatter", { message, user: reduxState.user.username, socketid: socket.id });
+    socket.emit("chatter", { message, user: reduxState.user.username});
   };
 
   console.log("messages", messages);
