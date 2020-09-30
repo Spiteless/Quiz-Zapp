@@ -38,7 +38,7 @@ const Game = (props) => {
 
   const [board, setBoard] = useState({
     deck: {},
-    // turn: [user1, user2],
+    turn: [user1, user2],
     cardsFaceUp: [],
     cardsReadyToMatch: [],
     forceFlip: [],
@@ -71,9 +71,10 @@ const Game = (props) => {
         newArrClean = _.uniqBy(newArr, 'answer')
         let tempQArray = [...newArrClean.slice(0, 8)]
         tempQArray = shuffleQuestions(cardData(tempQArray)) //shuffles slice of questions
-        setQArray([...tempQArray]);
+        // setQArray([...tempQArray]);
 
         const qArray = tempQArray
+        // setQArray((qArray) => tempQArray)
 
         let newDeck = {}
         qArray.forEach((card, index) => {
@@ -182,6 +183,7 @@ const Game = (props) => {
     console.log("**** newState for setBoard", newState)
     setTurn(newTurn)
     setBoard(newState)
+    // socket.emit('player-turn', {newState});
   }
 
   const nextPlayerTurn = (turnState) => {
