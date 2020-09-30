@@ -67,14 +67,14 @@
   margin: 10px;
 }
 
-.otherCard {
+/* .otherCard {
   /* display: inline-block;
   width: 10%;
   height: 150px;
   background-color: rgb(96, 98, 190);
   margin: 10px;
   border: 10px red solid; */
-}
+/* }  */
 
 .c {
   position: absolute;
@@ -139,6 +139,7 @@
   align-items: flex-end;
   margin-bottom: 5px;
   position: relative;
+  width: 130px;
 }
 
 .gameContainer {
@@ -155,17 +156,40 @@
 }
 
 .btn {
-  height: 25px;
+  height: 20px;
+  width: 75px;
   color: rgb(53, 52, 52);
+  background-color: white;
   font-weight: bolder;
+  border: solid 2px yellow;
+  /* box-shadow: 1px -3px 1px gray; */
+  -webkit-box-shadow: inset 0px 0px 2px 0px rgb(0, 0, 0);
+  -moz-box-shadow: inset 0px 0px 2px 0px rgb(0, 0, 0);
+  box-shadow: inset 0px 0px 2px 0px rgb(0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-left {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding-bottom: 4px;
+}
+
+.btn-right {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-left: none;
 }
 
 .q-a-text {
-  font-size: 13.5px;
+  font-size: 14px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bolder;
   color: white;
-  margin-top: 5px;
+  /* margin-top: 5px; */
+  margin: 10px;
 }
 
 /*!-------------------------------------------------Game.js------------------------------------------------------------------- */
@@ -201,7 +225,9 @@
 }
 
 .not-my-turn div.row div.card-parent {
-  border: red solid 2px;
+  border: red solid 1px;
+  box-shadow: -1px 2px 6px red;
+  border-radius: 10px;
 }
 .my-turn div.row div.card-parent {
   border: transparent solid 2px;
