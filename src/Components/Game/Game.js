@@ -47,10 +47,10 @@ const Game = (props) => {
 
   const [board, setBoard] = useState({
     deck: {},
-    turn: [user1, user2],
-    cardsFaceUp: [],
-    cardsReadyToMatch: [],
-    forceFlip: [],
+    // turn: [user1, user2],
+    // cardsFaceUp: [],
+    // cardsReadyToMatch: [],
+    // forceFlip: [],
   })
 
   const me = { ...user1 }
@@ -220,12 +220,13 @@ const Game = (props) => {
     //     newDeck[c[0]].faceUp = false
     //   })
     // }
-    let newState = { ...board, deck: newDeck, turn: newTurn }
+    let newState = { deck: newDeck }
     // newState.cardsFaceUp = newCardsFaceUp
     setCardsFaceUp(newCardsFaceUp)
     console.log("**** newState for setBoard", newState)
     setTurn(newTurn)
     setBoard(newState)
+    handleGameOver(newState)
     // socket.emit('player-turn', {newState});
   }
 
@@ -316,6 +317,13 @@ const Game = (props) => {
     return Object.values(board.cardsFaceUp).map(m => m[1].cardId)
   }
 
+  const handleGameOver = (state) => {
+    let mapOver = Object.values(state.deck).filter( c => {
+      return c.isVisible
+    })
+    return (mapOver.length === 0) ? modal() : false
+  }
+
   const isItMyTurn = () => {
     return turn[0].username === me.username
   }
@@ -372,9 +380,15 @@ const Game = (props) => {
     ? " my-turn"
     : " not-my-turn"
 
-  const endGameScores = (players) => {
-
-  }
+  const endGameScores = (player) => {
+    return (
+    <div className="scores">
+        <h1>{player.username}</h1>
+        <h2>Questions attempted: {player.questions}</h2>
+        <h2>Correct answers: {player.correct}</h2>
+        <h2>Score: {player.score}</h2>
+    </div>
+    )}
   return (
 
     <div className={"gameContainer" + whoseTurn} >
@@ -395,6 +409,8 @@ const Game = (props) => {
         <span onClick={e => { close() }} class="close">&times;</span>
         <div className="modalContent">
           <h1>GAME OVER</h1>
+          {console.log("$$$$", typeof playerScores)}
+          {Object.values(playerScores).map(p => endGameScores(p))}
           
           </div>
       </div>
