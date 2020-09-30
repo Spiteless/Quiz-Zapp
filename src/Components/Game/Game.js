@@ -30,10 +30,11 @@ let user2 = {
   username: "vroom"
 }
 
-const Game2 = (props) => {
+const Game = (props) => {
 
   const [qArray, setQArray] = useState([])
-  const [turn, setTurn] = useState([user1, user2])
+  const [turn, setTurn] = useState([user2, user1])
+  const [cardsFaceUp, setCardsFaceUp] = useState([])
 
   const [board, setBoard] = useState({
     deck: {},
@@ -50,7 +51,7 @@ const Game2 = (props) => {
     console.log("**** use effect ran", result)
   }, []);
 
-  
+
 
   const getQuestions = () => {
     let category = '';
@@ -71,7 +72,7 @@ const Game2 = (props) => {
         let tempQArray = [...newArrClean.slice(0, 8)]
         tempQArray = shuffleQuestions(cardData(tempQArray)) //shuffles slice of questions
         setQArray([...tempQArray]);
-        
+
         const qArray = tempQArray
 
         let newDeck = {}
@@ -91,8 +92,8 @@ const Game2 = (props) => {
         setBoard({ deck: newDeck })
         return newDeck
       })
-      .catch(err => {console.log(err)})
-      
+      .catch(err => { console.log(err) })
+
   }
 
   const shuffleQuestions = (qArray) => {
@@ -118,8 +119,6 @@ const Game2 = (props) => {
     console.log("**** gameHandleClick", cardState)
     let button = undefined
     button = cardState.button
-    alert("button "  + button)
-    // if (button) { alert("game: " + button) }
 
     delete cardState.button
 
@@ -128,7 +127,7 @@ const Game2 = (props) => {
     newDeck[cardState.cardId] = cardState
     let newCardsFaceUp = []
     console.log("**** board.turn in gameHandleClick", turn, "deck", deck)
-    let newTurn = [turn]
+    let newTurn = [...turn]
     Object.entries(newDeck).forEach(card => {
       // console.log("**** card", card)
       //console.log(card[0], card[1].faceUp)
@@ -139,7 +138,8 @@ const Game2 = (props) => {
     })
 
     if (newCardsFaceUp.length === 2) {
-      alert("button here is " + (button) ? button : "gone somehow")
+      let msg = (button) ? `button is [${button}]` : "no button?"
+      // alert(msg)
       console.log("**** newCardsFaceUp === 2", button)
       if (button === 'match') {
         if (checkIfMatch(newCardsFaceUp[0], newCardsFaceUp[1],)) {
@@ -162,7 +162,6 @@ const Game2 = (props) => {
       }
       if (button === 'back') {
         newCardsFaceUp.map((c, index) => {
-          alert("BACCKKK")
           // if (index + 1 !== map.newCardsFaceUp.length) {
           newDeck[c[0]].faceUp = false
           newCardsFaceUp = []
@@ -178,7 +177,10 @@ const Game2 = (props) => {
     //   })
     // }
     let newState = { ...board, deck: newDeck, turn: newTurn }
-    newState.cardsFaceUp = newCardsFaceUp
+    // newState.cardsFaceUp = newCardsFaceUp
+    setCardsFaceUp(newCardsFaceUp)
+    console.log("**** newState for setBoard", newState)
+    setTurn(newTurn)
     setBoard(newState)
   }
 
@@ -217,9 +219,9 @@ const Game2 = (props) => {
 
     return (combinedArr)
   }
- 
+
   const createCard = (cardInfo) => {
-    const {deck} = board
+    const { deck } = board
     // console.log("$$$$", cardInfo)
     return <Card
       textCardBack={cardInfo.textCardBack}
@@ -245,14 +247,14 @@ const Game2 = (props) => {
 
   const getCardsFaceUp = () => {
     let cards = Object.values(board.deck)
-    let empty = cards.filter( c => c.faceUp)
+    let empty = cards.filter(c => c.faceUp)
     console.log("**** getCardsFaceUp", cards, empty)
     return empty
     return Object.values(board.cardsFaceUp).map(m => m[1].cardId)
   }
 
   const isItMyTurn = () => {
-    return board.turn[0].username === me.username
+    return turn[0].username === me.username
   }
 
   const checkIfMatch = (c1, c2) => {
@@ -299,34 +301,42 @@ const Game2 = (props) => {
     modal.style.display = "none"
   }
   let mappedBoard = mapToBoard(Object.values(board.deck))
+  let currentPlayer = turn[0].username
+  let turnText = (currentPlayer === me.username)
+    ? "It's your turn!"
+    : `${currentPlayer}'s turn!`
+  let whoseTurn = (currentPlayer === me.username)
+    ? " my-turn"
+    : " not-my-turn"
   return (
-    
-    <div className="gameContainer">
 
-      {mappedBoard}
+    <div className={"gameContainer" + whoseTurn} >
+
+      {/* {mappedBoard}
     </div>
-    // <h1>Boop</h1>
-    // <div className={"gameContainer" + isItMyTurn} >
-      // {mappedBoard}
+    // <h1>Boop</h1> */}
+      {mappedBoard}
 
-    //   <div className="chatWindow" >
-    //     <h1 className="player">{turnText}</h1>
-    //     <h1>cardsFaceUp: {this.state.cardsFaceUp.map(c => c[1].matchId).toString()}</h1>
-    //     <GameChat />
-    //   </div>
+      <div className="chatWindow" >
+        <h1 className="player">{turnText}</h1>
+        <h1>cardsFaceUp:
+          {cardsFaceUp.map(c => c[1].matchId).toString()}
+        </h1>
+        <GameChat />
+      </div>
 
-    //   <button onClick={e => { this.modal() }}>MODAL</button>
+      <button onClick={e => { modal() }}>MODAL</button>
 
-    //   <div id="modal" className="endGameModal">
-    //     <span onClick={e => { this.close() }} class="close">&times;</span>
-    //     <div className="modalContent">GAME OVER</div>
-    //   </div>
+      <div id="modal" className="endGameModal">
+        <span onClick={e => { close() }} class="close">&times;</span>
+        <div className="modalContent">GAME OVER</div>
+      </div>
 
-    // </div>
+    </div>
   )
 }
 
-class Game extends React.Component {
+class GameBackup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -377,9 +387,9 @@ class Game extends React.Component {
     //     const {state: } = this.props.location
     let category = '';
     (this.props.location.state)
-          ? category = `http://jservice.io/api/clues?category=17`
-          // : category = this.props.location.state.name
-          : category = `http://jservice.io/api/clues?category=17`
+      ? category = `http://jservice.io/api/clues?category=17`
+      // : category = this.props.location.state.name
+      : category = `http://jservice.io/api/clues?category=17`
     let newArr = []
     let newArrClean = []
     axios.get(category)
@@ -538,8 +548,8 @@ class Game extends React.Component {
 
 
   createCard(cardInfo) {
-    const {gameHandleClick, getCardsFaceUp, isItMyTurn} = this
-    const {deck} = this.state
+    const { gameHandleClick, getCardsFaceUp, isItMyTurn } = this
+    const { deck } = this.state
     // console.log("$$$$", cardInfo)
     return <Card
       textCardBack={cardInfo.textCardBack}
@@ -641,7 +651,8 @@ class Game extends React.Component {
       // </div>
 
 
-          <Game2></Game2>
+      // <Game2></Game2>
+      <div className=""></div>
     )
   }
 
