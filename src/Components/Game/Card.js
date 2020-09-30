@@ -24,12 +24,7 @@ function Card(props) {
 
             setIsCardFaceUp(state => props.faceUp)
         }
-        // (props.faceUp) ? "Card is visible" : "Card is not visible"
     }, [props.faceUp]);
-    // useEffect(() => {
-    //         // console.log("#### use effect ran props.faceUp", props.cardId)
-    //         // (props.faceUp) ? "Card is visible" : "Card is not visible"
-    // }, [props.isVisible]);
 
     const cardHandleClick = (action) => {
         console.log("**** cardHandleClick", props, action)
@@ -39,7 +34,9 @@ function Card(props) {
         let faceUpCards = props.getCardsFaceUp()
         if (faceUpCards.length >= 2) {
             //disregard clicks on non-faceUp cards while 2 faceup
-            // if (!faceUpCards.includes(props.cardId)) { return }
+            if (!faceUpCards.includes(props.cardId)) {
+                // alert(faceUpCards.join(","))
+                return }
             //disregard clicks on card body, must click buttons
             if (action === 'flipOver') { return }
         }
@@ -49,7 +46,7 @@ function Card(props) {
         cardStatus.isVisible = props.isVisible
         if (action === 'flipOver') { setIsCardFaceUp(state => !state) }
         if (action === 'isVisible') { cardStatus.isVisible = false }
-        if (action === 'match') { cardStatus.button = 'match' }
+        if (action === 'match' ) { cardStatus.button = 'match' }
         if (action === 'back') {
             cardStatus['button'] = 'back';
             console.log("**** !!!!1", cardStatus)
@@ -115,11 +112,6 @@ function Card(props) {
                     }}>Match!</button>
                 </div>
             </a.div>
-            {/* <div className='btn-container-card'>
-                <button onClick={() => {}} className='btn'>🔙</button>
-                <button className='btn'>Match!</button>
-            </div> */}
-            {/* <div className={c front ? <div className=} */}
         </div>
     )
 }
