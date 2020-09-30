@@ -74,13 +74,13 @@ massive ({
                 lobbyUsers.push({...body, socketId: socket.id});
                 io.in('lobby').emit("userList", lobbyUsers);
             })
-            socket.on('remove-user', (body) =>{
-                console.log('remove-user',body)
-                const index = lobbyUsers.findIndex((user)=> body === user.username)
-                lobbyUsers.splice(index, 1);
-                io.in('lobby').emit("userList", lobbyUsers);
-                socket.leave('lobby')
-            })
+            // socket.on('remove-user', (body) =>{
+            //     console.log('remove-user',body)
+            //     const index = lobbyUsers.findIndex((user)=> body === user.username)
+            //     lobbyUsers.splice(index, 1);
+            //     io.in('lobby').emit("userList", lobbyUsers);
+            //     socket.leave('lobby')
+            // })
         })
     })
     .catch((err) => console.log(`Database error: ${err}`));

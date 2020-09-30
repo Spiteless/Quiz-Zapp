@@ -31,31 +31,31 @@ class Lobby extends Component {
               <form onChange={this.onChangeValue} className="lobbyRadio">
                 <div className="radioOption">
                   <input className="radio" type="radio" name="options" value="http://jservice.io/api/clues?category=114"/>
-                  <label for="option1"> History </label>
+                  <label htmlFor="option1"> History </label>
                 </div>
                 <div className="radioOption">
                   <input className="radio" type="radio" name="options" value="http://jservice.io/api/clues?category=267"/>
-                  <label for="option4"> Nature </label>
+                  <label htmlFor="option4"> Nature </label>
                 </div>
                 <div className="radioOption">
                   <input className="radio" type="radio" name="options" value="http://jservice.io/api/clues?category=574"/>
-                  <label for="option3"> Literature </label>
+                  <label htmlFor="option3"> Literature </label>
                 </div>
                 <div className="radioOption">
                   <input className="radio" type="radio" name="options" value="http://jservice.io/api/clues?category=25"/>
-                  <label for="option4"> Science </label>
+                  <label htmlFor="option4"> Science </label>
                 </div>
                 <div className="radioOption">
                   <input className="radio" type="radio" name="options" value="http://jservice.io/api/clues?category=582"/>
-                  <label for="option4"> U.S. Geography </label>
+                  <label htmlFor="option4"> U.S. Geography </label>
                 </div>
                 <div className="radioOption">
                   <input className="radio" type="radio" name="options" value="http://jservice.io/api/clues?category=1559"/>
-                  <label for="option4"> Art & Artists </label>
+                  <label htmlFor="option4"> Art & Artists </label>
                 </div>
                 <div className="radioOption">
                   <input className="radio" type="radio" name="options" value="http://jservice.io/api/clues?category=227"/>
-                  <label for="option3"> Hodgepodge </label>
+                  <label htmlFor="option3"> Hodgepodge </label>
                 </div>
                 <Link to = {{
                   pathname: '/game',
