@@ -18,51 +18,58 @@ function Card(props) {
 
     // let first = 0
     useEffect(() => {
+
         console.log("#### use effect ran props.faceUp", props.cardId)
-        if (props.isVisible){
+        if (props.isVisible) {
 
             setIsCardFaceUp(state => props.faceUp)
         }
-        // (props.faceUp) ? "Card is visible" : "Card is not visible"
     }, [props.faceUp]);
-    // useEffect(() => {
-    //         // console.log("#### use effect ran props.faceUp", props.cardId)
-    //         // (props.faceUp) ? "Card is visible" : "Card is not visible"
-    // }, [props.isVisible]);
 
     const cardHandleClick = (action) => {
+        console.log("**** cardHandleClick", props, action)
+        
+        // if (!props.isItMyTurn()) { return }
         if (!props.isVisible) { return } //if invisible, disregard clicks
         let faceUpCards = props.getCardsFaceUp()
-        if (faceUpCards.length >= 2){
+        if (faceUpCards.length >= 2) {
             //disregard clicks on non-faceUp cards while 2 faceup
-            if (!faceUpCards.includes(props.cardId)) { return }
-                //disregard clicks on card body, must click buttons
-            if (action==='flipOver') { return }
-            }
-                   
+            if (!faceUpCards.includes(props.cardId)) {
+                // alert(faceUpCards.join(","))
+                return }
+            //disregard clicks on card body, must click buttons
+            if (action === 'flipOver') { return }
+        }
+
         let cardStatus = {}
+        cardStatus['button'] = '';
         cardStatus.isVisible = props.isVisible
         if (action === 'flipOver') { setIsCardFaceUp(state => !state) }
         if (action === 'isVisible') { cardStatus.isVisible = false }
-        if (action === 'match') { cardStatus.button = 'match' }
+        if (action === 'match' ) { cardStatus.button = 'match' }
         if (action === 'back') {
-            cardStatus.button = 'back';
+            cardStatus['button'] = 'back';
+            console.log("**** !!!!1", cardStatus)
             // alert('card: back: ' + cardStatus.button)
         }
 
         cardStatus.cardId = props.cardId
         cardStatus.cardOrder = props.cardOrder
+        console.log("**** !!!!2", cardStatus)
         cardStatus.faceUp = (action === 'flipOver')
             ? !isCardFaceUp
             : isCardFaceUp
         cardStatus.matchId = props.matchId
         cardStatus.textCardFront = props.textCardFront
         cardStatus.urlFront = props.urlFront
+        console.log("**** !!!!3", cardStatus)
         let cardOut = {}
-        cardOut[props.cardId] = cardStatus
+        cardOut[props.cardId] = {...cardStatus}
         cardOut.name = props.cardId
+        console.log("**** !!!!4", cardStatus)
         console.log("####card", cardOut)
-        props.passedOnClickFunc(cardOut)
+        console.log('**** cardOut', cardOut, cardStatus.button)
+        props.passedOnClickFunc({...cardStatus})
         // return cardStatus
     }
 
@@ -94,7 +101,7 @@ function Card(props) {
                     <button className='btn' onClick={(e) => {
                         if (isCardFaceUp) { e.stopPropagation(); }
                         cardHandleClick('back')
-                    }}>🔙</button>
+                    }}>Back</button>
                     <button className='btn' onClick={(e) => {
 
                         if (isCardFaceUp) {
@@ -105,11 +112,6 @@ function Card(props) {
                     }}>Match!</button>
                 </div>
             </a.div>
-            {/* <div className='btn-container-card'>
-                <button onClick={() => {}} className='btn'>🔙</button>
-                <button className='btn'>Match!</button>
-            </div> */}
-            {/* <div className={c front ? <div className=} */}
         </div>
     )
 }
