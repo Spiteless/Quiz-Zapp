@@ -77,18 +77,20 @@ const Game = (props) => {
     let newPlayerScores = { ...playerScores }
     newPlayerScores[user1.user_id] = user1
     newPlayerScores[user2.user_id] = user2
-    setPlayerScores( newPlayerScores )
+    setPlayerScores(newPlayerScores)
     let result = getQuestions()
     console.log("**** use effect ran", result)
   }, []);
 
 
   const getQuestions = () => {
+    console.log("&&&&", props)
     let category = '';
-    (props.location)
-      ? category = `http://jservice.io/api/clues?category=17`
-      // : category = this.props.location.state.name
+    (!props.location.state === undefined)
+      ? category = props.location.state.name
       : category = `http://jservice.io/api/clues?category=17`
+
+    // : category = `http://jservice.io/api/clues?category=17`
     let newArr = []
     let newArrClean = []
     axios.get(category)
@@ -369,6 +371,10 @@ const Game = (props) => {
   let whoseTurn = (currentPlayer === me.username)
     ? " my-turn"
     : " not-my-turn"
+
+  const endGameScores = (players) => {
+
+  }
   return (
 
     <div className={"gameContainer" + whoseTurn} >
@@ -387,7 +393,10 @@ const Game = (props) => {
 
       <div id="modal" className="endGameModal">
         <span onClick={e => { close() }} class="close">&times;</span>
-        <div className="modalContent">GAME OVER</div>
+        <div className="modalContent">
+          <h1>GAME OVER</h1>
+          
+          </div>
       </div>
 
     </div>
