@@ -33,10 +33,13 @@ function LobbyChat(props) {
       //     socket.emit("user-info", { ...reduxState.user });
       //   }
       // });
-      socket.on("userList", (body) => {
+      socket.on("user-list", (body) => {
         updateUsersList(body);
         // console.log('usersList in useEffect', usersList)
       });
+      socket.on('start-game', (body) => {
+        console.log("game start")
+      })
     }
     return () => {
       if (socket) {
@@ -156,7 +159,11 @@ function LobbyChat(props) {
           {/* THIS MAP NEEDS TO BE FIXED--DISPLAYS SORT OF. Each username needs to be a link/button or something that when you click on it, it will display a pop up to challenge the user...?*/}
           {usersList.map((user, ind) => {
             return (
-              <p onClick={() => {}} className="username-for-list" key={ind}>
+              <p onClick={() => {
+                console.log('clicked')
+                socket.emit('challenge-player', {challenger: reduxState.user.user_id, opponent: user.user_id})
+                
+              }} className="username-for-list" key={ind}>
                 {user.username}
               </p>
               //   return (
