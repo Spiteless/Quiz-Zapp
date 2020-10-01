@@ -46,7 +46,7 @@
 .gameBoard {
   display: flex;
   flex-direction: column;
-  background-color: rgb(190, 253, 243);
+  background-color: rgb(46, 122, 223);
   width: 800px;
   border-radius: 10px;
 }
@@ -159,9 +159,9 @@
   height: 20px;
   width: 75px;
   color: rgb(53, 52, 52);
-  background-color: white;
+  /* background-color: white; */
   font-weight: bolder;
-  border: solid 2px yellow;
+  /* border: solid 2px yellow; */
   /* box-shadow: 1px -3px 1px gray; */
   -webkit-box-shadow: inset 0px 0px 2px 0px rgb(0, 0, 0);
   -moz-box-shadow: inset 0px 0px 2px 0px rgb(0, 0, 0);
@@ -172,12 +172,15 @@
 }
 
 .btn-left {
+  border: none;
+  margin-right: 5px;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
   padding-bottom: 4px;
 }
 
 .btn-right {
+  border: none;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   border-left: none;
@@ -195,22 +198,26 @@
 /*!-------------------------------------------------Game.js------------------------------------------------------------------- */
 
 .invisible {
-  opacity: 100%;
-  cursor: default !important;
- 
-  animation-name: invisible;
-  animation-duration: 2s;
-  animation-delay: 450ms;
+  pointer-events: none;
+  animation-delay: 200ms;
+  animation-duration: 1s;
   animation-fill-mode: forwards;
+  animation-name: invisible;
+}
+
+@keyframes invisible {
+  from {opacity: 100%;}
+  to {opacity: 0%;}
 }
 
 .invisible > * {
-  cursor: default !important;
+  pointer-events: none;
 }
 
 .invisible > * > * {
-  cursor: default !important;
+  pointer-events: none;
 }
+
 .chatWindow{
   align-items: center;
   justify-content: center;
@@ -229,15 +236,29 @@
   box-shadow: -1px 2px 6px red;
   border-radius: 10px;
 }
+
+.not-my-turn div.row div.card-parent:hover {
+  animation: cardPulse .7s linear alternate infinite;
+}
+
+@keyframes cardPulse {
+  from {box-shadow: 0px 0px 6px red;}
+  to {box-shadow: 0px 5px 12px red;}
+}
+
 .my-turn div.row div.card-parent {
-  border: transparent solid 1px;
-  box-shadow: -1px 2px 6px transparent;
+  border: rgb(100, 100, 100) solid 1px;
+  box-shadow: -1px 2px 6px rgb(100, 100, 100);
   border-radius: 10px;
 }
 
-@keyframes invisible {
-  from {opacity: 100%;}
-  to {opacity: 0%;}
+.my-turn div.row div.card-parent:hover {
+  animation: myCardPulse .7s linear alternate infinite;
+}
+
+@keyframes myCardPulse {
+  from {box-shadow: 0px 0px 6px rgb(100, 100, 100);}
+  to {box-shadow: 0px 5px 12px rgb(100, 100, 100);}
 }
 
 /*!-------------------------------------------------MODAL------------------------------------------------------------------- */

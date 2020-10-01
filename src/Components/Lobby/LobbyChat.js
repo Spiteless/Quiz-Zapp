@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import "./Lobby.css";
 import { SocketContext } from "../Context/Context";
 import {withRouter} from 'react-router-dom';
- 
+import ScrollableFeed from 'react-scrollable-feed';
 // const socket = io.connect('http://localhost:4141');
 //hide the port on the front end.
 
@@ -61,15 +61,6 @@ function LobbyChat(props) {
     }
   }, [socket]);
 
-//   useEffect(() => {
-//     if (socket) {
-//         return () => {
-//               if (socket) {
-//                 socket.emit("remove-user", reduxState.user.username);
-//               }
-//             };
-//     } 
-//     },[reduxState.user.username]);     
    //Don't want anything in the dependency array, because we don't want to fire the listener another time. Need it there, empty.
   // const handleInput = (e) => {
   //     setMessage({userMessage: e.target.value})
@@ -97,8 +88,10 @@ function LobbyChat(props) {
     <div className="lobby-chat-container">
       <div className="chat-container">
         <h1 className="list-header chat-header">Plan a game!</h1>
-        <div className="upper-chat">
+      
+        <div className="upper-chat scrollable-wrapper">
           <div className="messages">
+      <ScrollableFeed>
             {messages.map((message, i) => {
               return (
                 //Add user info
@@ -135,8 +128,11 @@ function LobbyChat(props) {
                 </div>
               );
             })}
+      </ScrollableFeed>
+
           </div>
         </div>
+
         <form className="input-btn-bar">
           <input
             className="chat-input"
