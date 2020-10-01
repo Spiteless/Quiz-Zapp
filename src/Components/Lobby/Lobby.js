@@ -30,6 +30,9 @@ class Lobby extends Component {
         </div>
         <div className="games-container" >
             <div className='custom-games-box'>
+              <div className='title-box'>
+                <h1 className='category-title'>Categories</h1>
+              </div>
               <form onChange={this.onChangeValue} className="lobbyRadio">
                 <div className="radioOption">
                   <input id="option1" className="radio" type="radio" name="options" value="http://jservice.io/api/clues?category=114"/>
@@ -59,15 +62,15 @@ class Lobby extends Component {
                   <input id="option7" className="radio" type="radio" name="options" value="http://jservice.io/api/clues?category=227"/>
                   <label for="option7"> Hodgepodge </label>
                 </div>
-                <Link to = {{
+                {/* <Link to = {{
                   pathname: '/game',
                   state: { name: this.state.name }
                   }}>
                 <button  className="custom-game-btn">Go to Game!</button>
-                </Link>
+                </Link> */}
               </form>
             </div>
-          <div className='games-box'></div>
+          {/* <div className='games-box'></div> */}
         </div>
       </div>
       <div className='right-container'>

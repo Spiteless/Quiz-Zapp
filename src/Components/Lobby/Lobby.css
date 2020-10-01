@@ -66,11 +66,33 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* flex-direction: column; */
+    flex-direction: column;
     margin: 0 auto;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border: 3px solid gray
+    border-radius: 10px;
+    /* border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px; */
+    border: 3px solid white;
+}
+
+.title-box {
+    border-bottom: 3px solid white;
+    width: 94%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.category-title {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 30px;
+    margin-bottom: 5px;
+    color: black;
+    text-shadow: 2px 2px 0px white;
+    letter-spacing: 2px;
+
+    /* font- */
+    /* border-bottom: 3px solid white; */
 }
 
 .lobbyRadio {
@@ -97,6 +119,7 @@ label:hover {
     margin-right: 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
+    font-weight: bolder;
 }
 
 .custom-game-btn {
@@ -146,6 +169,32 @@ label:hover {
     padding-top: 50px;
 
 }
+
+.instructions {
+    margin: 0 auto;
+    /* margin-left: 60px; */
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border-left: gray 2px solid;
+    border-right: gray 2px solid; */
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder; */
+}
+
+.game-instructions {
+    font-size: 21px;
+    /* letter-spacing: -1px; */
+       
+}
+
+.bigger {
+    font-size: 21px;
+}
+
 .chat-container {
     height: 625px;
     width: 400px;
@@ -165,7 +214,7 @@ label:hover {
 }
 
 .upper-chat {
-    max-height: 505px;
+    max-height: 465px;
     width: 400px;
     display: flex;
     padding: 10px;
