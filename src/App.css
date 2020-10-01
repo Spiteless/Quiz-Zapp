@@ -196,6 +196,10 @@
 }
 
 /*!-------------------------------------------------Game.js------------------------------------------------------------------- */
+.game-page {
+  box-sizing: border-box;
+  background-color: ;
+}
 
 .invisible {
   pointer-events: none;
@@ -227,8 +231,18 @@
   font-size: 2em;
 }
 .player {
-  color:white;
-  background: black;
+  color:yellow;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 60px;
+  text-align: center;
+  margin: 10px;
+  /* background: black; */
+}
+
+.not-my-turn {
+  color: rgb(209, 35, 35);
+  text-shadow: 2px 2px 0px white;
+
 }
 
 .not-my-turn div.row div.card-parent {
