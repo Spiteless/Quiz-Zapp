@@ -15,7 +15,7 @@ function LobbyChat(props) {
   const [message, setMessage] = useState("");
   const [usersList, setUsersList] = useState([]);
   const reduxState = useSelector((reduxState) => reduxState.auth);
-  const { socket, setGameParticipants, setGameRoom } = useContext(SocketContext);
+  const { socket, setGameParticipants, setGameRoom, setCategory } = useContext(SocketContext);
 
   console.log("reduxState", reduxState);
   console.log("what's on socket?", socket)
@@ -170,6 +170,8 @@ function LobbyChat(props) {
               <p onClick={() => {
                 console.log('~~~~ clicked')
                 socket.emit('challenge-player', {challenger: reduxState.user.user_id, opponent: user.user_id });
+                  //Do we need to include the input id or value? 
+                // setCategory(props.name);
               }} className="username-for-list" key={ind}>
                 {user.username}
               </p>
