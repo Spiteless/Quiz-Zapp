@@ -1,3 +1,4 @@
+// import { set } from "lodash";
 import React, { useState, createContext } from "react"; 
 import io from "socket.io-client";
 export const SocketContext = createContext(
@@ -6,6 +7,7 @@ export const SocketContext = createContext(
 export const SocketProvider = ({children}) => {
     const [socket, setSocket] = useState(null)
     const [gameRoom, setGameRoom] = useState('');
+    const [category, setCategory] = useState('');
     const [gameParticipants, setGameParticipants] = useState([
         {
             correct: 0,
@@ -26,6 +28,11 @@ export const SocketProvider = ({children}) => {
             username: "T-Rizzle"
           }
     ]);
+
+    const saveCategory = (qURL) => {
+        setCategory(qURL);
+    }
+    console.log('category in context', category)
 
     const getGameParticipants = () => gameParticipants
 
@@ -50,7 +57,10 @@ export const SocketProvider = ({children}) => {
             getGameParticipants,
             setGameParticipants,
             gameRoom,
-            setGameRoom
+            setGameRoom,
+            category,
+            setCategory,
+            saveCategory
 
             }}>
             {children}

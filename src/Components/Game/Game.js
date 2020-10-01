@@ -39,6 +39,8 @@ const Game = (props) => {
           gameParticipants,
           setGameParticipants,
           gameRoom,
+          category,
+          setCategory,
           socket } = useContext(SocketContext);
 
   
@@ -50,6 +52,7 @@ const Game = (props) => {
   })
   const [turn, setTurn] = useState([user2, user1])
   const [cardsFaceUp, setCardsFaceUp] = useState([])
+  const [gameCategory, setGameCategory] = useState(category);
 
   useEffect( () => {
           setPlayerScores( [...gameParticipants])
@@ -97,6 +100,8 @@ const Game = (props) => {
       let newDeck = { ...deck }
       setTurn((turn) => [...body.turn])
       setBoard((board) => [{deck: newDeck}])
+      setGameCategory(category);
+
         // playerScores: setPlayerScores
       
     })
@@ -105,17 +110,21 @@ const Game = (props) => {
 
   const getQuestions = () => {
     console.log("&&&&", props)
-    let category = '';
-    (!props.location.state === undefined)
-      ? category = props.location.state.name
-      : category = `http://jservice.io/api/clues?category=17`
+    console.log("~~~~game category on state but from context:", gameCategory)
+
+    // let category = '';
+    // let category = category;
+    // (!props.location.state === undefined)
+        //*** */ ? category = props.location.state.name
+
+    //   : category = `http://jservice.io/api/clues?category=17`
 
     // : category = `http://jservice.io/api/clues?category=17`
     let newArr = []
     let newArrClean = []
-    axios.get(category)
+    axios.get(gameCategory)
       .then((results) => {
-        newArr = shuffleQuestions(results.data); //shuffles the questiosn received from api 
+        newArr = shuffleQuestions(results.data); //shuffles the questions received from api 
         for (let i = 0; i < newArr.length; i++) {
           if (newArr[i].question === "" || newArr[i].answer === "") {
             newArr.splice(i, 1)
