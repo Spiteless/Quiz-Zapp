@@ -126,6 +126,10 @@
     transition: .4s;
 }
 
+.quick-start {
+    display: none;
+}
+
 .dash-btn:hover {
     border: 3px solid gray;
 }

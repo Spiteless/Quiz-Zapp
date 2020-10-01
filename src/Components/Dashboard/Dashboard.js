@@ -42,7 +42,7 @@ const Dashboard = (props) => {
         <h1 className='game-title'> QUIZ ZAPP </h1>
         <div className='buttonBar'>
           <Link to='/game/anon'>
-            <button className="dash-btn" >Quick Start</button>
+            <button className="dash-btn quick-start" >Quick Start</button>
           </Link>
           <button className="dash-btn" onClick={() => toggleLogin()}>Login</button>
           <button className="dash-btn" onClick={() => toggleRegister()}>Register</button>
