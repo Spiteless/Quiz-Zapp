@@ -49,8 +49,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-top: 3px solid white;
-    border-bottom: 3px solid white;
+    border-top: 3px solid lightgray;
+    border-bottom: 3px solid lightgray;
     animation: greyBar .5s;
 }
 
@@ -83,7 +83,7 @@
     width: 800px;
     height: 3px;
     background-color: white;
-    animation: lineBox .8s;
+    animation: lineBox .7s linear;
 }
 
 @keyframes lineBox {
@@ -123,10 +123,10 @@
     background-color: yellow;
     font-weight: 800;
     border: 3px solid white;
+    transition: .4s;
 }
 
 .dash-btn:hover {
-    transition: .4s;
     border: 3px solid gray;
 }
 
@@ -162,4 +162,8 @@
 
 .user-pass-submit:hover {
     background: yellow;
+}
+
+.user-pass-submit:focus {
+    outline: none;
 }
