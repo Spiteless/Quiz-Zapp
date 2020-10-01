@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useSelector } from "react-redux";
 import "./Lobby.css";
 import { SocketContext } from "../Context/Context";
+import {withRouter} from 'react-router-dom';
 import ScrollableFeed from 'react-scrollable-feed'
 // const socket = io.connect('http://localhost:4141');
 //hide the port on the front end.
@@ -9,37 +10,50 @@ import ScrollableFeed from 'react-scrollable-feed'
 //Could pass socket down as prop to children.
 //Or different socket connections per each need.
 //Option 3: Best, but most complicated. Save socket connection in redux or context. More complicated. React Context. Create a component that wraps around your whole app (another way to use global state).
-function LobbyChat() {
+function LobbyChat(props) {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [usersList, setUsersList] = useState([]);
   const reduxState = useSelector((reduxState) => reduxState.auth);
   const { socket } = useContext(SocketContext);
   console.log("reduxState", reduxState);
+  console.log("what's on socket?", socket)
   //all the endpoints will go in the same useEffect. It's just setting up a listener for whatever events.
 
   useEffect(() => {
     if (socket) {
-      console.log(socket);
+      console.log('socket in useEffect', socket);
       socket.on("test2", (body) => {});
       socket.on("welcome", (body) => {});
       socket.on("message", (body) => {
         updateMessages(body);
+        console.log('message console.log', body)
       });
-      socket.on("request-username", () => {
-        if (reduxState.user && reduxState.user.user_id) {
-          socket.emit("user-info", { ...reduxState.user });
-        }
-      });
-      socket.on("userList", (body) => {
+      // socket.on("request-username", () => {
+      //   if (reduxState.user && reduxState.user.user_id) {
+      //     socket.emit("user-info", { ...reduxState.user });
+      //   }
+      // });
+      socket.on("user-list", (body) => {
         updateUsersList(body);
+        // console.log('usersList in useEffect', usersList)
       });
+      socket.on('start-game', (body) => {
+        console.log("game start")
+      })
     }
     return () => {
       if (socket) {
         socket.emit("remove-user", reduxState.user.username);
       }
     };
+  }, [socket, props.location.pathname]);
+
+  useEffect(()=> {
+    if(socket){
+      console.log('useeffect hit')
+      socket.emit('join-lobby', {...reduxState.user});
+    }
   }, [socket]);
 
    //Don't want anything in the dependency array, because we don't want to fire the listener another time. Need it there, empty.
@@ -60,7 +74,7 @@ function LobbyChat() {
   };
   const emit = () => {
     //Add user to object after message.
-    socket.emit("chatter", { message, user: reduxState.user.username });
+    socket.emit("chatter", { message, user: reduxState.user.username});
   };
 
   console.log("messages", messages);
@@ -73,7 +87,6 @@ function LobbyChat() {
         <div className="upper-chat scrollable-wrapper">
           <div className="messages">
       <ScrollableFeed>
-            {/* {message} */}
             {messages.map((message, i) => {
               return (
                 //Add user info
@@ -111,6 +124,7 @@ function LobbyChat() {
               );
             })}
       </ScrollableFeed>
+
           </div>
         </div>
 
@@ -141,7 +155,11 @@ function LobbyChat() {
           {/* THIS MAP NEEDS TO BE FIXED--DISPLAYS SORT OF. Each username needs to be a link/button or something that when you click on it, it will display a pop up to challenge the user...?*/}
           {usersList.map((user, ind) => {
             return (
-              <p onClick={() => {}} className="username-for-list" key={ind}>
+              <p onClick={() => {
+                console.log('clicked')
+                socket.emit('challenge-player', {challenger: reduxState.user.user_id, opponent: user.user_id})
+                
+              }} className="username-for-list" key={ind}>
                 {user.username}
               </p>
               //   return (
@@ -173,7 +191,7 @@ function LobbyChat() {
   );
 }
 
-export default LobbyChat;
+export default withRouter(LobbyChat);
 
 //socket.on is the listening part
 //socket.emit is the emitting/sending part.
