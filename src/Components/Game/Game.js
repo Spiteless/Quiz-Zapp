@@ -82,7 +82,7 @@ const Game = (props) => {
     console.log("**** use effect ran", result)
   }, []);
 
-
+  
   const getQuestions = () => {
     console.log("&&&&", props)
     let category = '';
@@ -383,10 +383,12 @@ const Game = (props) => {
   const endGameScores = (player) => {
     return (
     <div className="scores">
-        <h1>{player.username}</h1>
-        <h2>Questions attempted: {player.questions}</h2>
-        <h2>Correct answers: {player.correct}</h2>
-        <h2>Score: {player.score}</h2>
+        <h1 className="modalUser" >{player.username}</h1>
+        <div className="modalInfo">
+          <h2>Questions attempted: <span className="modalNums">{player.questions}</span> </h2>
+          <h2>Correct answers: <span className="modalNums">{player.correct}</span> </h2>
+          <h2>Score: <span className="modalNums">{player.score}</span> </h2>
+        </div>
     </div>
     )}
   return (
@@ -408,7 +410,7 @@ const Game = (props) => {
       <div id="modal" className="endGameModal">
         <span onClick={e => { close() }} class="close">&times;</span>
         <div className="modalContent">
-          <h1>GAME OVER</h1>
+          <h1 className="gameover">GAME OVER</h1>
           {console.log("$$$$", typeof playerScores)}
           {Object.values(playerScores).map(p => endGameScores(p))}
           

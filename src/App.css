@@ -268,7 +268,7 @@
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 70px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -283,15 +283,23 @@
 
 /* Modal Content (image) */
 .modalContent {
+  font-family: Arial, Helvetica, sans-serif;
   margin: auto;
   display: block;
   width: 80%;
-  height: 100vh;
+  height: 80vh;
   max-width: 700px;
   font-size: 80px;
   text-align: center;
   color: white;
-  background-color: blue;
+  background-color: rgb(46, 122, 223);
+  border-radius: 10px;
+  animation: modalPulse .7s linear alternate infinite;
+}
+
+@keyframes modalPulse {
+  from {box-shadow: 0px 0px 5px yellow;}
+  to {box-shadow: 0px 0px 18px white;}
 }
 
 .close {
@@ -309,4 +317,37 @@
   color: #bbb;
   text-decoration: none;
   cursor: pointer;
+}
+
+.gameover {
+  padding-top: 10px;
+  color: yellow;
+  font-weight: 700;
+  font-size: 65px;
+}
+
+.scores {
+  font-size: 40px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modalUser {
+  font-weight: 600;
+  font-size: 50px;
+  text-decoration: underline;
+  margin-bottom: 5px;
+}
+
+.modalInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.modalNums {
+  color: yellow;
+  font-weight: 700;
 }
