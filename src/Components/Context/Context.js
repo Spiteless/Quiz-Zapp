@@ -5,13 +5,54 @@ export const SocketContext = createContext(
 ); 
 export const SocketProvider = ({children}) => {
     const [socket, setSocket] = useState(null)
+    const [gameRoom, setGameRoom] = useState('');
+    const [gameParticipants, setGameParticipants] = useState([
+        {
+            correct: 0,
+            email: "Morgan@gocart.mart",
+            questions: 0,
+            score: 0,
+            socketId: "A2jd5xDbxWGtygnlAAAA",
+            user_id: 101,
+            username: "Morganizer"
+          },
+          {
+            correct: 0,
+            email: "T@Rizzle.com",
+            questions: 0,
+            score: 0,
+            socketId: "UBNG890351ijAOING2Pp",
+            user_id: 100,
+            username: "T-Rizzle"
+          }
+    ]);
+
+    const getGameParticipants = () => gameParticipants
+
+    const saveGameRoom = (room) => {
+        setGameRoom(setGameRoom(room))
+        console.log('gameRoom')     
+    }
+
+    const currentGameRoom = () => gameRoom
+
     const connectSocket = () =>{
         setSocket((s) => {
            return !s ? io.connect("http://localhost:4141") : s
         })
     }
     return(
-        <SocketContext.Provider value={{socket, setSocket, connectSocket}}>
+        <SocketContext.Provider value={{
+            socket,
+            setSocket,
+            connectSocket,
+            gameParticipants,
+            getGameParticipants,
+            setGameParticipants,
+            gameRoom,
+            setGameRoom
+
+            }}>
             {children}
         </SocketContext.Provider>
     )

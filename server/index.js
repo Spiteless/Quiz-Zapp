@@ -53,19 +53,17 @@ massive ({
             socket.on('disconnect', () => {
                 console.log("Disconnected.")
                 // lobbyUsers.splice(`${socket.i}`)
-            })
+            });
             //socket.on - in the arrow function it will take in a body - the body from the front end. Like a put or post from the front end.
-            socket.on('turn', (body) => {
-                //socket.on will receive body as parameter in arrow functions, and socket.emit will have body. 
-                //what we're sending back.
-                socket.to(body.room).emit('test2', {winter: "evil"})
-            })
+            socket.on('player-turn', (body) => {
+                socket.to(body.room).emit('receive-game-state', body)
+            });
             socket.on('message', (body) => {
                 socket.emit(body);
-            } )
+            });
             socket.on('chatter', (body) => {
                 io.in('lobby').emit('message', body)
-            })
+            });
             socket.on('user-info', (body) => {
                 console.log('this is user-info body', body, "it ends here")
                 // lobbyUsers.map((user, ind)=>{
@@ -73,7 +71,7 @@ massive ({
                 // });
                 lobbyUsers.push({...body, socketId: socket.id});
                 io.in('lobby').emit("user-list", lobbyUsers);
-            })
+            });
             socket.on('join-lobby', (body) => {
                 const testIndexOf = lobbyUsers.indexOf((user) => user.user_id === body.user_id)
                 console.log(testIndexOf);
@@ -99,10 +97,19 @@ massive ({
                 const opponentSocket = lobbyUsers.find(user => user.user_id === body.opponent);
                 console.log("opponentSocket", opponentSocket)
                 if(opponentSocket){
-                    console.log('hit')
+                    console.log('~~~~ hit')
                     io.sockets.connected[opponentSocket.socketId].join(roomName)
                     socket.join(roomName)
-                    io.in(roomName).emit('start-game', {...body, roomName})
+                    let newObj = {
+                        ...body,
+                        roomName,
+                        players: [
+                            lobbyUsers.find(user => user.user_id === body.challenger),
+                            lobbyUsers.find(user => user.user_id === body.opponent)
+                        ]
+                    }
+                    console.log(newObj)
+                    io.in(roomName).emit('start-game', newObj)
                 }
             })
         })

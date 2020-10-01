@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import "./Lobby.css";
 import { SocketContext } from "../Context/Context";
 import {withRouter} from 'react-router-dom';
-import ScrollableFeed from 'react-scrollable-feed'
+ 
 // const socket = io.connect('http://localhost:4141');
 //hide the port on the front end.
 
@@ -15,7 +15,8 @@ function LobbyChat(props) {
   const [message, setMessage] = useState("");
   const [usersList, setUsersList] = useState([]);
   const reduxState = useSelector((reduxState) => reduxState.auth);
-  const { socket } = useContext(SocketContext);
+  const { socket, setGameParticipants, setGameRoom } = useContext(SocketContext);
+
   console.log("reduxState", reduxState);
   console.log("what's on socket?", socket)
   //all the endpoints will go in the same useEffect. It's just setting up a listener for whatever events.
@@ -38,8 +39,12 @@ function LobbyChat(props) {
         updateUsersList(body);
         // console.log('usersList in useEffect', usersList)
       });
-      socket.on('start-game', (body) => {
+      socket.on('start-game', (newObj) => {
         console.log("game start")
+        setGameParticipants( newObj.players);
+        setGameRoom(newObj.roomName);
+        props.history.push('/game');
+
       })
     }
     return () => {
@@ -94,7 +99,6 @@ function LobbyChat(props) {
         <h1 className="list-header chat-header">Plan a game!</h1>
         <div className="upper-chat">
           <div className="messages">
-            <ScrollableFeed>
             {messages.map((message, i) => {
               return (
                 //Add user info
@@ -131,7 +135,6 @@ function LobbyChat(props) {
                 </div>
               );
             })}
-            </ScrollableFeed>
           </div>
         </div>
         <form className="input-btn-bar">
@@ -162,9 +165,8 @@ function LobbyChat(props) {
           {usersList.map((user, ind) => {
             return (
               <p onClick={() => {
-                console.log('clicked')
-                socket.emit('challenge-player', {challenger: reduxState.user.user_id, opponent: user.user_id})
-                
+                console.log('~~~~ clicked')
+                socket.emit('challenge-player', {challenger: reduxState.user.user_id, opponent: user.user_id });
               }} className="username-for-list" key={ind}>
                 {user.username}
               </p>

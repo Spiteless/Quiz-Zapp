@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
 import Card from "./Card";
@@ -6,7 +6,9 @@ import GameChat from './GameChat';
 import cardFront from '../../cardfront.png';
 import { map } from 'lodash';
 import { useSelector } from "react-redux";
-// const reduxState = useSelector((reduxState) => reduxState.auth);
+import { SocketContext } from "../Context/Context";
+
+
 
 
 const _ = require('lodash');
@@ -31,6 +33,17 @@ let user2 = {
 }
 
 const Game = (props) => {
+  const reduxState = useSelector((reduxState) => reduxState.auth);
+  
+  const { getGameParticipants,
+          gameParticipants,
+          setGameParticipants,
+          gameRoom,
+          socket } = useContext(SocketContext);
+
+  
+  
+  console.log("~~~~Context imports:", getGameParticipants, gameParticipants, setGameParticipants)
 
   const [playerScores, setPlayerScores] = useState({
 
@@ -38,22 +51,16 @@ const Game = (props) => {
   const [turn, setTurn] = useState([user2, user1])
   const [cardsFaceUp, setCardsFaceUp] = useState([])
 
-  // let playerScores1 = { ...playerScores }
-  // playerScores1[user1.user_id] = user1
-  // setPlayerScores(playerScores1)
-  // let playerScores2 = { ...playerScores }
-  // playerScores2[user2.user_id] = user2
-  // setPlayerScores(playerScores2)
+  useEffect( () => {
+          setPlayerScores( [...gameParticipants])
+          setTurn( [...gameParticipants])
+        }, [])
 
   const [board, setBoard] = useState({
     deck: {},
-    // turn: [user1, user2],
-    // cardsFaceUp: [],
-    // cardsReadyToMatch: [],
-    // forceFlip: [],
   })
 
-  const me = { ...user1 }
+  const me = { ...reduxState.user }
 
   // useEffect(() => {
   //   let newPlayer = () => {
@@ -74,12 +81,25 @@ const Game = (props) => {
 
   //Player listener, when player joins, set the array larger
   useEffect(() => {
-    let newPlayerScores = { ...playerScores }
+    let newPlayerScores = {}
     newPlayerScores[user1.user_id] = user1
     newPlayerScores[user2.user_id] = user2
     setPlayerScores(newPlayerScores)
     let result = getQuestions()
     console.log("**** use effect ran", result)
+  }, []);
+
+  useEffect(() => {
+    socket.on('receive-game-state', (body) => {
+      console.log('~~~~receive game state', body);
+      // const {turn, board} = body
+      const { deck } = body.board
+      let newDeck = { ...deck }
+      setTurn((turn) => [...body.turn])
+      setBoard((board) => [{deck: newDeck}])
+        // playerScores: setPlayerScores
+      
+    })
   }, []);
 
 
@@ -227,7 +247,22 @@ const Game = (props) => {
     setTurn(newTurn)
     setBoard(newState)
     handleGameOver(newState)
-    // socket.emit('player-turn', {newState});
+    let newGameState = {
+      turn: newTurn,
+      board: newState,
+      playerScores: setPlayerScores
+    }
+    passGameState();
+  }
+  
+  const passGameState = (io_action) => {
+    let newGameState = {
+      turn: turn,
+      board: board,
+      room: gameRoom,
+      // playerScores: setPlayerScores
+    }
+    socket.emit('player-turn', newGameState)
   }
 
   const correctAnswer = (player, num = 5) => {
@@ -363,15 +398,18 @@ const Game = (props) => {
   }
 
   const modal = () => {
-    var modal = document.getElementById("modal");
+    const modal = document.getElementById("modal");
     modal.style.display = "block";
   }
 
   const close = () => {
-    var modal = document.getElementById("modal");
+    const modal = document.getElementById("modal");
     modal.style.display = "none"
   }
-  let mappedBoard = mapToBoard(Object.values(board.deck))
+  console.log("@@@@ board, turn", board, turn)
+  let mappedBoard = () => (<div>Error</div>)
+  if (board.deck) { mappedBoard = mapToBoard(Object.values(board.deck)) }
+
   let currentPlayer = turn[0].username
   let turnText = (currentPlayer === me.username)
     ? "It's your turn!"
