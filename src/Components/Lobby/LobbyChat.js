@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import "./Lobby.css";
 import { SocketContext } from "../Context/Context";
 import {withRouter} from 'react-router-dom';
+import ScrollableFeed from 'react-scrollable-feed'
 // const socket = io.connect('http://localhost:4141');
 //hide the port on the front end.
 
@@ -93,7 +94,7 @@ function LobbyChat(props) {
         <h1 className="list-header chat-header">Plan a game!</h1>
         <div className="upper-chat">
           <div className="messages">
-            {/* {message} */}
+            <ScrollableFeed>
             {messages.map((message, i) => {
               return (
                 //Add user info
@@ -130,6 +131,7 @@ function LobbyChat(props) {
                 </div>
               );
             })}
+            </ScrollableFeed>
           </div>
         </div>
         <form className="input-btn-bar">
