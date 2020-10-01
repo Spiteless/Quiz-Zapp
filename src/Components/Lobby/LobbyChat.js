@@ -157,7 +157,6 @@ function LobbyChat(props) {
       <div className="users-list-container">
         <h1 className="list-header">Challenge a Player</h1>
         <div className="users-list">
-          {/* THIS MAP NEEDS TO BE FIXED--DISPLAYS SORT OF. Each username needs to be a link/button or something that when you click on it, it will display a pop up to challenge the user...?*/}
           {usersList.map((user, ind) => {
             return (
               <p onClick={() => {
@@ -166,8 +165,6 @@ function LobbyChat(props) {
               }} className="username-for-list" key={ind}>
                 {user.username}
               </p>
-              //   return (
-              // <div className='username-for-list' key={ind}>{user[ind].username}</div>
             );
           })}
         </div>
