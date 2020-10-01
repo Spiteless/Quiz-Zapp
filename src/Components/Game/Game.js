@@ -93,6 +93,7 @@ const Game = (props) => {
   }, []);
 
   useEffect(() => {
+
     socket.on('receive-game-state', (body) => {
       console.log('~~~~receive game state', body);
       // const {turn, board} = body
@@ -422,7 +423,7 @@ const Game = (props) => {
   let currentPlayer = turn[0].username
   let turnText = (currentPlayer === me.username)
     ? "It's your turn!"
-    : `${currentPlayer}'s turn!`
+    : `It's ${currentPlayer}'s turn!`
   let whoseTurn = (currentPlayer === me.username)
     ? " my-turn"
     : " not-my-turn"
@@ -437,31 +438,33 @@ const Game = (props) => {
     </div>
     )}
   return (
+    <div className='game-page'>
+        <h1 className={"player" + whoseTurn}>{turnText}</h1>
+      <div className={"gameContainer" + whoseTurn} >
 
-    <div className={"gameContainer" + whoseTurn} >
+        {mappedBoard}
 
-      {mappedBoard}
+        {/* <div className="chatWindow" >
+          <h1 className="player">{turnText}</h1>
+          <h1>cardsFaceUp:
+            {cardsFaceUp.map(c => c[1].matchId).toString()}
+          </h1>
+          <GameChat />
+        </div> */}
 
-      <div className="chatWindow" >
-        <h1 className="player">{turnText}</h1>
-        <h1>cardsFaceUp:
-          {cardsFaceUp.map(c => c[1].matchId).toString()}
-        </h1>
-        <GameChat />
+        {/* <button onClick={e => { modal() }}>MODAL</button> */}
+
+        <div id="modal" className="endGameModal">
+          <span onClick={e => { close() }} class="close">&times;</span>
+          <div className="modalContent">
+            <h1>GAME OVER</h1>
+            {console.log("$$$$", typeof playerScores)}
+            {Object.values(playerScores).map(p => endGameScores(p))}
+            
+            </div>
+        </div>
+
       </div>
-
-      <button onClick={e => { modal() }}>MODAL</button>
-
-      <div id="modal" className="endGameModal">
-        <span onClick={e => { close() }} class="close">&times;</span>
-        <div className="modalContent">
-          <h1>GAME OVER</h1>
-          {console.log("$$$$", typeof playerScores)}
-          {Object.values(playerScores).map(p => endGameScores(p))}
-          
-          </div>
-      </div>
-
     </div>
   )
 }

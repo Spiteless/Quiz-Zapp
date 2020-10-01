@@ -88,7 +88,15 @@ function LobbyChat(props) {
     <div className="lobby-chat-container">
       <div className="chat-container">
         <h1 className="list-header chat-header">Plan a game!</h1>
-      
+        <div className='instructions'>
+          <h3 className='game-instructions'>Chat with players | Select a category</h3>
+          {/* <h3 className='game-instructions'>➀ Chat with players </h3> */}
+          {/* <h3 className='game-instructions'>➁ Select a category</h3> */}
+          {/* <h3 className='game-instructions'>➁ Select a category</h3> */}
+          <h3 className='game-instructions bigger'>Then, click on a player to start game!</h3>
+          {/* <h3 className='game-instructions bigger'>➂ Click on player to start game</h3> */}
+        </div>
+    
         <div className="upper-chat scrollable-wrapper">
           <div className="messages">
       <ScrollableFeed>
@@ -136,7 +144,7 @@ function LobbyChat(props) {
         <form className="input-btn-bar">
           <input
             className="chat-input"
-            placeholder="type message here"
+            placeholder="Type message here..."
             name="userMessage"
             value={message}
             onChange={(e) => setMessage(e.target.value)}

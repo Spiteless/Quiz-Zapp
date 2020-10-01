@@ -33,6 +33,10 @@ const Lobby = (props) => {
         <div className="games-container" >
             <div className='custom-games-box'>
               <form onChange={onChangeValue} className="lobbyRadio">
+
+              <div className='title-box'>
+                <h1 className='category-title'>Categories</h1>
+              </div>
                 <div className="radioOption">
                   <input id="option1" className="radio" type="radio" name="options" value="http://jservice.io/api/clues?category=114"/>
                   <label for="option1"> History </label>
@@ -65,11 +69,13 @@ const Lobby = (props) => {
                   pathname: '/game',
                   state: {name: name}  
                   }}>
-                <button className="custom-game-btn">Go to Game!</button>
+
+                <button  className="custom-game-btn">Go to Game!</button>
+
                 </Link> */}
               </form>
             </div>
-          <div className='games-box'></div>
+          {/* <div className='games-box'></div> */}
         </div>
       </div>
       <div className='right-container'>
