@@ -760,7 +760,6 @@ const Game = (props) => {
  <div className='game-page'>
         <h1 className={"player" + whoseTurn}>{turnText}</h1>
     <div className={"gameContainer" + whoseTurn} >
-
       {console.log("<<<< directly before mapToBoard render", board.deck)}
 
      { (board.deck) ? mapToBoard(Object.values(board.deck))
