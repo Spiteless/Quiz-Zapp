@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import "./Lobby.css";
 import { withRouter } from "react-router-dom";
 import { SocketContext } from "../Context/Context";
-import {withRouter} from 'react-router-dom';
 import ScrollableFeed from 'react-scrollable-feed';
 // const socket = io.connect('http://localhost:4141');
 //hide the port on the front end.
