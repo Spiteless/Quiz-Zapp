@@ -497,72 +497,91 @@ const Game = (props) => {
   };
 
   const gameHandleClick = (cardState) => {
-    let currentPlayer = turn[0];
-    console.log("**** gameHandleClick", cardState);
-    let button = undefined;
-    button = cardState.button;
+    let currentPlayer = turn[0]
+    console.log("**** gameHandleClick", cardState)
+    let button = undefined
+    button = cardState.button
 
-    delete cardState.button;
+    delete cardState.button
 
-    const { deck } = board;
-    let newDeck = { ...deck };
-    newDeck[cardState.cardId] = cardState;
-    let newCardsFaceUp = [];
-    console.log("**** board.turn in gameHandleClick", turn, "deck", deck);
-    let newTurn = [...turn];
-    Object.entries(newDeck).forEach((card) => {
+    const { deck } = board
+    let newDeck = { ...deck }
+    newDeck[cardState.cardId] = cardState
+    let newCardsFaceUp = []
+    console.log("**** board.turn in gameHandleClick", turn, "deck", deck)
+    let newTurn = [...turn]
+    Object.entries(newDeck).forEach(card => {
       // console.log("**** card", card)
       //console.log(card[0], card[1].faceUp)
       //if (card[1].faceUp) { newCardsFaceUp.push(card) }
 
-      const [cardName, cardAttributes] = card;
-      if (cardAttributes.faceUp) {
-        newCardsFaceUp.push(card);
-      }
-    });
+      const [cardName, cardAttributes] = card
+      if (cardAttributes.faceUp) { newCardsFaceUp.push(card) }
+    })
 
     if (newCardsFaceUp.length === 2) {
-      if (button === "match") {
-        if (checkIfMatch(newCardsFaceUp[0], newCardsFaceUp[1])) {
-          newCardsFaceUp.map((c) => {
-            newDeck[c[0]].isVisible = false;
-            newDeck[c[0]].faceUp = false;
-          });
-          console.log("SUCCESS, CARDS MATCHED!");
-          console.log("$$$$ newDeck:", newDeck);
-          newCardsFaceUp = [];
-          correctAnswer(currentPlayer);
-          let newScore = correctAnswer(currentPlayer);
-          let newPlayerScores = { ...playerScores };
-          newPlayerScores[currentPlayer.user_id] = newScore;
-          setPlayerScores(newPlayerScores);
-        } else {
+      if (button === 'match') {
+        if (checkIfMatch(newCardsFaceUp[0], newCardsFaceUp[1],)) {
+          newCardsFaceUp.map(c => {
+            newDeck[c[0]].isVisible = false
+            newDeck[c[0]].faceUp = false
+          })
+          console.log("SUCCESS, CARDS MATCHED!")
+          console.log("$$$$ newDeck:", newDeck)
+          newCardsFaceUp = []
+          correctAnswer(currentPlayer)
+          let newScore = correctAnswer(currentPlayer)
+          let newPlayerScores = { ...playerScores }
+          newPlayerScores[currentPlayer.user_id] = newScore
+          setPlayerScores(newPlayerScores)
+        }
+        else {
           // alert("NO MATCH!")
 
-          newCardsFaceUp.map((c) => (newDeck[c[0]].faceUp = false));
-          nextPlayerTurn(newTurn);
-          newCardsFaceUp = [];
-          let newScore = wrongAnswer(currentPlayer);
-          let newPlayerScores = { ...playerScores };
-          newPlayerScores[currentPlayer.user_id] = newScore;
-          setPlayerScores(newPlayerScores);
+          newCardsFaceUp.map(c => newDeck[c[0]].faceUp = false)
+          nextPlayerTurn(newTurn)
+          newCardsFaceUp = []
+          let newScore = wrongAnswer(currentPlayer)
+          let newPlayerScores = { ...playerScores }
+          newPlayerScores[currentPlayer.user_id] = newScore
+          setPlayerScores(newPlayerScores)
           // let forceFlip = [[newCardsFaceUp[0][0]], newCardsFaceUp[1][0]]
           // newState.forceFlip = forceFlip
         }
       }
-      if (button === "back") {
-        newCardsFaceUp.map(
-          (c, index) => {
-            // if (index + 1 !== map.newCardsFaceUp.length) {
-            newDeck[c[0]].faceUp = false;
-          }
+      if (button === 'back') {
+        newCardsFaceUp.map((c, index) => {
+          // if (index + 1 !== map.newCardsFaceUp.length) {
+          newDeck[c[0]].faceUp = false
+        }
 
           // }
-        );
-        nextPlayerTurn(newTurn);
-        newCardsFaceUp = [];
+        )
+        nextPlayerTurn(newTurn)
+        newCardsFaceUp = []
       }
     }
+
+    // if (newCardsFaceUp.length > 2) {
+    //   newCardsFaceUp.map(c => {
+    //     newDeck[c[0]].faceUp = false
+    //   })
+    // }
+    let newState = { deck: newDeck }
+    let emitToBackEnd = {}
+    emitToBackEnd['board'] = newState
+    emitToBackEnd['turn'] = newTurn
+    emitToBackEnd['room'] = gameRoom
+    // emitToBackEnd['playerScores'] = newPlayerScores
+
+    // newState.cardsFaceUp = newCardsFaceUp
+    setCardsFaceUp(newCardsFaceUp)
+    console.log("**** newState for setBoard", newState)
+    setTurn(newTurn)
+    setBoard(newState)
+    handleGameOver(newState)
+    passGameState(emitToBackEnd);
+  }
 
     // if (newCardsFaceUp.length > 2) {
     //   newCardsFaceUp.map(c => {
@@ -584,6 +603,7 @@ const Game = (props) => {
     handleGameOver(newState);
     passGameState(emitToBackEnd);
   };
+
 console.log('xyzzy playerScores', playerScores)
   const passGameState = (newState) => {
     console.log(">>>> gameStateOut", newState);
