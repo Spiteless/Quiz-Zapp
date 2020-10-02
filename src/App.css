@@ -46,9 +46,9 @@
 .gameBoard {
   display: flex;
   flex-direction: column;
-  background-color: rgb(46, 122, 223);
+  background-color: rgb(255, 255, 161);
   width: 800px;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 .row {
@@ -145,6 +145,10 @@
 .gameContainer {
   display: flex;
   justify-content: space-evenly;
+}
+
+.gameContainer.my-turn {
+  background-color:rgb(46, 122, 223);
 }
 
 .chatWindow {

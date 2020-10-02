@@ -19,8 +19,8 @@ const Profile = (props) => {
           <div className="userScores">
             
             <h3 className="scoresText">{reduxState.user.username}'s current score: <span className="score">{reduxState.user.score}</span></h3>
-            <h3 className="scoresText">The number of questions that {reduxState.user.username} has guessed at is: <span className="score">{reduxState.user.questions}</span></h3>
-            <h3 className="scoresText">The number of questions that {reduxState.user.username} has guessed correctly is: <span className="score">{reduxState.user.correct}</span> </h3>
+            <h3 className="scoresText">{reduxState.user.username}'s number of attempted matches is: <span className="score">{reduxState.user.questions}</span></h3>
+            <h3 className="scoresText">{reduxState.user.username}'s number of correct matches is: <span className="score">{reduxState.user.correct}</span> </h3>
           
           </div>
         </div>

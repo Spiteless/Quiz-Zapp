@@ -132,6 +132,7 @@
     margin: 0 7px;
     border-radius: 7px;
     background-color: yellow;
+    font-size: 20px;
     font-weight: 800;
     border: 3px solid white;
     transition: .4s;
@@ -160,6 +161,7 @@
 }
 
 .user-pass {
+    font-size: 20px;
     border-radius: 7px;
     margin-right: 5px;
     background-color: rgb(255, 255, 96);
@@ -171,6 +173,7 @@
 
 .user-pass-submit {
     background-color: white;
+    font-size: 20px;
     border-radius: 7px;
     font-weight: 600;
 }
