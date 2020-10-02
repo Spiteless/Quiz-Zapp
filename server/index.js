@@ -116,6 +116,11 @@ massive ({
                     io.in(roomName).emit('start-game', newObj)
                 }
             })
+            socket.on('gameOver', (body) => {
+                 const broom = body
+                console.log('gameOver', broom)
+                io.in(`${broom}`).emit('modal')
+            })
         })
     })
     .catch((err) => console.log(`Database error: ${err}`));
