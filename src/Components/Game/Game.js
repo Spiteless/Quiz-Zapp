@@ -8,6 +8,169 @@ import { map } from 'lodash';
 import { useSelector } from "react-redux";
 import { SocketContext } from "../Context/Context";
 
+const fakeBoard = { deck: {
+  "fakeCard1": {
+    card_id: "0a",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard2": {
+    card_id: "1a",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard3": {
+    card_id: "2a",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard4": {
+    card_id: "3a",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard5": {
+    card_id: "4a",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard6": {
+    card_id: "5a",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard7": {
+    card_id: "6a",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard8": {
+    card_id: "7a",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard9": {
+    card_id: "0q",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard10": {
+    card_id: "2q",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard11": {
+    card_id: "3a",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard12": {
+    card_id: "3q",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard13": {
+    card_id: "4q",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard14": {
+    card_id: "5q",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard15": {
+    card_id: "6q",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+  "fakeCard16": {
+    card_id: "7q",
+    cardOrder: 0,
+    match_id: 0,
+    faceUp: false,
+    textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+    urlFront: "",
+    isVisible: true,
+  },
+}
+}
 
 
 
@@ -33,6 +196,7 @@ let user2 = {
 }
 
 const Game = (props) => {
+  console.log("<<<< Enter Game Function Game Component >>>>")
   const reduxState = useSelector((reduxState) => reduxState.auth);
   
   const { getGameParticipants,
@@ -57,27 +221,172 @@ const Game = (props) => {
         }, [])
 
   const [board, setBoard] = useState({
-    deck: {},
+    deck: {
+      "fakeCard1": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard2": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard3": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard4": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard5": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard6": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard7": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard8": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard9": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard10": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard11": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard12": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard13": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard14": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard15": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+      "fakeCard16": {
+        card_id: "0a",
+        cardOrder: 0,
+        match_id: 0,
+        faceUp: false,
+        textCardFront: "This a fake card yo",
+    textCardBack: "Fake card back",
+        urlFront: "",
+        isVisible: true,
+      },
+    },
   })
 
   const me = { ...reduxState.user }
 
-  // useEffect(() => {
-  //   let newPlayer = () => {
-  //     return  { //test data
-  //       correct: 0,       
-  //       email: "marty",
-  //       questions: 0,
-  //       score: 0,
-  //       socketId: "NJFNFpo24oiuNfopm35M",
-  //       user_id: 102,
-  //       username: "Scooby"
-  //     }
-  //     return newPlayer}
-  //   console.log(`${newPlayer.username} has joined the game!`, newPlayer)
-  //   let newPlayerScores = {...playerScores }
-  //   newPlayerScores[newPlayer.user_id] = newPlayer
-  // }, []);
 
   //Player listener, when player joins, set the array larger
   useEffect(() => {
@@ -91,17 +400,15 @@ const Game = (props) => {
 
   useEffect(() => {
     socket.on('receive-game-state', (body) => {
-      console.log('~~~~receive game state', body);
-      // const {turn, board} = body
       const { deck } = body.board
       let newDeck = { ...deck }
       setTurn((turn) => [...body.turn])
-      setBoard((board) => [{deck: newDeck}])
-        // playerScores: setPlayerScores
-      
+      setBoard((board) => ({deck: newDeck}))
+      console.log("board", board, "turn", turn, "^^^^^^")
     })
   }, []);
 
+  
 
   const getQuestions = () => {
     console.log("&&&&", props)
@@ -241,28 +548,25 @@ const Game = (props) => {
     //   })
     // }
     let newState = { deck: newDeck }
+    let emitToBackEnd = {}
+    emitToBackEnd['board'] = newState
+    emitToBackEnd['turn'] = newTurn
+    emitToBackEnd['room'] = gameRoom
+    // emitToBackEnd['playerScores'] = newPlayerScores
+
     // newState.cardsFaceUp = newCardsFaceUp
     setCardsFaceUp(newCardsFaceUp)
     console.log("**** newState for setBoard", newState)
     setTurn(newTurn)
     setBoard(newState)
     handleGameOver(newState)
-    let newGameState = {
-      turn: newTurn,
-      board: newState,
-      playerScores: setPlayerScores
-    }
-    passGameState();
+    passGameState(emitToBackEnd);
   }
   
-  const passGameState = (io_action) => {
-    let newGameState = {
-      turn: turn,
-      board: board,
-      room: gameRoom,
-      // playerScores: setPlayerScores
-    }
-    socket.emit('player-turn', newGameState)
+  const passGameState = (newState) => {
+    
+    console.log(">>>> gameStateOut", newState)
+    socket.emit('player-turn', newState)
   }
 
   const correctAnswer = (player, num = 5) => {
@@ -318,8 +622,12 @@ const Game = (props) => {
     return (combinedArr)
   }
 
-  const createCard = (cardInfo) => {
-    const { deck } = board
+  const createCard = (cardInfoIn, index) => {
+    let cardInfo = (cardInfoIn) ? cardInfoIn : Object.values(Object.values(fakeBoard)[0])[index]
+    // console.log("<<<< obj.v(fb)[0][index]:",Object.values(fakeBoard)[0][index])
+    console.log("<<<< break in createCard (2nd render)")
+    // console.log("<<<<fakeBoard:", fakeBoard,"obj.v(fb):", Object.values(fakeBoard),
+    // "obj.v(obj.v(fb)[0]):", Object.values(Object.values(fakeBoard)[0]), "index:",index)
     return <Card
       textCardBack={cardInfo.textCardBack}
       textCardFront={cardInfo.textCardFront}
@@ -327,14 +635,11 @@ const Game = (props) => {
       cardId={cardInfo.cardId}
       passedOnClickFunc={gameHandleClick}
       matchId={cardInfo.matchId}
-      deck={deck}
       cardOrder={cardInfo.cardOrder}
       faceUp={cardInfo.faceUp}
       isVisible={cardInfo.isVisible}
       getCardsFaceUp={getCardsFaceUp}
       isItMyTurn={isItMyTurn}
-
-      testFlip={Object.entries(deck).includes(cardInfo.cardId)}
 
       urlFront={(cardInfo.urlFront)
         ? cardInfo.urlFront
@@ -368,9 +673,15 @@ const Game = (props) => {
   }
 
   const mapToBoard = (cardArrayIn, rows = 4, columns = 4) => {
+    let placeHolder = (cardArrayIn) ? cardArrayIn : fakeBoard
+    console.log("<<<< break when passed an empty array for cardArrayIn", cardArrayIn, placeHolder)
+    if(!cardArrayIn.length) { return <h1>Error</h1>}
+    // if(cardArrayIn.length === 1) {
+    //   console.log("<<<< hit test case for one card")
+    //   return createCard(cardArray[0]) }
     let cardArray = []
 
-    for (let i = 0; i < cardArrayIn.length; i++) {
+    for (let i = 0; i < placeHolder.length; i++) {
       let row = []
       for (let i = 0; i < columns; i++) {
         row.push(cardArrayIn.shift())
@@ -382,20 +693,16 @@ const Game = (props) => {
       <div className='gameBoard'>
         { cardArray.map((row, index) => {
           return (<div className="row" key={index}>
-            {row.map(card => createCard(card))}
+            {row.map((card, index2) => {
+              let indexNum=index*4+index2
+              return createCard(card, indexNum)
+              })}
           </div>)
         })}
       </div>
     )
   }
 
-  const readOut = (deck) => {
-    let entries = Object.entries(deck).map(obj => {
-      let [key, val] = obj
-      return <h2>{`${key}: ${JSON.stringify(val)}`}</h2>
-    })
-    return entries
-  }
 
   const modal = () => {
     const modal = document.getElementById("modal");
@@ -406,9 +713,15 @@ const Game = (props) => {
     const modal = document.getElementById("modal");
     modal.style.display = "none"
   }
-  console.log("@@@@ board, turn", board, turn)
-  let mappedBoard = () => (<div>Error</div>)
-  if (board.deck) { mappedBoard = mapToBoard(Object.values(board.deck)) }
+
+  let boardNuevo = {...board}
+  let deckNuevo = {...boardNuevo.deck}
+  let deckNuevoValues = Object.values(deckNuevo)
+  let deckNuevoKeys = Object.keys(deckNuevo)
+
+  console.log(">>>> board break in function component general body",boardNuevo, deckNuevo, deckNuevoValues, deckNuevoKeys)
+
+  
 
   let currentPlayer = turn[0].username
   let turnText = (currentPlayer === me.username)
@@ -431,7 +744,13 @@ const Game = (props) => {
 
     <div className={"gameContainer" + whoseTurn} >
 
-      {mappedBoard}
+      {console.log("<<<< directly before mapToBoard render", board.deck)}
+
+     { (board.deck) ? mapToBoard(Object.values(board.deck))
+                    : mapToBoard(Object.values(fakeBoard))}
+
+      {/* {const setMappedBoard = () => Object.values(board.deck)} */}
+      {/* {mappedBoard} */}
 
       <div className="chatWindow" >
         <h1 className="player">{turnText}</h1>
@@ -447,7 +766,6 @@ const Game = (props) => {
         <span onClick={e => { close() }} class="close">&times;</span>
         <div className="modalContent">
           <h1>GAME OVER</h1>
-          {console.log("$$$$", typeof playerScores)}
           {Object.values(playerScores).map(p => endGameScores(p))}
           
           </div>

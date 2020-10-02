@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 // import axios from 'axios';
 
 import { useSpring, animated as a } from 'react-spring'
+import { flip } from 'lodash';
 // import './styles.css'
 
 
@@ -27,6 +28,7 @@ function Card(props) {
     }, [props.faceUp]);
 
     const cardHandleClick = (action) => {
+        let flipState = isCardFaceUp
         console.log("**** cardHandleClick", props, action)
         
         // if (!props.isItMyTurn()) { return }
@@ -48,7 +50,9 @@ function Card(props) {
         let cardStatus = {}
         cardStatus['button'] = '';
         cardStatus.isVisible = props.isVisible
-        if (action === 'flipOver') { setIsCardFaceUp(state => !state) }
+        if (action === 'flipOver') { setIsCardFaceUp(state => !state)
+        flipState = !flipState
+        }
         if (action === 'isVisible') { cardStatus.isVisible = false }
         if (action === 'match' ) { 
             cardStatus.button = 'match' 
@@ -76,10 +80,10 @@ function Card(props) {
         console.log("**** !!!!4", cardStatus)
         console.log("####card", cardOut)
         console.log('**** cardOut', cardOut, cardStatus.button)
+        cardStatus.flipState = flipState
         props.passedOnClickFunc({...cardStatus})
         // return cardStatus
     }
-
     let classes = "card-parent "
     if (!props.isVisible) {
         classes += " invisible"

@@ -42,7 +42,7 @@ module.exports = {
   },
   getUser: (req, res) => {
       if (req.session.user) {
-          console.log("req.session.user", req.session.user)
+        //   console.log("req.session.user", req.session.user)
           res.status(200).send(req.session.user);
       } else {
           res.sendStatus(404);
