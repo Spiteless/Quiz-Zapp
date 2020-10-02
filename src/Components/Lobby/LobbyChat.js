@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import "./Lobby.css";
 import { withRouter } from "react-router-dom";
 import { SocketContext } from "../Context/Context";
-import ScrollableFeed from 'react-scrollable-feed'
+import {withRouter} from 'react-router-dom';
+import ScrollableFeed from 'react-scrollable-feed';
 // const socket = io.connect('http://localhost:4141');
 //hide the port on the front end.
 
@@ -15,7 +16,8 @@ function LobbyChat(props) {
   const [message, setMessage] = useState("");
   const [usersList, setUsersList] = useState([]);
   const reduxState = useSelector((reduxState) => reduxState.auth);
-  const { socket } = useContext(SocketContext);
+  const { socket, setGameParticipants, setGameRoom, setCategory } = useContext(SocketContext);
+
   console.log("reduxState", reduxState);
   console.log("what's on socket?", socket)
   //all the endpoints will go in the same useEffect. It's just setting up a listener for whatever events.
@@ -38,8 +40,12 @@ function LobbyChat(props) {
         updateUsersList(body);
         // console.log('usersList in useEffect', usersList)
       });
-      socket.on('start-game', (body) => {
+
+      socket.on('start-game', (newObj) => {
         console.log("game start")
+        setGameParticipants( newObj.players);
+        setGameRoom(newObj.roomName);
+        props.history.push('/game');
       })
     }
     return () => {
@@ -92,11 +98,18 @@ function LobbyChat(props) {
     <div className="lobby-chat-container">
       <div className="chat-container">
         <h1 className="list-header chat-header">Plan a game!</h1>
-      
+        <div className='instructions'>
+          <h3 className='game-instructions'>Chat with players | Select a category</h3>
+          {/* <h3 className='game-instructions'>➀ Chat with players </h3> */}
+          {/* <h3 className='game-instructions'>➁ Select a category</h3> */}
+          {/* <h3 className='game-instructions'>➁ Select a category</h3> */}
+          <h3 className='game-instructions bigger'>Then, click on a player to start game!</h3>
+          {/* <h3 className='game-instructions bigger'>➂ Click on player to start game</h3> */}
+        </div>
+    
         <div className="upper-chat scrollable-wrapper">
           <div className="messages">
       <ScrollableFeed>
-            {/* {message} */}
             {messages.map((message, i) => {
               return (
                 //Add user info
@@ -134,13 +147,14 @@ function LobbyChat(props) {
               );
             })}
       </ScrollableFeed>
+
           </div>
         </div>
 
         <form className="input-btn-bar">
           <input
             className="chat-input"
-            placeholder="type message here"
+            placeholder="Type message here..."
             name="userMessage"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -161,18 +175,16 @@ function LobbyChat(props) {
       <div className="users-list-container">
         <h1 className="list-header">Challenge a Player</h1>
         <div className="users-list">
-          {/* THIS MAP NEEDS TO BE FIXED--DISPLAYS SORT OF. Each username needs to be a link/button or something that when you click on it, it will display a pop up to challenge the user...?*/}
           {usersList.map((user, ind) => {
             return (
               <p onClick={() => {
-                console.log('clicked')
-                socket.emit('challenge-player', {challenger: reduxState.user.user_id, opponent: user.user_id})
-                
+                console.log('~~~~ clicked')
+                socket.emit('challenge-player', {challenger: reduxState.user.user_id, opponent: user.user_id });
+                  //Do we need to include the input id or value? 
+                // setCategory(props.name);
               }} className="username-for-list" key={ind}>
                 {user.username}
               </p>
-              //   return (
-              // <div className='username-for-list' key={ind}>{user[ind].username}</div>
             );
           })}
         </div>
