@@ -299,23 +299,6 @@ const Game = (props) => {
     return newPlayer
   }
 
-  const correctAnswer = (player, num = 5) => {
-    let newPlayer = { ...playerScores[player.user_id] }
-    newPlayer.questions += 1
-    newPlayer.correct += 1
-    newPlayer.score += num
-    console.log("@@@@", player, newPlayer)
-    return newPlayer
-  }
-
-  const wrongAnswer = (player, num = -5) => {
-    let newPlayer = { ...playerScores[player.user_id] }
-    newPlayer.questions += 1
-    newPlayer.score += num
-    console.log("@@@@", player, newPlayer)
-    return newPlayer
-  }
-
   const nextPlayerTurn = (turnState) => {
     // let newTurnState = [...turnState]
     turnState.push(turnState.shift()) //move front item to end
