@@ -37,7 +37,8 @@ massive ({
         //Also, app.listen returns the port. We need to use port again -
         //const socketio = require('socket.io');
         // const io = socketio(SERVER_PORT);
-        const io = require('socket.io')(app.listen(SERVER_PORT, () => console.log(`-----PORT ${SERVER_PORT} ONLINE-----`)));
+        const io = require('socket.io')(
+            app.listen(SERVER_PORT, () => console.log(`-----PORT ${SERVER_PORT} ONLINE-----`)));
         app.set("io", io)
         //When a new connection to the socket (to the server) do what's in this arrow function.
         //Socket id is generated each time a user connects - it's associated with the connection, not with the user.
@@ -49,6 +50,7 @@ massive ({
             
             socket.emit('request-username')
             io.in('lobby').emit('welcome', {welcome: 'New user joined!', newUser: socket.id})
+            // console.log(io.sockets.adapter.rooms['lobby'].sockets) //not working for Trillium
             //connection and disconnect are default endpoints. We receive the disconnect message when someone disconnects.
             socket.on('disconnect', () => {
                 console.log("Disconnected.")
@@ -56,6 +58,7 @@ massive ({
             });
             //socket.on - in the arrow function it will take in a body - the body from the front end. Like a put or post from the front end.
             socket.on('player-turn', (body) => {
+                console.log("player-turn", (body))
                 socket.to(body.room).emit('receive-game-state', body)
             });
             socket.on('message', (body) => {
