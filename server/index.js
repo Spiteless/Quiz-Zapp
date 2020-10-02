@@ -74,6 +74,7 @@ massive ({
                 // });
                 lobbyUsers.push({...body, socketId: socket.id});
                 io.in('lobby').emit("user-list", lobbyUsers);
+
             });
             socket.on('join-lobby', (body) => {
                 const testIndexOf = lobbyUsers.indexOf((user) => user.user_id === body.user_id)

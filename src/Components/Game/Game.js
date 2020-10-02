@@ -203,6 +203,8 @@ const Game = (props) => {
           gameParticipants,
           setGameParticipants,
           gameRoom,
+          category,
+          setCategory,
           socket } = useContext(SocketContext);
 
   
@@ -214,11 +216,19 @@ const Game = (props) => {
   })
   const [turn, setTurn] = useState([user2, user1])
   const [cardsFaceUp, setCardsFaceUp] = useState([])
+  const [gameCategory, setGameCategory] = useState(category);
 
   useEffect( () => {
           setPlayerScores( [...gameParticipants])
           setTurn( [...gameParticipants])
         }, [])
+
+  // let playerScores1 = { ...playerScores }
+  // playerScores1[user1.user_id] = user1
+  // setPlayerScores(playerScores1)
+  // let playerScores2 = { ...playerScores }
+  // playerScores2[user2.user_id] = user2
+  // setPlayerScores(playerScores2)
 
   const [board, setBoard] = useState({
     deck: {
@@ -399,12 +409,15 @@ const Game = (props) => {
   }, []);
 
   useEffect(() => {
+
     socket.on('receive-game-state', (body) => {
       const { deck } = body.board
       let newDeck = { ...deck }
       setTurn((turn) => [...body.turn])
       setBoard((board) => ({deck: newDeck}))
       console.log("board", board, "turn", turn, "^^^^^^")
+//       setGameCategory(category);
+
     })
   }, []);
 
@@ -412,17 +425,20 @@ const Game = (props) => {
 
   const getQuestions = () => {
     console.log("&&&&", props)
-    let category = '';
-    (!props.location.state === undefined)
-      ? category = props.location.state.name
-      : category = `http://jservice.io/api/clues?category=17`
+    console.log("~~~~game category on state but from context:", gameCategory)
 
+    // let category = '';
+    // let category = category;
+    // (!props.location.state === undefined)
+        //*** */ ? category = props.location.state.name
+
+    //   : category = `http://jservice.io/api/clues?category=17`
     // : category = `http://jservice.io/api/clues?category=17`
     let newArr = []
     let newArrClean = []
-    axios.get(category)
+    axios.get(gameCategory)
       .then((results) => {
-        newArr = shuffleQuestions(results.data); //shuffles the questiosn received from api 
+        newArr = shuffleQuestions(results.data); //shuffles the questions received from api 
         for (let i = 0; i < newArr.length; i++) {
           if (newArr[i].question === "" || newArr[i].answer === "") {
             newArr.splice(i, 1)
@@ -726,7 +742,7 @@ const Game = (props) => {
   let currentPlayer = turn[0].username
   let turnText = (currentPlayer === me.username)
     ? "It's your turn!"
-    : `${currentPlayer}'s turn!`
+    : `It's ${currentPlayer}'s turn!`
   let whoseTurn = (currentPlayer === me.username)
     ? " my-turn"
     : " not-my-turn"
@@ -741,7 +757,8 @@ const Game = (props) => {
     </div>
     )}
   return (
-
+ <div className='game-page'>
+        <h1 className={"player" + whoseTurn}>{turnText}</h1>
     <div className={"gameContainer" + whoseTurn} >
 
       {console.log("<<<< directly before mapToBoard render", board.deck)}
@@ -752,16 +769,6 @@ const Game = (props) => {
       {/* {const setMappedBoard = () => Object.values(board.deck)} */}
       {/* {mappedBoard} */}
 
-      <div className="chatWindow" >
-        <h1 className="player">{turnText}</h1>
-        <h1>cardsFaceUp:
-          {cardsFaceUp.map(c => c[1].matchId).toString()}
-        </h1>
-        <GameChat />
-      </div>
-
-      <button onClick={e => { modal() }}>MODAL</button>
-
       <div id="modal" className="endGameModal">
         <span onClick={e => { close() }} class="close">&times;</span>
         <div className="modalContent">
@@ -769,8 +776,18 @@ const Game = (props) => {
           {Object.values(playerScores).map(p => endGameScores(p))}
           
           </div>
-      </div>
+        {/* <div className="chatWindow" >
+          <h1 className="player">{turnText}</h1>
+          <h1>cardsFaceUp:
+            {cardsFaceUp.map(c => c[1].matchId).toString()}
+          </h1>
+          <GameChat />
+        </div> */}
 
+        {/* <button onClick={e => { modal() }}>MODAL</button> */}
+
+        </div>
+      </div>
     </div>
   )
 }

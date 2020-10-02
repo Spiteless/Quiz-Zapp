@@ -1,0 +1,66 @@
+.profileContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile {
+    width: 80%;
+    height: 80vh;
+    margin-top: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    background-color: rgb(31, 93, 173);
+    /* background-color: rgb(108, 159, 224); */
+    animation: profile .5s;
+    transform-origin: bottom;
+}
+
+@keyframes profile {
+    from {transform: scale(0);}
+    to {transform: scale(1);}
+}
+
+.profileName {
+    font-size: 45px;
+    font-weight: 700;
+    color: yellow;
+}
+
+.userProfile {
+    width: 95%;
+    height: 50px;
+    margin-top: 20px;
+    background-color: rgb(115, 183, 204);
+    border-radius: 20px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
+}
+
+.userScores {
+    width: 95%;
+    height: 80%;
+    margin-top: 10px;
+    background-color:  rgb(126, 197, 219);
+    border-radius: 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+    animation: profile .6s;
+    transform-origin: bottom;
+}
+
+.scoresText {
+    font-size: 28px;
+    margin-top: 15px;
+    font-weight: 600;
+    color: rgb(31, 93, 173);
+}
+
+.score {
+    color: yellow;
+}
