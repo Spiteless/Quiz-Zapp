@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useSelector } from "react-redux";
 import "./Lobby.css";
+import { withRouter } from "react-router-dom";
 import { SocketContext } from "../Context/Context";
 import {withRouter} from 'react-router-dom';
 import ScrollableFeed from 'react-scrollable-feed';
@@ -39,12 +40,12 @@ function LobbyChat(props) {
         updateUsersList(body);
         // console.log('usersList in useEffect', usersList)
       });
+
       socket.on('start-game', (newObj) => {
         console.log("game start")
         setGameParticipants( newObj.players);
         setGameRoom(newObj.roomName);
         props.history.push('/game');
-
       })
     }
     return () => {
@@ -61,6 +62,15 @@ function LobbyChat(props) {
     }
   }, [socket]);
 
+//   useEffect(() => {
+//     if (socket) {
+//         return () => {
+//               if (socket) {
+//                 socket.emit("remove-user", reduxState.user.username);
+//               }
+//             };
+//     } 
+//     },[reduxState.user.username]);     
    //Don't want anything in the dependency array, because we don't want to fire the listener another time. Need it there, empty.
   // const handleInput = (e) => {
   //     setMessage({userMessage: e.target.value})

@@ -59,6 +59,13 @@ const Game = (props) => {
           setTurn( [...gameParticipants])
         }, [])
 
+  // let playerScores1 = { ...playerScores }
+  // playerScores1[user1.user_id] = user1
+  // setPlayerScores(playerScores1)
+  // let playerScores2 = { ...playerScores }
+  // playerScores2[user2.user_id] = user2
+  // setPlayerScores(playerScores2)
+
   const [board, setBoard] = useState({
     deck: {},
   })
@@ -119,7 +126,6 @@ const Game = (props) => {
         //*** */ ? category = props.location.state.name
 
     //   : category = `http://jservice.io/api/clues?category=17`
-
     // : category = `http://jservice.io/api/clues?category=17`
     let newArr = []
     let newArrClean = []
@@ -257,6 +263,7 @@ const Game = (props) => {
     setTurn(newTurn)
     setBoard(newState)
     handleGameOver(newState)
+
     let newGameState = {
       turn: newTurn,
       board: newState,
@@ -273,6 +280,23 @@ const Game = (props) => {
       // playerScores: setPlayerScores
     }
     socket.emit('player-turn', newGameState)
+  }
+
+  const correctAnswer = (player, num = 5) => {
+    let newPlayer = { ...playerScores[player.user_id] }
+    newPlayer.questions += 1
+    newPlayer.correct += 1
+    newPlayer.score += num
+    console.log("@@@@", player, newPlayer)
+    return newPlayer
+  }
+
+  const wrongAnswer = (player, num = -5) => {
+    let newPlayer = { ...playerScores[player.user_id] }
+    newPlayer.questions += 1
+    newPlayer.score += num
+    console.log("@@@@", player, newPlayer)
+    return newPlayer
   }
 
   const correctAnswer = (player, num = 5) => {
@@ -463,7 +487,6 @@ const Game = (props) => {
             
             </div>
         </div>
-
       </div>
     </div>
   )
