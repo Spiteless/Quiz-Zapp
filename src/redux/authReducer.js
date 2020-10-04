@@ -8,10 +8,9 @@ const initialState = {
     // I deleted isLoggedIn from switch statement below.
 }
 
-const LOGIN_USER = 'LOGIN_USER';
+const LOGIN_USER  = 'LOGIN_USER';
 const LOGOUT_USER = 'LOGOUT_USER';
-const GET_USER = 'GET_USER';
-
+const GET_USER    = 'GET_USER';
 
 export function loginUser(user){
     return {
@@ -28,6 +27,7 @@ export function logoutUser(){
 }
 
 export function getUser(){
+    console.log("fired getUser")
     const user = axios.get('/auth/user')
         .then(res => res.data)
         .catch(err => console.log(err));
@@ -48,7 +48,7 @@ export default function authReducer(state = initialState, action) {
         case GET_USER + "_PENDING":
             return {...state, loading: true}
         case GET_USER + "_FULFILLED":
-            console.log('payload', payload)
+            console.log('payload authReducer', payload)
             return {...state, user: payload}
         case GET_USER + "_REJECTED":
             return state
