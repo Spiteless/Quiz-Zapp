@@ -135,7 +135,7 @@ app.post('/auth/logout', authCtrl.logout);
 app.get('/auth/user', authCtrl.getUser);
 
 // game endpoints
-
+app.get('/api/leaders', gameCtrl.getLeaders);
 
 
 

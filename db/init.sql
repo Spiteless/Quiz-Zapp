@@ -5,7 +5,7 @@ CREATE TABLE users (
     email VARCHAR(50) NOT NULL UNIQUE,
     score INT,
     questions INT,
-    answers INT
+    correct INT
 );
 
 CREATE TABLE categories (
