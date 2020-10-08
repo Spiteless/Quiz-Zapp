@@ -243,9 +243,9 @@
   /* background: black; */
 }
 
-.not-my-turn {
-  color: rgb(209, 35, 35);
-  /* text-shadow: 2px 2px 0px white; */
+h1.not-my-turn {
+  color: rgb(209, 35, 35) !important; 
+  text-shadow: 2px 2px 0px white;
 
 }
 
