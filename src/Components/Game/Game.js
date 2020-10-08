@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
 import Card from "./Card";
 import GameChat from "./GameChat";
@@ -7,7 +7,6 @@ import cardFront from "../../cardfront.png";
 import { map } from "lodash";
 import { useSelector } from "react-redux";
 import { SocketContext } from "../Context/Context";
-import { Link }  from "react-router-dom";
 
 const fakeBoard = {
   deck: {
@@ -399,6 +398,7 @@ const Game = (props) => {
   });
 
   const me = { ...reduxState.user };
+  console.log ("0000 user: " + me.username)
 
   //Player listener, when player joins, set the array larger
   useEffect(() => {
@@ -428,17 +428,16 @@ const Game = (props) => {
     console.log("&&&&", props);
     console.log("~~~~game category on state but from context:", gameCategory);
 
-    // let category = '';
-    // let category = category;
+    let category = '';
+        category = (gameCategory)
+      ? category = gameCategory
+      : category = `http://jservice.io/api/clues?category=17`
     // (!props.location.state === undefined)
-    //*** */ ? category = props.location.state.name
 
-    //   : category = `http://jservice.io/api/clues?category=17`
-    // : category = `http://jservice.io/api/clues?category=17`
     let newArr = [];
     let newArrClean = [];
     axios
-      .get(gameCategory)
+      .get(category)
       .then((results) => {
         newArr = shuffleQuestions(results.data); //shuffles the questions received from api
         for (let i = 0; i < newArr.length; i++) {
@@ -755,11 +754,12 @@ console.log('xyzzy playerScores', playerScores)
   );
 
   let currentPlayer = turn[0].username;
-  let turnText =
-    currentPlayer === me.username
+  let turnText = (currentPlayer === me.username)
       ? "It's your turn!"
       : `It's ${currentPlayer}'s turn!`;
-  let whoseTurn = currentPlayer === me.username ? " my-turn" : " not-my-turn";
+  let whoseTurn = (currentPlayer === me.username)
+      ? " my-turn"
+      : " not-my-turn " + me.username;
 
   const endGameScores = (player) => {
     console.log('xyzzy', Object.values(playerScores).length)

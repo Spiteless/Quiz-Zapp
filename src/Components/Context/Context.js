@@ -1,10 +1,15 @@
 // import { set } from "lodash";
-import React, { useState, createContext } from "react"; 
+import React, { useState, createContext } from "react";
 import io from "socket.io-client";
 export const SocketContext = createContext(
- null
-); 
-export const SocketProvider = ({children}) => {
+    null
+);
+
+require("dotenv").config();
+const{ SERVER_PORT } = process.env;
+console.log("dotenv SERVER_PORT: " + SERVER_PORT)
+
+export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null)
     const [gameRoom, setGameRoom] = useState('');
     const [category, setCategory] = useState('');
@@ -17,8 +22,8 @@ export const SocketProvider = ({children}) => {
             socketId: "A2jd5xDbxWGtygnlAAAA",
             user_id: 101,
             username: "Morganizer"
-          },
-          {
+        },
+        {
             correct: 0,
             email: "T@Rizzle.com",
             questions: 0,
@@ -26,7 +31,7 @@ export const SocketProvider = ({children}) => {
             socketId: "UBNG890351ijAOING2Pp",
             user_id: 100,
             username: "T-Rizzle"
-          }
+        }
     ]);
 
     const saveCategory = (qURL) => {
@@ -38,17 +43,18 @@ export const SocketProvider = ({children}) => {
 
     const saveGameRoom = (room) => {
         setGameRoom(setGameRoom(room))
-        console.log('gameRoom')     
+        console.log('gameRoom')
     }
 
     const currentGameRoom = () => gameRoom
 
-    const connectSocket = () =>{
+    const connectSocket = () => {
         setSocket((s) => {
-           return !s ? io.connect("http://localhost:4141") : s
+            // return !s ? io.connect(`http://localhost:${SERVER_PORT}`) : s
+            return !s ? io.connect(`http://localhost:4142`) : s
         })
     }
-    return(
+    return (
         <SocketContext.Provider value={{
             socket,
             setSocket,
@@ -62,7 +68,7 @@ export const SocketProvider = ({children}) => {
             setCategory,
             saveCategory
 
-            }}>
+        }}>
             {children}
         </SocketContext.Provider>
     )
