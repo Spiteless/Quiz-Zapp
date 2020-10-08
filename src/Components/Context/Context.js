@@ -51,7 +51,7 @@ export const SocketProvider = ({ children }) => {
     const connectSocket = () => {
         setSocket((s) => {
             // return !s ? io.connect(`http://localhost:${SERVER_PORT}`) : s
-            return !s ? io.connect(`http://localhost:4142`) : s
+            return !s ? io.connect(SERVER_PORT) : s
         })
     }
     return (
