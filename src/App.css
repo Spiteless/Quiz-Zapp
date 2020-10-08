@@ -111,7 +111,7 @@
 .card-parent:hover {
   /* border-color: grey; */
   transform-origin: center;
-  transform: scale(1.035);
+  /* transform: scale(1.035); */
 } 
 
 .front,
@@ -245,7 +245,7 @@
 
 .not-my-turn {
   color: rgb(209, 35, 35);
-  text-shadow: 2px 2px 0px white;
+  /* text-shadow: 2px 2px 0px white; */
 
 }
 
