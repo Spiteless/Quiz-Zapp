@@ -2,12 +2,15 @@ import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 import { SocketContext } from '../Context/Context';
+import {connect} from 'react-redux';
+import {loginUser} from '../../redux/authReducer';
 
 const Register = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const {connectSocket} = useContext(SocketContext);
+
   const register = () => {
     if(username && password && email){
         axios.post('/auth/register', {username, password, email}).then(res => {
@@ -16,7 +19,7 @@ const Register = (props) => {
            props.history.push('/lobby') 
         }).catch(err => {
             console.log(err)
-            alert("Registration failed. Try another email address.")
+            alert(`${err}. Registration failed.`)
         })
     } else {
         alert("Registration failed. All fields must have a value.")
@@ -51,4 +54,4 @@ const Register = (props) => {
 
 
 
-export default withRouter(Register);
+export default connect(null, {loginUser})(withRouter(Register));
