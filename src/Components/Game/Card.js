@@ -31,13 +31,13 @@ function Card(props) {
         let flipState = isCardFaceUp
         console.log("**** cardHandleClick", props, action)
         
-        // if (!props.isItMyTurn()) { return }
+        if (!props.isItMyTurn()) { return }
         if (!props.isVisible) { return } //if invisible, disregard clicks
         let faceUpCards = props.getCardsFaceUp()
 
         if (faceUpCards.length === 1
             && faceUpCards.includes(props.cardId)) { return }
-
+        
         if (faceUpCards.length >= 2) {
             //disregard clicks on non-faceUp cards while 2 faceup
             if (!faceUpCards.includes(props.cardId)) {

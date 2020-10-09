@@ -660,7 +660,7 @@ console.log('xyzzy playerScores', playerScores)
         faceUp={cardInfo.faceUp}
         isVisible={cardInfo.isVisible}
         getCardsFaceUp={getCardsFaceUp}
-        isItMyTurn={isItMyTurn}
+        isItMyTurn={isMyTurn}
         urlFront={cardInfo.urlFront ? cardInfo.urlFront : cardFront}
       ></Card>
     );
@@ -684,7 +684,7 @@ console.log('xyzzy playerScores', playerScores)
   };
 
   const isItMyTurn = () => {
-    return turn[0].username === me.username;
+    return (currentPlayer === me.username)
   };
 
   const checkIfMatch = (c1, c2) => {
@@ -757,7 +757,8 @@ console.log('xyzzy playerScores', playerScores)
   let turnText = (currentPlayer === me.username)
       ? "It's your turn!"
       : `It's ${currentPlayer}'s turn!`;
-  let whoseTurn = (currentPlayer === me.username)
+  
+  let whoseTurn = (isMyTurn())
       ? " my-turn"
       : " not-my-turn " + me.username;
 
