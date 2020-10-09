@@ -23,6 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+.env.prod
 
 #local workspace
 workspace.code-workspace
