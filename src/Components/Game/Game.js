@@ -537,7 +537,6 @@ const Game = (props) => {
           setPlayerScores(newPlayerScores);
         } else {
           // alert("NO MATCH!")
-
           newCardsFaceUp.map((c) => (newDeck[c[0]].faceUp = false));
           nextPlayerTurn(newTurn);
           newCardsFaceUp = [];
@@ -583,7 +582,6 @@ const Game = (props) => {
     handleGameOver(newState);
     passGameState(emitToBackEnd);
   };
-console.log('xyzzy playerScores', playerScores)
   const passGameState = (newState) => {
     console.log(">>>> gameStateOut", newState);
     socket.emit("player-turn", newState);
@@ -601,7 +599,7 @@ console.log('xyzzy playerScores', playerScores)
   const wrongAnswer = (player, num = -5) => {
     let newPlayer = {...playerScores[player.user_id]};
     !newPlayer.questions ? (newPlayer.questions = 1) : (newPlayer.questions += 1);
-    !newPlayer.score ? (newPlayer.score = num) : (newPlayer.score -= num);
+    !newPlayer.score ? (newPlayer.score = num) : (newPlayer.score += num);
     return newPlayer;
   };
 
@@ -660,7 +658,7 @@ console.log('xyzzy playerScores', playerScores)
         faceUp={cardInfo.faceUp}
         isVisible={cardInfo.isVisible}
         getCardsFaceUp={getCardsFaceUp}
-        isItMyTurn={isMyTurn}
+        isItMyTurn={isItMyTurn}
         urlFront={cardInfo.urlFront ? cardInfo.urlFront : cardFront}
       ></Card>
     );
@@ -758,15 +756,13 @@ console.log('xyzzy playerScores', playerScores)
       ? "It's your turn!"
       : `It's ${currentPlayer}'s turn!`;
   
-  let whoseTurn = (isMyTurn())
+  let whoseTurn = (isItMyTurn())
       ? " my-turn"
       : " not-my-turn " + me.username;
 
   const endGameScores = (player) => {
-    console.log('xyzzy', Object.values(playerScores).length)
     if(Object.values(playerScores).length >= 3){
       const tempPlayer = Object.values(playerScores)[2]
-      console.log('xyzzy', tempPlayer)
     return (
       <div className="scores">
         {/* <h1>{tempPlayer.username}</h1> */}
