@@ -219,18 +219,12 @@ const Game = (props) => {
   const [turn, setTurn] = useState([user2, user1]);
   const [cardsFaceUp, setCardsFaceUp] = useState([]);
   const [gameCategory, setGameCategory] = useState(category);
+  const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
     setPlayerScores([...gameParticipants]);
     setTurn([...gameParticipants]);
   }, []);
-
-  // let playerScores1 = { ...playerScores }
-  // playerScores1[user1.user_id] = user1
-  // setPlayerScores(playerScores1)
-  // let playerScores2 = { ...playerScores }
-  // playerScores2[user2.user_id] = user2
-  // setPlayerScores(playerScores2)
 
   const [board, setBoard] = useState({
     deck: {
@@ -398,7 +392,7 @@ const Game = (props) => {
   });
 
   const me = { ...reduxState.user };
-  console.log ("0000 user: " + me.username)
+  console.log("0000 user: " + me.username);
 
   //Player listener, when player joins, set the array larger
   useEffect(() => {
@@ -419,19 +413,27 @@ const Game = (props) => {
       console.log("board", board, "turn", turn, "^^^^^^");
       //       setGameCategory(category);
     });
-    socket.on('modal', (body) => {
-      modal()
-    })
+    socket.on("modal", (body) => {
+      sendScores();
+      modal();
+    });
   }, []);
+
+  useEffect(()=>{
+    if(modalState){
+      const finalPlayer = {playerId:(parseInt(Object.keys(playerScores)[2]))};
+      const finalScore = {...finalPlayer, ...(Object.values(playerScores)[2])};
+      axios.put('/api/playerScore', finalScore).then(console.log('xyzzy useEffect', finalScore))}
+  },[modalState])
 
   const getQuestions = () => {
     console.log("&&&&", props);
     console.log("~~~~game category on state but from context:", gameCategory);
 
-    let category = '';
-        category = (gameCategory)
-      ? category = gameCategory
-      : category = `http://jservice.io/api/clues?category=17`
+    let category = "";
+    category = gameCategory
+      ? (category = gameCategory)
+      : (category = `http://jservice.io/api/clues?category=17`);
     // (!props.location.state === undefined)
 
     let newArr = [];
@@ -562,19 +564,12 @@ const Game = (props) => {
       }
     }
 
-    // if (newCardsFaceUp.length > 2) {
-    //   newCardsFaceUp.map(c => {
-    //     newDeck[c[0]].faceUp = false
-    //   })
-    // }
     let newState = { deck: newDeck };
     let emitToBackEnd = {};
     emitToBackEnd["board"] = newState;
     emitToBackEnd["turn"] = newTurn;
     emitToBackEnd["room"] = gameRoom;
-    // emitToBackEnd['playerScores'] = newPlayerScores
 
-    // newState.cardsFaceUp = newCardsFaceUp
     setCardsFaceUp(newCardsFaceUp);
     console.log("**** newState for setBoard", newState);
     setTurn(newTurn);
@@ -582,6 +577,7 @@ const Game = (props) => {
     handleGameOver(newState);
     passGameState(emitToBackEnd);
   };
+
   const passGameState = (newState) => {
     console.log(">>>> gameStateOut", newState);
     socket.emit("player-turn", newState);
@@ -589,7 +585,9 @@ const Game = (props) => {
 
   const correctAnswer = (player, num = 5) => {
     let newPlayer = { ...playerScores[player.user_id] };
-    !newPlayer.questions ? (newPlayer.questions = 1) : (newPlayer.questions += 1);
+    !newPlayer.questions
+      ? (newPlayer.questions = 1)
+      : (newPlayer.questions += 1);
     !newPlayer.correct ? (newPlayer.correct = 1) : (newPlayer.correct += 1);
     !newPlayer.score ? (newPlayer.score = num) : (newPlayer.score += num);
     console.log(newPlayer);
@@ -597,8 +595,10 @@ const Game = (props) => {
   };
 
   const wrongAnswer = (player, num = -5) => {
-    let newPlayer = {...playerScores[player.user_id]};
-    !newPlayer.questions ? (newPlayer.questions = 1) : (newPlayer.questions += 1);
+    let newPlayer = { ...playerScores[player.user_id] };
+    !newPlayer.questions
+      ? (newPlayer.questions = 1)
+      : (newPlayer.questions += 1);
     !newPlayer.score ? (newPlayer.score = num) : (newPlayer.score += num);
     return newPlayer;
   };
@@ -608,7 +608,7 @@ const Game = (props) => {
     turnState.push(turnState.shift()); //move front item to end
     return turnState;
   };
-    const cardData = (qArray) => {
+  const cardData = (qArray) => {
     const qArr = qArray.map((obj, index) => {
       const newObjq = {
         cardOrder: index,
@@ -642,10 +642,7 @@ const Game = (props) => {
     let cardInfo = cardInfoIn
       ? cardInfoIn
       : Object.values(Object.values(fakeBoard)[0])[index];
-    // console.log("<<<< obj.v(fb)[0][index]:",Object.values(fakeBoard)[0][index])
-    console.log("<<<< break in createCard (2nd render)");
-    // console.log("<<<<fakeBoard:", fakeBoard,"obj.v(fb):", Object.values(fakeBoard),
-    // "obj.v(obj.v(fb)[0]):", Object.values(Object.values(fakeBoard)[0]), "index:",index)
+
     return (
       <Card
         textCardBack={cardInfo.textCardBack}
@@ -678,11 +675,11 @@ const Game = (props) => {
     let mapOver = Object.values(state.deck).filter((c) => {
       return c.isVisible;
     });
-    return mapOver.length === 0 ? socket.emit('gameOver', gameRoom) : false;
+    return mapOver.length === 0 ? socket.emit("gameOver", gameRoom) : false;
   };
 
   const isItMyTurn = () => {
-    return (currentPlayer === me.username)
+    return currentPlayer === me.username;
   };
 
   const checkIfMatch = (c1, c2) => {
@@ -699,9 +696,7 @@ const Game = (props) => {
     if (!cardArrayIn.length) {
       return <h1>Error</h1>;
     }
-    // if(cardArrayIn.length === 1) {
-    //   console.log("<<<< hit test case for one card")
-    //   return createCard(cardArray[0]) }
+
     let cardArray = [];
 
     for (let i = 0; i < placeHolder.length; i++) {
@@ -727,7 +722,9 @@ const Game = (props) => {
       </div>
     );
   };
-
+  const sendScores = (player) => {
+    setModalState(true);
+  };
   const modal = () => {
     const modal = document.getElementById("modal");
     modal.style.display = "block";
@@ -752,29 +749,27 @@ const Game = (props) => {
   );
 
   let currentPlayer = turn[0].username;
-  let turnText = (currentPlayer === me.username)
+  let turnText =
+    currentPlayer === me.username
       ? "It's your turn!"
       : `It's ${currentPlayer}'s turn!`;
-  
-  let whoseTurn = (isItMyTurn())
-      ? " my-turn"
-      : " not-my-turn " + me.username;
+
+  let whoseTurn = isItMyTurn() ? " my-turn" : " not-my-turn " + me.username;
 
   const endGameScores = (player) => {
-    if(Object.values(playerScores).length >= 3){
-      const tempPlayer = Object.values(playerScores)[2]
-    return (
-      <div className="scores">
-        {/* <h1>{tempPlayer.username}</h1> */}
-        <h2>Questions attempted: {tempPlayer.questions}</h2>
-        <h2>Correct answers: {tempPlayer.correct}</h2>
-        <h2>Score: {tempPlayer.score}</h2>
-      </div>
-    );
+    if (Object.values(playerScores).length >= 3) {
+      const tempPlayer = Object.values(playerScores)[2];
+      return (
+        <div className="scores">
+          <h2>Questions attempted: {tempPlayer.questions}</h2>
+          <h2>Correct answers: {tempPlayer.correct}</h2>
+          <h2>Score: {tempPlayer.score}</h2>
+        </div>
+      );
     }
-  }
-  return (
+  };
 
+  return (
     <div className="game-page">
       <h1 className={"player" + whoseTurn}>{turnText}</h1>
       <div className={"gameContainer" + whoseTurn}>
@@ -784,32 +779,16 @@ const Game = (props) => {
           ? mapToBoard(Object.values(board.deck))
           : mapToBoard(Object.values(fakeBoard))}
 
-        {/* {const setMappedBoard = () => Object.values(board.deck)} */}
-        {/* {mappedBoard} */}
-
         <div id="modal" className="endGameModal">
-          <Link to='/lobby'>
-            <span
-            onClick={(e) => {
-            }}
-            class="close"
-          >
-            &times;
-          </span>
+          <Link to="/lobby">
+            <span onClick={(e) => {}} class="close">
+              &times;
+            </span>
           </Link>
           <div className="modalContent">
             <h1>GAME OVER</h1>
             {endGameScores()}
           </div>
-          {/* <div className="chatWindow" >
-          <h1 className="player">{turnText}</h1>
-          <h1>cardsFaceUp:
-            {cardsFaceUp.map(c => c[1].matchId).toString()}
-          </h1>
-          <GameChat />
-        </div> */}
-
-          {/* <button onClick={e => { modal() }}>MODAL</button> */}
         </div>
       </div>
     </div>
